@@ -22,18 +22,19 @@ const storage = multer.diskStorage({
     }
 });
 
-// Filtros de archivos opcionales (por ejemplo, permitir solo imágenes)
+// Filtros de archivos para aceptar jpg, png, docx, pdf, xlsx
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+    if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(new Error('File type not supported'), false);
+        cb(new Error('Tipo de archivo no soportado'), false);
     }
 };
 
 // Límite de tamaño del archivo (opcional)
 const limits = {
-    fileSize: 1024 * 1024 * 5 // 5 MB
+    fileSize: 1024 * 1024 * 10 // 10 MB
 };
 
 // Inicializar multer con la configuración

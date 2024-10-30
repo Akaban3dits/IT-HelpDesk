@@ -60,7 +60,6 @@ export const AuthProvider = ({ children }) => {
                 throw new Error('Rol no reconocido');
             }
         } catch (error) {
-            console.error('Error al iniciar sesión:', error);
             setAuthError('Credenciales incorrectas o problemas con el servidor'); // Manejo del error
             throw error;
         } finally {

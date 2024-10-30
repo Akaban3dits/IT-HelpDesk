@@ -1,20 +1,27 @@
 import DepartmentService from '../services/department.service.js';
 
 class DepartmentController {
-    async createDepartment(req, res) {
+    //*Funcionalidades correctas
+
+    async searchDepartments(req, res) {
         try {
-            const department = await DepartmentService.createDepartment(req.body);
-            return res.status(201).json(department);
+            //Extraccion de la variable search en request
+            const { search } = req.query;
+            //Busqueda en los servicios para su uso
+            const departments = await DepartmentService.searchDepartments(search || '');
+            return res.status(200).json(departments);
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }
     }
 
-    async searchDepartments(req, res) {
+
+
+    //!Eliminar funcionalidades
+    async createDepartment(req, res) {
         try {
-            const { search } = req.query;
-            const departments = await DepartmentService.searchDepartments(search || '');
-            return res.status(200).json(departments);
+            const department = await DepartmentService.createDepartment(req.body);
+            return res.status(201).json(department);
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }

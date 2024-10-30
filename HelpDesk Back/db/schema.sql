@@ -40,28 +40,35 @@ CREATE TABLE IF NOT EXISTS priority (
     priority_name TEXT NOT NULL
 );
 
--- Tabla de dispositivos
+-- Tabla de tipos de dispositivos
+CREATE TABLE IF NOT EXISTS device_types (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    type_name TEXT NOT NULL
+);
+
+-- Tabla de dispositivos con la referencia a tipos de dispositivos
 CREATE TABLE IF NOT EXISTS devices (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    device_name TEXT NOT NULL
+    device_name TEXT NOT NULL,
+    device_type_id BIGINT REFERENCES device_types (id)
 );
 
 -- Tabla de tickets (con campo 'title')
 CREATE TABLE IF NOT EXISTS tickets (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     friendly_code TEXT NOT NULL UNIQUE,
-    title TEXT NOT NULL, -- Nuevo campo para el título del ticke
+    title TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     closed_at TIMESTAMP WITH TIME ZONE, -- Puede ser nulo si el ticket no está cerrado
     description TEXT NOT NULL,
     status_id BIGINT NOT NULL REFERENCES status (id),
-    priority_id BIGINT NOT NULL REFERENCES priority (id),
+    priority_id BIGINT REFERENCES priority (id), -- Ahora puede ser nulo
     device_id BIGINT NOT NULL REFERENCES devices (id),
-    assigned_user_id BIGINT NOT NULL REFERENCES users (id),
+    assigned_user_id BIGINT REFERENCES users (id), -- Ahora puede ser nulo
     department_id BIGINT NOT NULL REFERENCES departments (id),
     parent_ticket_id BIGINT REFERENCES tickets (id), -- Puede ser nulo si no hay jerarquía de tickets
     created_by BIGINT NOT NULL REFERENCES users (id),
-    updated_by BIGINT REFERENCES users (id),
+    updated_by BIGINT NOT NULL REFERENCES users (id),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -75,12 +82,13 @@ CREATE TABLE IF NOT EXISTS comments (
     parent_comment_id BIGINT REFERENCES comments (id) -- Puede ser nulo si no es una respuesta
 );
 
--- Tabla de adjuntos
+-- Tabla de adjuntos con el nuevo campo 'is_image'
 CREATE TABLE IF NOT EXISTS attachments (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     file_path TEXT NOT NULL, -- Ruta del archivo
     uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    ticket_id BIGINT NOT NULL REFERENCES tickets (id)
+    ticket_id BIGINT NOT NULL REFERENCES tickets (id),
+    is_image BOOLEAN NOT NULL DEFAULT FALSE -- Nuevo campo booleano para indicar si es una imagen
 );
 
 -- Tabla de historial de estado de tickets
@@ -93,7 +101,7 @@ CREATE TABLE IF NOT EXISTS status_history (
     changed_by_user_id BIGINT NOT NULL REFERENCES users (id)
 );
 
--- Tabla de tareas (ahora con campo booleano 'is_completed')
+-- Tabla de tareas (con campo booleano 'is_completed')
 CREATE TABLE IF NOT EXISTS tasks (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     task_description TEXT NOT NULL,
@@ -179,19 +187,32 @@ INSERT INTO priority (priority_name)
 SELECT 'Baja'
 WHERE NOT EXISTS (SELECT 1 FROM priority WHERE priority_name = 'Baja');
 
--- Insertar dispositivos
-INSERT INTO devices (device_name)
-SELECT 'Laptop'
+-- Insertar tipos de dispositivos
+INSERT INTO device_types (type_name)
+SELECT 'Hardware'
+WHERE NOT EXISTS (SELECT 1 FROM device_types WHERE type_name = 'Hardware');
+
+INSERT INTO device_types (type_name)
+SELECT 'Periférico'
+WHERE NOT EXISTS (SELECT 1 FROM device_types WHERE type_name = 'Periférico');
+
+INSERT INTO device_types (type_name)
+SELECT 'Software'
+WHERE NOT EXISTS (SELECT 1 FROM device_types WHERE type_name = 'Software');
+
+-- Insertar dispositivos con los tipos de dispositivos
+INSERT INTO devices (device_name, device_type_id)
+SELECT 'Laptop', (SELECT id FROM device_types WHERE type_name = 'Hardware')
 WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Laptop');
 
-INSERT INTO devices (device_name)
-SELECT 'Teléfono'
+INSERT INTO devices (device_name, device_type_id)
+SELECT 'Teléfono', (SELECT id FROM device_types WHERE type_name = 'Hardware')
 WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Teléfono');
 
-INSERT INTO devices (device_name)
-SELECT 'Router'
+INSERT INTO devices (device_name, device_type_id)
+SELECT 'Router', (SELECT id FROM device_types WHERE type_name = 'Periférico')
 WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Router');
 
-INSERT INTO devices (device_name)
-SELECT 'Impresora'
+INSERT INTO devices (device_name, device_type_id)
+SELECT 'Impresora', (SELECT id FROM device_types WHERE type_name = 'Periférico')
 WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Impresora');

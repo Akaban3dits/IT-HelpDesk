@@ -1,6 +1,21 @@
 import PriorityService from '../services/priority.service.js';
 
 class PriorityController {
+
+    //* Funcionalidad en uso
+    async getAllPriorities(req, res) {
+        try {
+            //Extraer prioridades del servicio (todas)
+            const priorities = await PriorityService.getAllPriorities();
+            return res.status(200).json(priorities);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+
+
+    //!Funcionalidad sin uso
     async createPriority(req, res) {
         try {
             const priority = await PriorityService.createPriority(req.body);
@@ -10,14 +25,7 @@ class PriorityController {
         }
     }
 
-    async getAllPriorities(req, res) {
-        try {
-            const priorities = await PriorityService.getAllPriorities();
-            return res.status(200).json(priorities);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
-    }
+    
 
     async getPriorityById(req, res) {
         try {
@@ -54,6 +62,8 @@ class PriorityController {
             return res.status(500).json({ error: error.message });
         }
     }
+
+    
 }
 
 export default new PriorityController();

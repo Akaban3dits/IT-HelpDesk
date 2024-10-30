@@ -47,11 +47,11 @@ const StatusChangeModal = ({ onClose, statusChanges }) => {
 const getStatusColor = (status) => {
     switch (status) {
         case 'Abierto':
-            return 'bg-red-500 text-white';
+            return 'bg-green-500 text-white';
         case 'En Progreso':
             return 'bg-yellow-500 text-white';
         case 'Cerrado':
-            return 'bg-green-500 text-white';
+            return 'bg-red-500 text-white';
         default:
             return 'bg-gray-500 text-white';
     }

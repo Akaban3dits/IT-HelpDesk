@@ -1,4 +1,5 @@
 import UserService from '../services/user.service.js';
+import bcrypt from 'bcrypt';
 
 class UserController {
     async createUser(req, res) {
@@ -9,8 +10,14 @@ class UserController {
             return res.status(500).json({ error: error.message });
         }
     }
+    async updatePassword(friendly_code, newPassword) {
+        const result = await pool.query(
+            'UPDATE users SET password = $1 WHERE friendly_code = $2 RETURNING *',
+            [newPassword, friendly_code]
+        );
+        return result.rows[0];
+    }
 
-    // Controlador para obtener todos los usuarios
     async getAllUsers(req, res) {
         try {
             const {
@@ -23,11 +30,9 @@ class UserController {
                 sortDirection = 'asc',
                 role_id = ''
             } = req.query;
-    
-            // Convierte el valor de status a booleano, si es 'true' o 'false', o deja como undefined si no está presente
+
             const status = req.query.status === 'false' ? false : req.query.status === 'true' ? true : undefined;
-    
-            // Llama al servicio para obtener los usuarios con los parámetros recibidos
+
             const usersData = await UserService.getUsers(
                 parseInt(page),
                 parseInt(limit),
@@ -37,20 +42,15 @@ class UserController {
                 sortBy,
                 sortDirection,
                 status,
-                role_id // Asegúrate de pasar el filtro de role_id si está presente
+                role_id
             );
-    
-            // Devuelve la lista de usuarios obtenidos en la respuesta
+
             return res.status(200).json(usersData);
         } catch (error) {
             console.error('Error al obtener usuarios:', error.message);
             return res.status(500).json({ error: error.message });
         }
     }
-    
-    
-
-
 
     async getUserByFriendlyCode(req, res) {
         try {
@@ -78,7 +78,6 @@ class UserController {
 
     async deleteUser(req, res) {
         try {
-            // Llamamos al servicio de usuario para realizar el borrado lógico
             const deletedUser = await UserService.deleteUser(req.params.friendly_code);
             if (!deletedUser) {
                 return res.status(404).json({ message: 'User not found' });
@@ -89,7 +88,46 @@ class UserController {
             return res.status(500).json({ error: error.message });
         }
     }
+
+
+    async getAssignableUsers(req, res) {
+        try {
+            // Log para ver el valor de search recibido en la consulta
+            const { search = '' } = req.query;
+            const users = await UserService.getAssignableUsers(search);
     
+            return res.status(200).json(users);
+        } catch (error) {
+            // Log del error ocurrido durante la ejecución
+            console.error('Error al obtener usuarios asignables:', error.message);
+            return res.status(500).json({ error: error.message });
+        }
+    }
+    
+    
+
+    /**
+     * Cambia la contraseña de un usuario existente
+     */
+    async changePassword(req, res) {
+        const { friendly_code } = req.params;
+        const { newPassword } = req.body;
+
+        // Validación básica de los campos
+        if (!newPassword) {
+            return res.status(400).json({ message: 'La nueva contraseña es requerida.' });
+        }
+
+        try {
+            // Actualizar la contraseña del usuario
+            await UserService.updatePassword(friendly_code, newPassword);
+
+            return res.status(200).json({ message: 'Contraseña cambiada exitosamente.' });
+        } catch (error) {
+            console.error('Error al cambiar la contraseña:', error.message);
+            return res.status(500).json({ error: error.message });
+        }
+    }
 }
 
 export default new UserController();

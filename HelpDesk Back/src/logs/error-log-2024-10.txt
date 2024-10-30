@@ -1,0 +1,47 @@
+Error ID: 3729f852-d42e-456c-b1c5-ed6d787756e5
+Timestamp: 2024-10-02T17:04:03.128Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: File type not supported
+Stack: Error: File type not supported
+    at fileFilter (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/config/multerConfig.js:30:12)
+    at wrappedFileFilter (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\multer\index.js:44:7)
+    at Multipart.<anonymous> (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\multer\lib\make-middleware.js:107:7)
+    at Multipart.emit (node:events:514:28)
+    at HeaderParser.cb (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\busboy\lib\types\multipart.js:358:14)
+    at HeaderParser.push (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\busboy\lib\types\multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\busboy\lib\types\multipart.js:394:37)
+    at feed (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\streamsearch\lib\sbmh.js:248:10)
+    at SBMH.push (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\streamsearch\lib\sbmh.js:104:16)
+    at Multipart._write (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\busboy\lib\types\multipart.js:567:19)
+
+Error ID: f814dfe6-541f-4d50-8eb8-61e640402ff2
+Timestamp: 2024-10-30T21:17:51.442Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Invalid credentials
+Stack: Error: Invalid credentials
+    at AuthService.login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/auth.service.js:13:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:10:27)
+
+Error ID: 653132ea-5198-47cd-9d2b-db3f92980d2e
+Timestamp: 2024-10-30T21:17:53.575Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Invalid credentials
+Stack: Error: Invalid credentials
+    at AuthService.login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/auth.service.js:13:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:10:27)
+
+Error ID: 69b2570e-3828-4b83-a6c3-825309830f41
+Timestamp: 2024-10-30T21:17:55.633Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Invalid credentials
+Stack: Error: Invalid credentials
+    at AuthService.login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/auth.service.js:13:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:10:27)
+

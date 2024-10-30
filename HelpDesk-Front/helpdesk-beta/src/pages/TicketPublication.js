@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Printer, Tag, FileText, MessageSquare, CheckSquare, UserCheck, AlertCircle, Clock, ChevronDown, ChevronUp, History } from 'lucide-react';
+import { Calendar, Printer, Tag, FileText, MessageSquare, CheckSquare, UserCheck, AlertCircle, Clock, ChevronDown, ChevronUp, History, Copy, Check } from 'lucide-react';
 import ImageGallery from '../components/ui/ImageGallery';
 import Comment from '../components/ui/Comment';
 import TaskModal from '../components/ui/TaskModal';
 import StatusChangeModal from '../components/ui/StatusChangeModal';
 import { readToken } from '../api/auth/authService';
+import DocumentButton from './../components/ui/DocumentButton';
 
 const TicketPublication = () => {
     const [comment, setComment] = useState('');
@@ -12,13 +13,15 @@ const TicketPublication = () => {
     const [isStatusModalOpen, setIsStatusModalOpen] = useState(false); // Estado para manejar la visibilidad del modal de cambios de estado
     const [isContentVisible, setIsContentVisible] = useState(true); // Estado para manejar la visibilidad del contenido
     const [userRole, setUserRole] = useState(null); // Estado para almacenar el rol del usuario
-    const [statusChanges, setStatusChanges] = useState([]); // Estado para almacenar los cambios de estado del ticket
+    const [statusChanges, setStatusChanges] = useState([]);
+    const [isCopied, setIsCopied] = useState(false); // Estado para almacenar los cambios de estado del ticket
 
     const [ticketData, setTicketData] = useState({
+        code: 'TKT-00012183329', // Added ticket code
         createdBy: 'Juan Pérez',
         assignedUser: 'Carlos Rodríguez',
         status: 'En Progreso',
-        closeDate: null, // Fecha de cierre
+        closeDate: null,
     });
 
     // Leer el token para extraer el rol del usuario
@@ -28,7 +31,6 @@ const TicketPublication = () => {
                 const decodedToken = await readToken(); // Lee el token y decodifícalo
                 setUserRole(decodedToken?.role?.name || null); // Establece el rol del usuario
             } catch (error) {
-                console.error('Error al leer el token:', error);
                 setUserRole(null); // Si hay un error, establece el rol como null
             }
         };
@@ -122,8 +124,14 @@ const TicketPublication = () => {
     };
 
     const images = [
-        { id: 1, src: "https://i.pinimg.com/736x/de/a3/b6/dea3b662624acda5adbbf4489461ece6.jpg", alt: "Evidencia 1" },
-        { id: 2, src: "https://i.pinimg.com/736x/de/a3/b6/dea3b662624acda5adbbf4489461ece6.jpg", alt: "Evidencia 2" },
+        { id: 1, src: "https://filestore.community.support.microsoft.com/api/images/0ffcef30-1c1f-4c8e-992a-871417ea935c?upload=true", alt: "Evidencia 1" },
+        { id: 2, src: "https://filestore.community.support.microsoft.com/api/images/0ffcef30-1c1f-4c8e-992a-871417ea935c?upload=true", alt: "Evidencia 2" },
+    ];
+
+    const documents = [
+        { name: "Manual de usuario.pdf", type: "pdf", previewUrl: "/path/to/pdf-preview.jpg" },
+        { name: "Historial de mantenimiento.docx", type: "docx", previewUrl: "/path/to/docx-preview.jpg" },
+        { name: "Imagen del problema.jpg", type: "jpg", previewUrl: "/path/to/image-preview.jpg" },
     ];
 
     const comments = [
@@ -143,8 +151,41 @@ const TicketPublication = () => {
 
     const isAdmin = userRole === 'Administrador' || userRole === 'Superadministrador' || userRole === 'Observador';
 
+
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(ticketData.code);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
     return (
         <div className="bg-gray-100 p-4 rounded-lg shadow-lg w-full max-w-full overflow-x-hidden">
+
+            {/* Responsive Ticket Code with Copy Button */}
+            <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-t-lg font-semibold mb-4 flex flex-col sm:flex-row justify-between items-center">
+                <div className="mb-2 sm:mb-0">Ticket: {ticketData.code}</div>
+                <button
+                    onClick={copyToClipboard}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition-colors flex items-center"
+                >
+                    {isCopied ? (
+                        <>
+                            <Check className="h-4 w-4 mr-1" />
+                            Copiado
+                        </>
+                    ) : (
+                        <>
+                            <Copy className="h-4 w-4 mr-1" />
+                            Copiar
+                        </>
+                    )}
+                </button>
+            </div>
+
             {/* Botones Ver Tareas y Ver Cambios de Estado */}
             {isAdmin && (
                 <div className="my-4 flex justify-end space-x-4">
@@ -233,14 +274,18 @@ const TicketPublication = () => {
 
                     {/* Documents */}
                     <div className="mb-6">
-                        <h3 className="text-lg font-semibold text-gray-700 flex items-center space-x-2 mb-2">
+                        <h3 className="text-lg font-semibold text-gray-700 flex items-center space-x-2 mb-4">
                             <FileText className="h-5 w-5 text-blue-500 flex-shrink-0" />
                             <span>Documentos:</span>
                         </h3>
-                        <ul className="list-disc list-inside text-gray-600">
-                            <li>Manual de usuario.pdf</li>
-                            <li>Historial de mantenimiento.docx</li>
-                        </ul>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                            {documents.map((doc, index) => (
+                                <DocumentButton
+                                    key={index}
+                                    filename={doc.name}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}
@@ -271,7 +316,6 @@ const TicketPublication = () => {
                     <div className="flex justify-end mt-2">
                         <button
                             onClick={() => {
-                                console.log('Comentario enviado:', comment);
                                 setComment('');
                             }}
                             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"

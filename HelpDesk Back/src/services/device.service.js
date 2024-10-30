@@ -1,6 +1,20 @@
 import DeviceModel from '../models/device.model.js';
 
 class DeviceService {
+
+    //*Servicio en uso
+    async getDevices(search) {
+        try {
+            //Envio del parametro para que se haga la busqueda en el script
+            const devices = await DeviceModel.getDevices(search);
+            return devices;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //!Servicios sin uso
+
     async createDevice(deviceData) {
         return await DeviceModel.create(deviceData);
     }
@@ -20,6 +34,8 @@ class DeviceService {
     async deleteDevice(deviceId) {
         return await DeviceModel.delete(deviceId);
     }
+
+    
 }
 
 export default new DeviceService();

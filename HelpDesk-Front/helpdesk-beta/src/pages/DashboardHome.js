@@ -31,10 +31,8 @@ const DashboardHome = ({ isSidebarOpen }) => {
         const fetchUserRole = async () => {
             try {
                 const decodedToken = await readToken(); // Asegúrate de que `readToken` sea una función async
-                console.log('Decoded Token:', decodedToken); // Debugging: Ver el token decodificado
                 setUserRole(decodedToken?.role?.name || null); // Establece el rol si existe
             } catch (error) {
-                console.error('Error leyendo el token:', error);
                 setUserRole(null);
             }
         };

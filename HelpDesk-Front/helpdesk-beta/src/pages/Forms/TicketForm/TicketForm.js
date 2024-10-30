@@ -1,225 +1,367 @@
-// Importaciones de React
 import React, { useState, useEffect } from 'react';
-// Importación para la navegación entre rutas
 import { useNavigate } from 'react-router-dom';
-
-// Importaciones de funciones de la API
-import { fetchUserNames } from '../../../api/users/userService'; 
-import { fetchDevices } from '../../../api/devices/device'; 
+import { fetchUserNames } from '../../../api/users/userService';
+import { fetchDevices } from '../../../api/devices/deviceService';
 import { fetchDepartments } from '../../../api/departments/departmentService';
-import { fetchCategories } from '../../../api/categories/category'; 
-import { fetchStatuses } from '../../../api/statuses/status'; 
-import { fetchPriorities } from '../../../api/priorities/priority'; 
-import { createTicket } from '../../../api/tickets/ticketService'; 
-
-// Importaciones de componentes personalizados de entradas de datos
+import { fetchPriorities } from '../../../api/priorities/priorityService';
+import { createTicket } from '../../../api/tickets/ticketService'; // Importar la función para crear ticket
 import TextInput from '../../../components/Inputs/TextInput';
 import TextAreaInput from '../../../components/Inputs/TextAreaInput';
 import SearchableSelect from '../../../components/Inputs/SearchableSelect';
 import FileUploadArea from '../../../components/Inputs/FileUploadData';
-
-// Importación del componente de alertas
+import ProgressBar from '../../../components/ui/ProgressBar';
 import Alert from '../../../components/ui/Alert';
+import SelectInput from './../../../components/Inputs/SelectInput';
 
-// Componente principal para la creación de tickets
 const CreateTicketForm = () => {
-    // Hook para manejar la navegación programática a otras rutas
     const navigate = useNavigate();
+    const [currentStep, setCurrentStep] = useState(0);
+    const steps = ['Información básica', 'Detalles', 'Asignación', 'Archivos adjuntos'];
 
-    // Estado para almacenar los datos del formulario
     const [formData, setFormData] = useState({
-        title: '',         // Título del ticket
-        description: '',   // Descripción del ticket
-        status_id: '',     // ID del estado seleccionado
-        priority_id: '',   // ID de la prioridad seleccionada
-        category_id: '',   // ID de la categoría seleccionada
-        device_id: '',     // ID del dispositivo seleccionado
-        assigned_user_id: '', // ID del usuario asignado
-        department_id: '', // ID del departamento seleccionado
-        attachments: []    // Archivos adjuntos subidos
+        title: '',
+        description: '',
+        status_id: '4',
+        priority_id: '',
+        device_id: '',
+        assigned_user_id: '',
+        department_id: '',
+        attachments: []
     });
 
-    // Estados para manejar las búsquedas y los datos cargados para los selectores
-    const [userSearch, setUserSearch] = useState(''); 
-    const [users, setUsers] = useState([]); 
-    const [deviceSearch, setDeviceSearch] = useState(''); 
-    const [devices, setDevices] = useState([]); 
-    const [departmentSearch, setDepartmentSearch] = useState(''); 
-    const [departments, setDepartments] = useState([]); 
-    const [categorySearch, setCategorySearch] = useState(''); 
-    const [categories, setCategories] = useState([]); 
-    const [statusSearch, setStatusSearch] = useState(''); 
-    const [statuses, setStatuses] = useState([]); 
-    const [prioritySearch, setPrioritySearch] = useState(''); 
-    const [priorities, setPriorities] = useState([]); 
+    const [userSearch, setUserSearch] = useState('');
+    const [deviceSearch, setDeviceSearch] = useState('');
+    const [departmentSearch, setDepartmentSearch] = useState('');
+    const [priorities, setPriorities] = useState([]);
+    const [errors, setErrors] = useState({});
+    const [alertMessage, setAlertMessage] = useState(null);
+    const [alertType, setAlertType] = useState('info');
 
-    // Estado para manejar los errores del formulario
-    const [errors, setErrors] = useState({});            // Objeto de errores del formulario
+    const fetchDepartmentOptions = async (search) => {
+        try {
+            const result = await fetchDepartments(search);
+            return result.map(dept => ({
+                value: dept.id,
+                label: dept.department_name,
+            }));
+        } catch (error) {
+            console.error('Error al obtener opciones de departamentos:', error);
+            return [];
+        }
+    };
 
-    // Estado para manejar el mensaje de alerta y el tipo de alerta (éxito o error)
-    const [alertMessage, setAlertMessage] = useState(null); // Mensaje de alerta
-    const [alertType, setAlertType] = useState('info');     // Tipo de alerta ('info', 'success', 'error')
+    const fetchUserOptions = async (search) => {
+        try {
+            const result = await fetchUserNames(search);
+            return result.map(user => ({
+                value: user.id,
+                label: `${user.first_name} ${user.last_name}`,
+            }));
+        } catch (error) {
+            console.error('Error al obtener opciones de usuarios:', error);
+            return [];
+        }
+    };
 
-    // Función para validar el formulario antes de enviarlo
+    const fetchDeviceOptions = async (search) => {
+        try {
+            const result = await fetchDevices(search);
+            return result.map(device => ({
+                value: device.id,
+                label: device.device_name,
+            }));
+        } catch (error) {
+            console.error('Error al obtener opciones de dispositivos:', error);
+            return [];
+        }
+    };
+
+    useEffect(() => {
+        const loadPriorities = async () => {
+            try {
+                const prioritiesResult = await fetchPriorities();
+                setPriorities(prioritiesResult);
+            } catch (error) {
+                console.error('Error al obtener prioridades:', error);
+            }
+        };
+
+        loadPriorities();
+    }, []);
+
     const validateForm = () => {
-        const newErrors = {}; // Inicializa un objeto de errores
+        const newErrors = {};
+        if (currentStep === 0) {
+            if (!formData.title) {
+                newErrors.title = 'El título es obligatorio.';
+            }
+            if (!formData.description) {
+                newErrors.description = 'La descripción es obligatoria.';
+            }
+        }
+        if (currentStep === 1) {
+            if (!formData.department_id) {
+                newErrors.department_id = 'Debe seleccionar un departamento.';
+            }
+            if (!formData.priority_id) {
+                newErrors.priority_id = 'Debe seleccionar una prioridad.';
+            }
+        }
+        if (currentStep === 2) {
+            if (!formData.assigned_user_id) {
+                newErrors.assigned_user_id = 'Debe asignar un usuario.';
+            }
+            if (!formData.device_id) {
+                newErrors.device_id = 'Debe seleccionar un dispositivo.';
+            }
+        }
 
-        // Validaciones específicas para campos obligatorios
-        if (!formData.title) {
-            newErrors.title = 'El título es obligatorio.'; // Validación para el título
-        }
-        if (!formData.description) {
-            newErrors.description = 'La descripción es obligatoria.'; // Validación para la descripción
-        }
-        if (!formData.assigned_user_id) {
-            newErrors.assigned_user_id = 'Debe asignar un usuario.'; // Validación para el usuario asignado
-        }
-
-        // Establecer errores en el estado
         setErrors(newErrors);
-
-        // Retorna true si no hay errores, de lo contrario false
         return Object.keys(newErrors).length === 0;
     };
 
-    // Función para manejar el envío del formulario
+    const validateFinalStep = () => {
+        const newErrors = {};
+        if (formData.attachments.length === 0) {
+            newErrors.attachments = 'Debe subir al menos un archivo.';
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevenir comportamiento predeterminado del formulario
-        if (validateForm()) { // Si la validación es exitosa
+        e.preventDefault();
+    
+        if (validateFinalStep()) {
             try {
-                await createTicket(formData); // Llamada a la API para crear el ticket
-                setAlertType('success');      // Configura el tipo de alerta como éxito
-                setAlertMessage('Ticket creado con éxito'); // Mensaje de éxito
+                // Preparar los datos para enviar
+                const formDataToSend = new FormData();
+                formDataToSend.append('title', formData.title);
+                formDataToSend.append('description', formData.description);
+                formDataToSend.append('status_id', formData.status_id);
+                formDataToSend.append('priority_id', formData.priority_id);
+                formDataToSend.append('device_id', formData.device_id);
+                formDataToSend.append('assigned_user_id', formData.assigned_user_id);
+                formDataToSend.append('department_id', formData.department_id);
+    
+                // Adjuntar archivos al FormData
+                if (formData.attachments && formData.attachments.length > 0) {
+                    formData.attachments.forEach((file) => {
+                        formDataToSend.append('attachments', file);
+                    });
+                }
+    
+                // Log para verificar el contenido de FormData
+                for (let [key, value] of formDataToSend.entries()) {
+                    if (value instanceof File) {
+                        console.log(`${key}: ${value.name}`);
+                    } else {
+                        console.log(`${key}: ${value}`);
+                    }
+                }
+    
+                // Enviar la solicitud al backend
+                await createTicket(formDataToSend);
+    
+                setAlertType('success');
+                setAlertMessage('Ticket creado con éxito');
+    
+                setTimeout(() => {
+                    navigate('/admin/dashboard');
+                    // Recargar la página
+                    window.location.reload();
+                }, 2000);
             } catch (error) {
-                console.error('Error creando el ticket:', error); // Muestra el error en la consola
-                setAlertType('error');        // Configura el tipo de alerta como error
-                setAlertMessage('Error al crear el ticket'); // Mensaje de error
+                console.error('Error al crear el ticket:', error); // Log de error
+                if (error.response) {
+                    // El servidor respondió con un estado distinto de 2xx
+                    console.error('Response data:', error.response.data);
+                    console.error('Response status:', error.response.status);
+                    console.error('Response headers:', error.response.headers);
+                } else if (error.request) {
+                    // La solicitud se realizó pero no se recibió respuesta
+                    console.error('Request data:', error.request);
+                } else {
+                    // Otro tipo de error
+                    console.error('Error', error.message);
+                }
+                setAlertType('error');
+                setAlertMessage('Error al crear el ticket');
             }
         }
     };
+    
 
-    // Función para manejar los cambios en los campos de texto del formulario
     const handleChange = (e) => {
-        const { name, value } = e.target; // Extrae el nombre y valor del input
-        setFormData({ ...formData, [name]: value }); // Actualiza el estado con el nuevo valor
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
-    // Función para manejar el cambio de archivos adjuntos
-    const handleFileChange = (files) => {
-        setFormData({ ...formData, attachments: files }); // Actualiza el estado con los archivos seleccionados
-    };
-
-    // Función para manejar el cambio de los selectores de búsqueda
     const handleSelectChange = (name, value) => {
-        setFormData({ ...formData, [name]: value }); // Actualiza el estado con el valor seleccionado
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleFileChange = (files) => {
+        setFormData({ ...formData, attachments: files });
+    };
+
+    const nextStep = () => {
+        if (currentStep < steps.length - 1 && validateForm()) {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+
+    const prevStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+
+    const handleNavigateToDashboard = () => {
+        navigate('/admin/dashboard');
+    };
+
+    const renderStep = () => {
+        switch (currentStep) {
+            case 0:
+                return (
+                    <div className="space-y-4">
+                        <TextInput
+                            label="Título"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            required={true}
+                            error={errors.title}
+                        />
+                        <TextAreaInput
+                            label="Descripción"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            required={true}
+                            error={errors.description}
+                        />
+                    </div>
+                );
+            case 1:
+                return (
+                    <div className="space-y-4">
+                        <SearchableSelect
+                            key={`department-${formData.department_id}`}
+                            label="Departamento"
+                            searchValue={departmentSearch}
+                            onSearchChange={setDepartmentSearch}
+                            fetchOptions={fetchDepartmentOptions}
+                            selectedValue={formData.department_id}
+                            onSelectChange={(value) => handleSelectChange('department_id', value)}
+                            error={errors.department_id}
+                        />
+
+                        <SelectInput
+                            label="Prioridad"
+                            name="priority_id"
+                            value={formData.priority_id}
+                            onChange={(e) => handleSelectChange(e.target.name, e.target.value)}
+                            options={priorities.map(priority => ({ label: priority.priority_name, value: priority.id }))}
+                            required={true}
+                            error={errors.priority_id}
+                        />
+                    </div>
+                );
+            case 2:
+                return (
+                    <div className="space-y-4">
+                        <SearchableSelect
+                            key={`user-${formData.assigned_user_id}`}
+                            label="Usuario Asignado"
+                            searchValue={userSearch}
+                            onSearchChange={setUserSearch}
+                            fetchOptions={fetchUserOptions}
+                            selectedValue={formData.assigned_user_id}
+                            onSelectChange={(value) => handleSelectChange('assigned_user_id', value)}
+                            error={errors.assigned_user_id}
+                        />
+
+                        <SearchableSelect
+                            label="Dispositivo"
+                            searchValue={deviceSearch}
+                            onSearchChange={setDeviceSearch}
+                            fetchOptions={fetchDeviceOptions}
+                            selectedValue={formData.device_id}
+                            onSelectChange={(value) => handleSelectChange('device_id', value)}
+                            error={errors.device_id}
+                        />
+                    </div>
+                );
+            case 3:
+                return (
+                    <div>
+                        <FileUploadArea onFileChange={handleFileChange} maxFiles={5} />
+                        {errors.attachments && <p className="text-red-500">{errors.attachments}</p>}
+                    </div>
+                );
+            default:
+                return null;
+        }
     };
 
     return (
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            {/* Encabezado de la página */}
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-semibold text-gray-900">Crear Ticket</h2>
-            </div>
-
-            {/* Muestra el mensaje de alerta si existe */}
-            {alertMessage && (
-                <Alert
-                    type={alertType}      // Tipo de alerta
-                    message={alertMessage} // Mensaje de la alerta
-                    onClose={() => setAlertMessage(null)} // Función para cerrar la alerta
-                />
-            )}
-
-            {/* Formulario principal */}
-            <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-8">
-                    {/* Input para el título */}
-                    <TextInput
-                        label="Título"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        required={true}
-                        error={errors.title}
-                    />
-                    {/* Selectores para estado, prioridad, usuario, etc. */}
-                    <SearchableSelect
-                        label="Estado"
-                        searchValue={statusSearch}
-                        onSearchChange={(e) => setStatusSearch(e.target.value)}
-                        options={statuses.map((status) => ({ label: status.status_name, value: status.id }))}
-                        selectedValue={formData.status_id}
-                        onSelectChange={(value) => handleSelectChange('status_id', value)}
-                    />
-                    <SearchableSelect
-                        label="Prioridad"
-                        searchValue={prioritySearch}
-                        onSearchChange={(e) => setPrioritySearch(e.target.value)}
-                        options={priorities.map((priority) => ({ label: priority.priority_name, value: priority.id }))}
-                        selectedValue={formData.priority_id}
-                        onSelectChange={(value) => handleSelectChange('priority_id', value)}
-                    />
-                    <SearchableSelect
-                        label="Usuario"
-                        searchValue={userSearch}
-                        onSearchChange={(e) => setUserSearch(e.target.value)}
-                        options={users.map((user) => ({ label: `${user.first_name} ${user.last_name}`, value: user.id }))}
-                        selectedValue={formData.assigned_user_id}
-                        onSelectChange={(value) => handleSelectChange('assigned_user_id', value)}
-                    />
-                    <SearchableSelect
-                        label="Departamento"
-                        searchValue={departmentSearch}
-                        onSearchChange={(e) => setDepartmentSearch(e.target.value)}
-                        options={departments.map((dept) => ({ label: dept.department_name, value: dept.id }))}
-                        selectedValue={formData.department_id}
-                        onSelectChange={(value) => handleSelectChange('department_id', value)}
-                    />
-                    <SearchableSelect
-                        label="Categoría"
-                        searchValue={categorySearch}
-                        onSearchChange={(e) => setCategorySearch(e.target.value)}
-                        options={categories.map((cat) => ({ label: cat.category_name, value: cat.id }))}
-                        selectedValue={formData.category_id}
-                        onSelectChange={(value) => handleSelectChange('category_id', value)}
-                    />
-                    <SearchableSelect
-                        label="Dispositivo"
-                        searchValue={deviceSearch}
-                        onSearchChange={(e) => setDeviceSearch(e.target.value)}
-                        options={devices.map((device) => ({ label: device.device_name, value: device.id }))}
-                        selectedValue={formData.device_id}
-                        onSelectChange={(value) => handleSelectChange('device_id', value)}
-                    />
-                </div>
-
-                {/* Input para la descripción */}
-                <div className="mt-6">
-                    <TextAreaInput
-                        label="Descripción"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        required={true}
-                        error={errors.description}
-                    />
-                </div>
-
-                {/* Área para cargar archivos adjuntos */}
-                <div className="mt-6">
-                    <FileUploadArea onFileChange={handleFileChange} maxFiles={5} />
-                </div>
-
-                {/* Botón de guardar */}
-                <div className="flex justify-end mt-6">
+        <div className="w-full px-4 py-8 bg-gray-100">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-2xl font-bold text-gray-900">Crear Nuevo Ticket</h1>
                     <button
-                        type="submit"
-                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        type="button"
+                        onClick={handleNavigateToDashboard}
+                        className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Guardar
+                        Ir al Dashboard
                     </button>
                 </div>
-            </form>
+
+                {alertMessage && (
+                    <Alert type={alertType} message={alertMessage} onClose={() => setAlertMessage(null)} />
+                )}
+
+                <div className="mb-8">
+                    <ProgressBar steps={steps} currentStep={currentStep} />
+                </div>
+
+                <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg overflow-visible">
+                    <div className="p-6 space-y-6">
+                        {renderStep()}
+                    </div>
+
+                    <div className="px-6 py-4 bg-gray-50 flex justify-end items-center gap-4">
+                        {currentStep > 0 && (
+                            <button
+                                type="button"
+                                onClick={prevStep}
+                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Anterior
+                            </button>
+                        )}
+                        {currentStep < steps.length - 1 ? (
+                            <button
+                                type="button"
+                                onClick={nextStep}
+                                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Siguiente
+                            </button>
+                        ) : (
+                            <button
+                                type="submit"
+                                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Crear Ticket
+                            </button>
+                        )}
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

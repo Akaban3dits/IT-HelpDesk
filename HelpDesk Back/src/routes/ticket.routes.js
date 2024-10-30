@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import TicketController from '../controllers/ticket.controller.js';
 import authenticateToken from '../middlewares/auth.js';
+import upload from '../config/multerConfig.js';
 
 const router = Router();
 
@@ -91,7 +92,12 @@ router.get('/tickets/:ticket_id', authenticateToken, TicketController.getTicketB
  *       500:
  *         description: Error del servidor
  */
-router.post('/tickets', authenticateToken, TicketController.createTicket);
+router.post('/tickets', authenticateToken, upload.array('attachments', 5), (req, res, next) => {
+    // Log para verificar los datos que llegan al servidor
+
+    // Llamar al controlador para continuar con la lógica de creación del ticket
+    TicketController.createTicket(req, res, next);
+});
 
 /**
  * @swagger

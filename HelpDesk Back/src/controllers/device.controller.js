@@ -1,6 +1,23 @@
 import DeviceService from '../services/device.service.js';
 
 class DeviceController {
+    //Funcionalidad comprobada y correcta
+    async getDevices(req, res) {
+        try {
+            //Buscar vacio en caso de que search este vacio
+            const { search = '' } = req.query;
+            //Añadir el parametro de busqueda al Servicio
+            const devices = await DeviceService.getDevices(search);
+            return res.status(200).json(devices);
+        } catch (error) {
+            console.error('Error al obtener dispositivos:', error.message);
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    //Funcionalidades sin uso
+
+
     async createDevice(req, res) {
         try {
             const device = await DeviceService.createDevice(req.body);
@@ -54,6 +71,8 @@ class DeviceController {
             return res.status(500).json({ error: error.message });
         }
     }
+
+    
 }
 
 export default new DeviceController();

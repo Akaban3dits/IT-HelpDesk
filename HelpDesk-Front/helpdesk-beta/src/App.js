@@ -12,24 +12,29 @@ import DashboardUser from './pages/Dashboard_User';
 import DashboardHome from './pages/DashboardHome';
 import CreateTicketForm from './pages/Forms/TicketForm/TicketForm';
 import TicketPublication from './pages/TicketPublication';
+import RegisterForm from './pages/Forms/UserForm/RegisterForm';
+
 
 const App = () => {
   return (
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<CreateUserForm />} />
-        <Route element={<PrivateRoute allowedRoles={['Usuario']} />}>
+        <Route path="/register" element={<RegisterForm />} />
+        <Route element={<PrivateRoute allowedRoles={['Usuario', 'Administrador', 'Superadministrador', 'Observador']} />}>
           <Route path="/home" element={<Home />} />
         </Route>
-        <Route element={<PrivateRoute allowedRoles={['Administrador', 'Superadministrador', 'Observador']} />}>
-          <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={<PrivateRoute allowedRoles={['Administrador', 'Superadministrador', 'Observador']} />}>
+          <Route element={<AdminLayout />}>
             <Route path="dashboard" element={<DashboardHome />} />
             <Route path="create-ticket" element={<CreateTicketForm />} />
-            <Route path="users" element={<DashboardUser/>} />
-            <Route path="create-user" element={<CreateUserForm />} />
+            <Route path="users" element={<DashboardUser />} />
             <Route path="reports" element={<TicketPublication />} />
-            <Route path="edit-user/:friendlyCode" element={<UpdateUserForm />} /> {/* Ruta para la edición de usuarios */}
+
+            <Route element={<PrivateRoute allowedRoles={['Administrador', 'Superadministrador']} />}>
+              <Route path="create-user" element={<CreateUserForm />} />
+              <Route path="edit-user/:friendlyCode" element={<UpdateUserForm />} />
+            </Route>
           </Route>
         </Route>
         <Route path="/unauthorized" element={<Unauthorized />} />
@@ -37,6 +42,5 @@ const App = () => {
     </AuthProvider>
   );
 };
-
 
 export default App;

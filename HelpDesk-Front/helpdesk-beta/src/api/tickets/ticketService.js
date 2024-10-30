@@ -1,23 +1,11 @@
-import apiClient from '../interceptors/apiClient'; // Ajusta la ruta según tu estructura
+import apiClientMultipart from './../interceptors/apiClientMultipart';
 
-// Función para obtener todos los tickets
-export const fetchTickets = async () => {
-    try {
-        const response = await apiClient.get('/tickets');
-        return response.data;
-    } catch (error) {
-        console.error('Error al obtener los tickets:', error);
-        throw error;
-    }
-};
-
-// Función para crear un nuevo ticket
 export const createTicket = async (ticketData) => {
     try {
-        const response = await apiClient.post('/tickets', ticketData);
+        const response = await apiClientMultipart.post('/tickets', ticketData);
         return response.data;
     } catch (error) {
-        console.error('Error al crear el ticket:', error);
-        throw error;
+        const errorMessage = error.response?.data?.error || 'Error al crear el ticket';
+        throw new Error(errorMessage);
     }
 };

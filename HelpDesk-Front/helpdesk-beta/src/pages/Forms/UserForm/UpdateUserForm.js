@@ -9,7 +9,7 @@ import Alert from '../../../components/ui/Alert';
 import SearchableSelect from '../../../components/Inputs/SearchableSelect';
 
 const UpdateUserForm = () => {
-    const { friendlyCode } = useParams(); // Obtener el friendlyCode de la URL
+    const { friendlyCode } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         first_name: '',
@@ -18,7 +18,7 @@ const UpdateUserForm = () => {
         phone_number: '',
         role_id: '',
         department_id: '',
-        status: true,
+        status: true, // Inicializar el estado
         company: ''
     });
 
@@ -32,20 +32,16 @@ const UpdateUserForm = () => {
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertType, setAlertType] = useState('info');
 
-    // RegExp para validaciones
-    const nameRegEx = /^[a-zA-ZÀ-ÿ\s]+$/;  // Solo letras y espacios, incluyendo acentos
-    const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Correo válido
-    const phoneRegEx = /^[0-9]{10,15}$/;  // Teléfono de 10 a 15 dígitos
+    const nameRegEx = /^[a-zA-ZÀ-ÿ\s]+$/;
+    const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegEx = /^[0-9]{10,15}$/;
 
-    // Cargar los datos del usuario cuando el componente se monte
     useEffect(() => {
         const loadUserData = async () => {
             try {
                 const user = await getUserByFriendlyCode(friendlyCode);
-                console.log('User fetched:', user); // Para verificar los datos cargados
-                setFormData(user); // Cargar los datos del usuario en el formulario
+                setFormData(user);
             } catch (error) {
-                console.error('Error al cargar los datos del usuario:', error);
             } finally {
                 setLoadingUser(false);
             }
@@ -54,16 +50,13 @@ const UpdateUserForm = () => {
         loadUserData();
     }, [friendlyCode]);
 
-    // Cargar departamentos al escribir en el campo de búsqueda
     useEffect(() => {
         const loadDepartments = async () => {
             setLoadingDepartments(true);
             try {
                 const result = await fetchDepartments(departmentSearch || '');
-                console.log('Departments fetched:', result); // Verificación de datos cargados
                 setDepartments(result);
             } catch (error) {
-                console.error('Error al cargar departamentos:', error);
             } finally {
                 setLoadingDepartments(false);
             }
@@ -72,16 +65,13 @@ const UpdateUserForm = () => {
         loadDepartments();
     }, [departmentSearch]);
 
-    // Cargar roles
     useEffect(() => {
         const loadRoles = async () => {
             setLoadingRoles(true);
             try {
                 const result = await fetchRoles();
-                console.log('Roles fetched:', result); // Verificación de datos cargados
                 setRoles(result);
             } catch (error) {
-                console.error('Error al cargar roles:', error);
             } finally {
                 setLoadingRoles(false);
             }
@@ -133,7 +123,6 @@ const UpdateUserForm = () => {
                 setAlertType('success');
                 setAlertMessage('Usuario actualizado con éxito');
             } catch (error) {
-                console.error('Error al actualizar el usuario:', error);
                 setAlertType('error');
                 setAlertMessage('Error al actualizar el usuario');
             }
@@ -148,13 +137,11 @@ const UpdateUserForm = () => {
     const fetchDepartmentsData = async (search) => {
         try {
             const result = await fetchDepartments(search);
-            console.log('SearchableSelect fetched departments:', result);
             return result.map(dept => ({
                 value: dept.id,
                 label: dept.department_name,
             }));
         } catch (error) {
-            console.error('Error fetching departments:', error);
             return [];
         }
     };
@@ -249,6 +236,18 @@ const UpdateUserForm = () => {
                         ]}
                         required={true}
                         error={errors.company}
+                    />
+                    <SelectInput
+                        label="Estado"
+                        name="status"
+                        value={formData.status ? 'true' : 'false'}
+                        onChange={(e) => setFormData({ ...formData, status: e.target.value === 'true' })}
+                        options={[
+                            { label: 'Activo', value: 'true' },
+                            { label: 'Inactivo', value: 'false' }
+                        ]}
+                        required={true}
+                        error={errors.status}
                     />
                 </div>
 

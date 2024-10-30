@@ -90,6 +90,9 @@ const router = Router();
 
 router.get('/users', authenticateToken, UserController.getAllUsers);
 
+
+router.get('/users-names/search', authenticateToken, UserController.getAssignableUsers);
+
 /**
  * @swagger
  * /users/{friendly_code}:
@@ -192,5 +195,47 @@ router.put('/users/:friendly_code', authenticateToken, UserController.updateUser
  *         description: Error del servidor
  */
 router.delete('/users/:friendly_code', authenticateToken, UserController.deleteUser);
+
+/**
+ * @swagger
+ * /users/{friendly_code}/change-password:
+ *   put:
+ *     summary: Cambia la contraseña de un usuario existente
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: friendly_code
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Código amigable del usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               newPassword:
+ *                 type: string
+ *                 description: La nueva contraseña del usuario
+ *               confirmPassword:
+ *                 type: string
+ *                 description: Confirmación de la nueva contraseña
+ *             required:
+ *               - newPassword
+ *               - confirmPassword
+ *     responses:
+ *       200:
+ *         description: Contraseña cambiada exitosamente
+ *       400:
+ *         description: Datos de entrada inválidos
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error del servidor
+ */
+router.put('/users/:friendly_code/change-password', authenticateToken, UserController.changePassword);
+
 
 export default router;

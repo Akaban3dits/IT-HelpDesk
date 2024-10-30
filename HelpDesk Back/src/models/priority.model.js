@@ -1,11 +1,13 @@
 import pool from '../config/db.js';
 
 class Priority {
+
+    //*Funcion en uso
     async findAll() {
         const result = await pool.query('SELECT * FROM priority');
         return result.rows;
     }
-
+    //! Funciones sin uso
     async findById(priority_id) {
         const result = await pool.query('SELECT * FROM priority WHERE priority_id = $1', [priority_id]);
         return result.rows[0];
@@ -25,6 +27,9 @@ class Priority {
         const result = await pool.query('DELETE FROM priority WHERE priority_id = $1 RETURNING *', [priority_id]);
         return result.rows[0];
     }
+
+
+    
 }
 
 export default new Priority();

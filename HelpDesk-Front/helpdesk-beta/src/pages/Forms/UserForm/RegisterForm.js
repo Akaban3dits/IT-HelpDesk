@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchDepartments } from '../../../api/departments/departmentService';
-import { fetchRoles } from '../../../api/roles/rolesService';
 import { createUser } from '../../../api/users/userService';
 import TextInput from '../../../components/Inputs/TextInput';
 import SelectInput from '../../../components/Inputs/SelectInput';
 import Alert from '../../../components/ui/Alert';
 import SearchableSelect from '../../../components/Inputs/SearchableSelect';
-import { jwtDecode } from 'jwt-decode';
 
-const CreateUserForm = () => {
+const RegisterForm = () => {
     const navigate = useNavigate();
-    const [userRole, setUserRole] = useState(null);
 
     const [formData, setFormData] = useState({
         first_name: '',
@@ -19,7 +16,7 @@ const CreateUserForm = () => {
         email: '',
         password: '',
         phone_number: '',
-        role_id: '',
+        role_id: '4', // Asumiendo que '3' es el ID para el rol de Usuario
         department_id: '',
         status: true,
         company: ''
@@ -27,54 +24,10 @@ const CreateUserForm = () => {
 
     const [departmentSearch, setDepartmentSearch] = useState('');
     const [departments, setDepartments] = useState([]);
-    const [roles, setRoles] = useState([]);
     const [loadingDepartments, setLoadingDepartments] = useState(false);
-    const [loadingRoles, setLoadingRoles] = useState(false);
     const [errors, setErrors] = useState({});
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertType, setAlertType] = useState('info');
-
-    // Verificar si hay un token almacenado y redirigir en base al rol
-    useEffect(() => {
-        const token = sessionStorage.getItem('authToken');
-        if (!token) {
-            navigate('/', { replace: true });
-            return;
-        }
-
-        try {
-            const decodedToken = jwtDecode(token);
-            if (decodedToken.role && decodedToken.role.name) {
-                setUserRole(decodedToken.role.name);
-                
-                // Verificar si el usuario tiene permiso para acceder a esta página
-                if (decodedToken.role.name !== 'Administrador' && decodedToken.role.name !== 'Superadministrador') {
-                    navigate('/unauthorized', { replace: true });
-                }
-            } else {
-                // Si no hay rol en el token, redirigir a la página de inicio de sesión
-                navigate('/', { replace: true });
-            }
-        } catch (error) {
-            navigate('/', { replace: true });
-        }
-    }, [navigate]);
-
-    
-    useEffect(() => {
-        const loadRoles = async () => {
-            setLoadingRoles(true);
-            try {
-                const rolesResult = await fetchRoles();
-                setRoles(rolesResult);
-            } catch (error) {
-            } finally {
-                setLoadingRoles(false);
-            }
-        };
-
-        loadRoles();
-    }, []);
 
     useEffect(() => {
         const fetchDepartmentsData = async () => {
@@ -91,11 +44,10 @@ const CreateUserForm = () => {
         fetchDepartmentsData();
     }, [departmentSearch]);
 
-    // Expresiones Regulares para validaciones
-    const nameRegEx = /^[a-zA-ZÀ-ÿ\s]+$/;  // Solo letras y espacios, incluyendo acentos
-    const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Correo válido
-    const phoneRegEx = /^[0-9]{10,15}$/;  // Teléfono de 10 a 15 dígitos
-    const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;  // Al menos 8 caracteres, 1 mayúscula, 1 número, 1 símbolo
+    const nameRegEx = /^[a-zA-ZÀ-ÿ\s]+$/;
+    const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegEx = /^[0-9]{10,15}$/;
+    const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     const validateForm = () => {
         const newErrors = {};
@@ -122,10 +74,6 @@ const CreateUserForm = () => {
 
         if (formData.company === '') {
             newErrors.company = 'Debe seleccionar una marca.';
-        }
-
-        if (!formData.role_id) {
-            newErrors.role_id = 'Debe seleccionar un rol.';
         }
 
         if (!formData.department_id) {
@@ -168,12 +116,7 @@ const CreateUserForm = () => {
     };
 
     const handleNavigate = () => {
-        const token = sessionStorage.getItem('authToken');
-        if (token) {
-            navigate('/admin/users');
-        } else {
-            navigate('/');
-        }
+        navigate('/'); // O la ruta que desees usar para volver
     };
 
     return (
@@ -254,15 +197,6 @@ const CreateUserForm = () => {
                     />
 
                     <SelectInput
-                        label="Rol"
-                        name="role_id"
-                        value={formData.role_id}
-                        onChange={handleChange}
-                        options={roles.map(role => ({ label: role.role_name, value: role.id }))}
-                        required={true}
-                        error={errors.role_id}
-                    />
-                    <SelectInput
                         label="Marca"
                         name="company"
                         value={formData.company}
@@ -296,4 +230,4 @@ const CreateUserForm = () => {
     );
 };
 
-export default CreateUserForm;
+export default RegisterForm;

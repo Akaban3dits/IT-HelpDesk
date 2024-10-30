@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import Table from '../ui/Table';
 import Pagination from '../ui/Pagination';
-import { fetchUsers, deleteUser, getUserByFriendlyCode } from '../../api/users/userService';
-import { Plus, Edit3, Trash2, ArrowUp, ArrowDown, Key } from 'lucide-react'; 
+import { fetchUsers, deleteUser, getUserByFriendlyCode, changeUserPassword } from '../../api/users/userService';
+import { Plus, Edit3, Trash2, ArrowUp, ArrowDown, Key } from 'lucide-react';
 import { readToken } from '../../api/auth/authService';
+import PasswordChangeModal from '../ui/PasswordChangeModal';
+import Alert from '../ui/Alert';
 
 const UserTable = () => {
-    console.log('--- UserTable Component Initialized ---');
-
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
     const [totalUsers, setTotalUsers] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
-    const [sortBy, setSortBy] = useState('friendly_code');  // Cambiar orden inicial a friendly_code
+    const [sortBy, setSortBy] = useState('friendly_code');
     const [sortDirection, setSortDirection] = useState('asc');
     const [filters, setFilters] = useState({
         status: '',
@@ -27,15 +27,17 @@ const UserTable = () => {
     const [error, setError] = useState(null);
     const [userRole, setUserRole] = useState(null);
     const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [selectedUserFriendlyCode, setSelectedUserFriendlyCode] = useState(null);
+    const [alertMessage, setAlertMessage] = useState(null);
+    const [alertType, setAlertType] = useState('info');
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserRole = async () => {
             try {
                 const decodedToken = await readToken();
-                console.log('Decoded Token:', decodedToken);
-
                 if (decodedToken?.role?.name) {
                     setUserRole(decodedToken.role.name);
                     setIsSuperAdmin(decodedToken.role.name === 'Superadministrador');
@@ -44,7 +46,6 @@ const UserTable = () => {
                     setIsSuperAdmin(false);
                 }
             } catch (error) {
-                console.error('Error reading token:', error);
             }
         };
 
@@ -54,13 +55,10 @@ const UserTable = () => {
     const canViewActions = userRole === 'Administrador' || isSuperAdmin;
 
     const loadUsers = async () => {
-        console.log('loadUsers function called');
         setIsLoading(true);
         setError(null);
         try {
             const response = await fetchUsers(currentPage, itemsPerPage, searchTerm, sortBy, sortDirection, filters);
-            console.log('API Response:', response);
-
             if (response && response.users && Array.isArray(response.users)) {
                 setUsers(response.users);
                 setTotalPages(parseInt(response.total_pages) || 1);
@@ -70,7 +68,6 @@ const UserTable = () => {
                 setUsers([]);
             }
         } catch (error) {
-            console.error('Error in loadUsers:', error);
             setError('Error al cargar los usuarios. Por favor, intente de nuevo.');
             setUsers([]);
         } finally {
@@ -79,53 +76,49 @@ const UserTable = () => {
     };
 
     useEffect(() => {
-        console.log('useEffect triggered - loadUsers called');
         loadUsers();
     }, [currentPage, searchTerm, sortBy, sortDirection, filters]);
 
     const handleSearch = (event) => {
-        console.log('Search term changed:', event.target.value);
         setSearchTerm(event.target.value);
         setCurrentPage(1);
     };
 
     const handleSort = (column) => {
-        console.log('Sort changed:', column);
         setSortBy(column);
         setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     };
 
     const handleFilter = (key, value) => {
-        console.log('Filter changed:', key, value);
         setFilters(prev => ({ ...prev, [key]: value }));
         setCurrentPage(1);
     };
 
     const handlePageChange = (page) => {
-        console.log('Page changed:', page);
         setCurrentPage(page);
     };
 
     const handleDeleteUser = async (friendlyCode) => {
-        console.log('Deleting user:', friendlyCode);
         try {
-            await deleteUser(friendlyCode); 
-            loadUsers(); 
+            await deleteUser(friendlyCode);
+            loadUsers();
         } catch (error) {
-            console.error('Error deleting user:', error);
         }
     };
 
     const handleEditUser = async (friendlyCode) => {
-        console.log('Editing user:', friendlyCode);
         try {
             const user = await getUserByFriendlyCode(friendlyCode);
             if (user) {
                 navigate(`/admin/edit-user/${friendlyCode}`, { state: { user } });
             }
         } catch (error) {
-            console.error('Error al obtener usuario para editar:', error);
         }
+    };
+
+    const handlePasswordChange = (friendlyCode) => {
+        setSelectedUserFriendlyCode(friendlyCode);
+        setIsPasswordModalOpen(true);
     };
 
     return (
@@ -227,7 +220,11 @@ const UserTable = () => {
                                                         <Trash2 className="h-4 w-4" />
                                                     </Button>
                                                     {isSuperAdmin && (
-                                                        <Button variant="ghost" size="sm">
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => handlePasswordChange(user.friendly_code)}
+                                                        >
                                                             <Key className="h-4 w-4" />
                                                         </Button>
                                                     )}
@@ -247,7 +244,6 @@ const UserTable = () => {
                     </Table>
                 </div>
             </div>
-
             <div className="block sm:hidden">
                 {users.length > 0 ? (
                     users.map((user) => (
@@ -291,7 +287,11 @@ const UserTable = () => {
                     <div>{isLoading ? 'Cargando...' : 'No se encontraron usuarios'}</div>
                 )}
             </div>
-
+            <PasswordChangeModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                friendlyCode={selectedUserFriendlyCode} // Pasar el friendlyCode al modal
+            />
             <div className="mt-4">
                 <Pagination
                     currentPage={currentPage}

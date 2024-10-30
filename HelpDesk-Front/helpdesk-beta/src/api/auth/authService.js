@@ -4,9 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 
 // Función para notificar que el token necesita ser refrescado
 const notifyTokenRefresh = () => {
-    // Aquí puedes implementar la lógica para mostrar una notificación al usuario
-    console.log("El token está a punto de expirar. Se intentará refrescar automáticamente.");
-    // Ejemplo: dispatchEvent(new CustomEvent('tokenRefreshNeeded'));
+
 };
 
 // Leer y decodificar el token del sessionStorage
@@ -28,7 +26,6 @@ export const readToken = async () => {
         }
         return decodedToken;
     } catch (error) {
-        console.error('Error al decodificar el token:', error);
         removeToken();
         return null;
     }
@@ -43,7 +40,6 @@ const renewTokenIfPossible = async () => {
             setToken(newAccessToken);
             return jwtDecode(newAccessToken);
         } catch (error) {
-            console.error('Error al renovar el token:', error);
             removeToken();
             removeRefreshToken();
             return null;
@@ -58,7 +54,6 @@ const renewTokenIfPossible = async () => {
 export const loginUser = async (email, password) => {
     try {
         const response = await apiClient.post('/auth/login', { email, password });
-        console.log('Respuesta completa:', response);
         if (!response?.data?.accessToken) {
             throw new Error('La respuesta no contiene los tokens necesarios');
         }
@@ -69,7 +64,6 @@ export const loginUser = async (email, password) => {
         }
         return response.data;
     } catch (error) {
-        console.error('Error en la autenticación:', error);
         throw error;
     }
 };
@@ -94,7 +88,6 @@ export const renewToken = async (refreshToken) => {
         setToken(accessToken);
         return accessToken;
     } catch (error) {
-        console.error('Error al renovar el token:', error);
         throw error;
     }
 };

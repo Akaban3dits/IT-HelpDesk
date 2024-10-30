@@ -23,7 +23,6 @@ export const fetchUsers = async (page = 1, limit = 10, search = '', sortBy = 'fi
 
         return response.data;
     } catch (error) {
-        console.error('Error al obtener usuarios:', error);
         throw error;
     }
 };
@@ -34,7 +33,6 @@ export const createUser = async (userData) => {
         const response = await apiClient.post('/users', userData);
         return response.data;
     } catch (error) {
-        console.error('Error al crear el usuario:', error);
         throw error;
     }
 };
@@ -48,7 +46,6 @@ export const deleteUser = async (friendlyCode) => {
 
         return response.data;
     } catch (error) {
-        console.error("Error eliminando el usuario:", error);
         throw error;
     }
 };
@@ -57,10 +54,8 @@ export const deleteUser = async (friendlyCode) => {
 export const getUserByFriendlyCode = async (friendlyCode) => {
     try {
         const response = await apiClient.get(`/users/${friendlyCode}`);
-        console.log('Respuesta del servidor:', response); // Log de la respuesta del servidor
         return response.data;
     } catch (error) {
-        console.error("Error al obtener el usuario por código friendly:", error);
         throw error;
     }
 };
@@ -69,10 +64,8 @@ export const getUserByFriendlyCode = async (friendlyCode) => {
 export const updateUser = async (friendlyCode, updatedUserData) => {
     try {
         const response = await apiClient.put(`/users/${friendlyCode}`, updatedUserData);
-        console.log('Respuesta del servidor al actualizar el usuario:', response); // Log de la respuesta del servidor
         return response.data;
     } catch (error) {
-        console.error('Error al actualizar el usuario:', error);
         throw error;
     }
 };
@@ -80,13 +73,34 @@ export const updateUser = async (friendlyCode, updatedUserData) => {
 // Función para obtener nombres de usuarios para auto-completar o búsqueda
 export const fetchUserNames = async (searchTerm = '') => {
     try {
-        const response = await apiClient.get(`/users/names?search=${searchTerm}`);
+        // Realizar la solicitud GET al endpoint con el término de búsqueda, aunque esté vacío
+        const response = await apiClient.get(`/users-names/search`, {
+            params: { search: searchTerm || '' } // Siempre pasa un string, incluso si searchTerm está vacío
+        });
+
+
+        // Validar si la respuesta contiene datos
         if (!response.data) {
             throw new Error('Error al obtener los nombres de usuarios');
         }
+
         return response.data;
     } catch (error) {
-        console.error('Error al obtener nombres de usuarios:', error);
-        return [];
+        // Log del error
+        throw error; // Lanzar el error para manejarlo donde se llame a la función
     }
 };
+
+
+
+export const changeUserPassword = async (friendlyCode, newPassword) => {
+    try {
+        const response = await apiClient.put(`/users/${friendlyCode}/change-password`, {
+            newPassword,
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+

@@ -26,7 +26,7 @@ const SearchableSelect = ({
                 const data = await fetchOptions(search);
                 setOptions(data);
             } catch (err) {
-                console.error('Error fetching options', err);
+                console.error('Error al obtener opciones:', err);
             } finally {
                 setLoading(false);
             }
@@ -35,26 +35,20 @@ const SearchableSelect = ({
     );
 
     useEffect(() => {
+        const fetchInitialOptions = async () => {
+            setLoading(true);
+            try {
+                const data = await fetchOptions(searchValue);
+                setOptions(data);
+            } catch (err) {
+                console.error('Error al obtener opciones iniciales:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchInitialOptions();
-    }, []);
-
-    const fetchInitialOptions = async () => {
-        setLoading(true);
-        try {
-            const data = await fetchOptions('');
-            setOptions(data);
-        } catch (err) {
-            console.error('Error fetching initial options', err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        if (inputValue !== '') {
-            debouncedFetchOptions(inputValue);
-        }
-    }, [inputValue, debouncedFetchOptions]);
+    }, [fetchOptions, searchValue]);
 
     useEffect(() => {
         if (selectedValue) {
@@ -69,12 +63,11 @@ const SearchableSelect = ({
         const value = e.target.value;
         setInputValue(value);
         onSearchChange(value);
+        debouncedFetchOptions(value);
     };
 
     const handleInputFocus = () => {
-        setInputValue('');
         setIsOpen(true);
-        fetchInitialOptions();
     };
 
     const handleSelectOption = (option) => {
@@ -90,7 +83,6 @@ const SearchableSelect = ({
                 {label}
             </label>
             <div className="relative">
-                {/* Selected Value Display */}
                 <div
                     className="p-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer sm:text-sm"
                     onClick={() => setIsOpen(!isOpen)}
@@ -101,10 +93,8 @@ const SearchableSelect = ({
                     />
                 </div>
 
-                {/* Dropdown Content */}
                 {isOpen && (
-                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg sm:text-sm">
-                        {/* Search Input */}
+                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg sm:text-sm">
                         <input
                             type="text"
                             name={name}
@@ -117,7 +107,6 @@ const SearchableSelect = ({
                             autoComplete="off"
                         />
 
-                        {/* Options List */}
                         <ul className="max-h-60 overflow-auto sm:text-sm">
                             {loading ? (
                                 <li className="px-4 py-2 text-gray-500">Cargando...</li>
@@ -127,8 +116,7 @@ const SearchableSelect = ({
                                 options.map((option) => (
                                     <li
                                         key={option.value}
-                                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${selectedValue === option.value ? 'bg-blue-200' : ''
-                                            }`}
+                                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${selectedValue === option.value ? 'bg-blue-200' : ''}`}
                                         onClick={() => handleSelectOption(option)}
                                     >
                                         {option.label}
