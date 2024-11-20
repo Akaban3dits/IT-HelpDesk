@@ -2,21 +2,8 @@ import UserService from '../services/user.service.js';
 import bcrypt from 'bcrypt';
 
 class UserController {
-    async createUser(req, res) {
-        try {
-            const user = await UserService.createUser(req.body);
-            return res.status(201).json(user);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
-    }
-    async updatePassword(friendly_code, newPassword) {
-        const result = await pool.query(
-            'UPDATE users SET password = $1 WHERE friendly_code = $2 RETURNING *',
-            [newPassword, friendly_code]
-        );
-        return result.rows[0];
-    }
+
+    //* Controladores validos
 
     async getAllUsers(req, res) {
         try {
@@ -47,34 +34,29 @@ class UserController {
 
             return res.status(200).json(usersData);
         } catch (error) {
-            console.error('Error al obtener usuarios:', error.message);
+            next(error);
             return res.status(500).json({ error: error.message });
         }
     }
 
-    async getUserByFriendlyCode(req, res) {
+    async createUser(req, res) {
         try {
-            const user = await UserService.getUserByFriendlyCode(req.params.friendly_code);
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-            return res.status(200).json(user);
+            const user = await UserService.createUser(req.body);
+            return res.status(201).json(user);
         } catch (error) {
-            return res.status(500).json({ error: error.message });
+            // Verifica si el error es de clave duplicada
+            if (error.code === '23505') {
+                if (error.constraint === 'users_email_key') {
+                    return res.status(400).json({ error: 'El email ya está registrado.' });
+                } else if (error.constraint === 'users_phone_number_key') {
+                    return res.status(400).json({ error: 'El número de teléfono ya está en uso.' });
+                }
+            }
+            // Error genérico
+            return res.status(500).json({ error: 'Error interno del servidor.' });
         }
     }
 
-    async updateUser(req, res) {
-        try {
-            const updatedUser = await UserService.updateUser(req.params.friendly_code, req.body);
-            if (!updatedUser) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-            return res.status(200).json(updatedUser);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
-    }
 
     async deleteUser(req, res) {
         try {
@@ -84,31 +66,35 @@ class UserController {
             }
             return res.status(200).json({ message: 'User deleted successfully' });
         } catch (error) {
-            console.error('Error al eliminar usuario:', error.message);
+            next(error);
             return res.status(500).json({ error: error.message });
         }
     }
-
-
-    async getAssignableUsers(req, res) {
+    async getUserByFriendlyCode(req, res) {
         try {
-            // Log para ver el valor de search recibido en la consulta
-            const { search = '' } = req.query;
-            const users = await UserService.getAssignableUsers(search);
-    
-            return res.status(200).json(users);
+            const user = await UserService.getUserByFriendlyCode(req.params.friendly_code);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            return res.status(200).json(user);
         } catch (error) {
-            // Log del error ocurrido durante la ejecución
-            console.error('Error al obtener usuarios asignables:', error.message);
+            throw error;
             return res.status(500).json({ error: error.message });
         }
     }
-    
-    
+    async updateUser(req, res) {
+        try {
+            const updatedUser = await UserService.updateUser(req.params.friendly_code, req.body);
+            if (!updatedUser) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            return res.status(200).json(updatedUser);
+        } catch (error) {
+            next(error);
+            return res.status(500).json({ error: error.message });
+        }
+    }
 
-    /**
-     * Cambia la contraseña de un usuario existente
-     */
     async changePassword(req, res) {
         const { friendly_code } = req.params;
         const { newPassword } = req.body;
@@ -124,7 +110,19 @@ class UserController {
 
             return res.status(200).json({ message: 'Contraseña cambiada exitosamente.' });
         } catch (error) {
-            console.error('Error al cambiar la contraseña:', error.message);
+            next(error);
+            return res.status(500).json({ error: error.message });
+        }
+    }
+    async getAssignableUsers(req, res) {
+        try {
+            // Log para ver el valor de search recibido en la consulta
+            const { search = '' } = req.query;
+            const users = await UserService.getAssignableUsers(search);
+
+            return res.status(200).json(users);
+        } catch (error) {
+            next(error);
             return res.status(500).json({ error: error.message });
         }
     }

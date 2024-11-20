@@ -2,34 +2,42 @@ import User from '../models/user.model.js';
 import Role from '../models/role.model.js';
 import jwt from 'jsonwebtoken';
 
-
-//* Funcionando y sin errores
 class AuthService {
     async login(loginDto) {
-
-        //Busca por el correo proporcionado una similitud
+        // Busca por el correo proporcionado
         const user = await User.getUserByEmail(loginDto.email);
         if (!user) {
-            throw new Error('Invalid credentials');
+            const error = new Error('Credenciales inválidas');
+            error.statusCode = 401;
+            throw error;
         }
-        //Si la cuenta es activa o inactiva
+        
+        // Verificación de si la cuenta es activa o inactiva
         if (!user.status) {
-            throw new Error('User account is inactive');
+            const error = new Error('Cuenta inactiva, contacte al administrador');
+            error.statusCode = 403;
+            throw error;
         }
-        //Comparativa con metodo de desencriptado, 
+        
+        // Comparativa de contraseñas
         const validPassword = await User.validatePassword(user.password, loginDto.password);
         if (!validPassword) {
-            throw new Error('Invalid credentials');
+            const error = new Error('Credenciales inválidas');
+            error.statusCode = 401;
+            throw error;
         }
-        //Busqueda de rol, si no tiene uno otorgado
+        
+        // Búsqueda de rol, verifica si no tiene uno asignado
         const role = await Role.findById(user.role_id);
         if (!role) {
-            throw new Error('Role not found');
+            const error = new Error('Credenciales inválidas');
+            error.statusCode = 401;
+            throw error;
         }
-        //Generacion del token
+        
+        // Generación del token
         const token = jwt.sign(
             {
-                //Datos necesarios para su uso sin problemas de seguridad
                 userId: user.id,
                 username: `${user.first_name} ${user.last_name}`,
                 role: {
@@ -38,7 +46,6 @@ class AuthService {
                 }
             },
             process.env.JWT_SECRET,
-            //Tiempo de expiración
             { expiresIn: '1h' }
         );
         return token;

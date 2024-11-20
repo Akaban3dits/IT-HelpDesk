@@ -2,23 +2,21 @@ import CommentModel from '../models/comment.model.js';
 
 class CommentService {
     async createComment(commentData) {
-        return await CommentModel.create(commentData);
+        try {
+            const comment = await CommentModel.createComment(commentData);
+            return comment;
+        } catch (error) {
+            throw new Error('Error al crear el comentario: ' + error)
+        }
     }
 
-    async getAllComments() {
-        return await CommentModel.findAllByTicket();
-    }
-
-    async getCommentById(commentId) {
-        return await CommentModel.findById(commentId);
-    }
-
-    async updateComment(commentId, commentData) {
-        return await CommentModel.update(commentId, commentData);
-    }
-
-    async deleteComment(commentId) {
-        return await CommentModel.delete(commentId);
+    async getComments(friendly_code) {
+        try {
+            const comments = await CommentModel.getCommentsByFriendlyCode(friendly_code);
+            return comments;
+        } catch (error) {
+            throw new Error('Error al crear el comentario: ' + error)
+        }
     }
 }
 

@@ -1,24 +1,14 @@
 import NotificationModel from '../models/notification.model.js';
 
 class NotificationService {
-    async createNotification(notificationData) {
-        return await NotificationModel.create(notificationData);
-    }
+    async getusernotifications(user_id){
+        try {
+            const notificaciones = await NotificationModel.getusernotifications(user_id);
+            return notificaciones;
 
-    async getAllNotifications() {
-        return await NotificationModel.findAll();
-    }
-
-    async getNotificationById(notificationId) {
-        return await NotificationModel.findById(notificationId);
-    }
-
-    async updateNotification(notificationId, notificationData) {
-        return await NotificationModel.update(notificationId, notificationData);
-    }
-
-    async deleteNotification(notificationId) {
-        return await NotificationModel.delete(notificationId);
+        } catch (error) {
+            console.log("Data error service")
+        }
     }
 }
 

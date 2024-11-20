@@ -53,22 +53,23 @@ CREATE TABLE IF NOT EXISTS devices (
     device_type_id BIGINT REFERENCES device_types (id)
 );
 
--- Tabla de tickets (con campo 'title')
+-- Tabla de tickets (ajustes finales para el manejo de usuarios eliminados)
 CREATE TABLE IF NOT EXISTS tickets (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     friendly_code TEXT NOT NULL UNIQUE,
     title TEXT NOT NULL,
+    description TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     closed_at TIMESTAMP WITH TIME ZONE, -- Puede ser nulo si el ticket no está cerrado
-    description TEXT NOT NULL,
     status_id BIGINT NOT NULL REFERENCES status (id),
-    priority_id BIGINT REFERENCES priority (id), -- Ahora puede ser nulo
+    priority_id BIGINT REFERENCES priority (id), -- Puede ser nulo
     device_id BIGINT NOT NULL REFERENCES devices (id),
-    assigned_user_id BIGINT REFERENCES users (id), -- Ahora puede ser nulo
+    assigned_user_id BIGINT REFERENCES users (id) ON DELETE SET NULL,
     department_id BIGINT NOT NULL REFERENCES departments (id),
     parent_ticket_id BIGINT REFERENCES tickets (id), -- Puede ser nulo si no hay jerarquía de tickets
-    created_by BIGINT NOT NULL REFERENCES users (id),
-    updated_by BIGINT NOT NULL REFERENCES users (id),
+    created_by BIGINT REFERENCES users (id) ON DELETE SET NULL,
+    created_by_name TEXT, -- Almacenar el nombre del usuario que creó el ticket
+    updated_by BIGINT REFERENCES users (id) ON DELETE SET NULL, -- Cambiado para manejar la eliminación del usuario que actualizó el ticket
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -82,13 +83,14 @@ CREATE TABLE IF NOT EXISTS comments (
     parent_comment_id BIGINT REFERENCES comments (id) -- Puede ser nulo si no es una respuesta
 );
 
--- Tabla de adjuntos con el nuevo campo 'is_image'
+-- Tabla de adjuntos
 CREATE TABLE IF NOT EXISTS attachments (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    file_path TEXT NOT NULL, -- Ruta del archivo
+    file_path TEXT NOT NULL,
+    original_filename TEXT NOT NULL,
     uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     ticket_id BIGINT NOT NULL REFERENCES tickets (id),
-    is_image BOOLEAN NOT NULL DEFAULT FALSE -- Nuevo campo booleano para indicar si es una imagen
+    is_image BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -- Tabla de historial de estado de tickets
@@ -101,12 +103,12 @@ CREATE TABLE IF NOT EXISTS status_history (
     changed_by_user_id BIGINT NOT NULL REFERENCES users (id)
 );
 
--- Tabla de tareas (con campo booleano 'is_completed')
+-- Tabla de tareas
 CREATE TABLE IF NOT EXISTS tasks (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     task_description TEXT NOT NULL,
     assigned_to_user_id BIGINT NOT NULL REFERENCES users (id),
-    is_completed BOOLEAN NOT NULL DEFAULT FALSE, -- Campo booleano para indicar si la tarea está completada
+    is_completed BOOLEAN NOT NULL DEFAULT FALSE,
     due_date TIMESTAMP WITH TIME ZONE NOT NULL,
     ticket_id BIGINT NOT NULL REFERENCES tickets (id)
 );
@@ -126,6 +128,7 @@ CREATE TABLE IF NOT EXISTS notification_user (
     read_at TIMESTAMP WITH TIME ZONE, -- Puede ser nulo si la notificación no ha sido leída
     PRIMARY KEY (notification_id, user_id)
 );
+
 
 -- Insertar roles
 INSERT INTO roles (role_name)

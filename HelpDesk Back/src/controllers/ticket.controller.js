@@ -1,44 +1,26 @@
-import path from 'path';
+// ticketController.js
 import TicketService from '../services/ticket.service.js';
 import UserService from '../services/user.service.js';
-import fs from 'fs/promises';
-
+import uploadConfig from '../config/multerConfig.js';
 
 class TicketController {
-    // Método para crear un nuevo ticket
-    async createTicket(req, res) {
+    async createTicket(req, res, next) {
         try {
-            // Directorio donde se guardarán los archivos
-            const uploadDir = path.join('uploads');
-            
-            // Crear la carpeta si no existe
-            await this.createUploadDir(uploadDir);
-
             // Obtiene el ID del usuario autenticado desde el token
             const createdBy = req.user.id;
 
             // Genera un código amigable para el ticket
             const friendlyCode = this.generateFriendlyCode();
-
             // Procesa archivos subidos
             let attachments = [];
             if (req.files && req.files.length > 0) {
-                attachments = req.files.map(file => {
-                    const filePath = path.join(uploadDir, file.filename);
-                    console.log('Procesando archivo:', file.originalname, 'Ruta:', filePath);
-
-                    // Determina si el archivo es una imagen basándose en su extensión
-                    const isImage = ['.jpg', '.jpeg', '.png', '.gif'].includes(path.extname(file.originalname).toLowerCase());
-
-                    return {
-                        file_path: filePath,
-                        ticket_id: null,
-                        uploaded_at: new Date(),
-                        is_image: isImage
-                    };
-                });
-            } else {
-                console.log('No se recibieron archivos adjuntos.');
+                attachments = req.files.map(file => ({
+                    file_path: file.path,
+                    original_filename: file.originalname,
+                    ticket_id: null,
+                    uploaded_at: new Date(),
+                    is_image: uploadConfig.isImage(file.mimetype)
+                }));
             }
 
             // Verificar si el usuario asignado existe
@@ -46,7 +28,6 @@ class TicketController {
             if (assigned_user_id) {
                 const assignedUser = await UserService.getUserById(assigned_user_id);
                 if (!assignedUser) {
-                    console.error('El usuario asignado no existe.');
                     return res.status(400).json({ error: 'El usuario asignado no existe.' });
                 }
             }
@@ -62,88 +43,108 @@ class TicketController {
             };
 
             // Crear el ticket con los datos y los adjuntos confirmados
-            console.log('Creando ticket con los siguientes datos:', ticketData);
             const ticket = await TicketService.createTicket(ticketData, attachments);
 
             return res.status(201).json(ticket);
         } catch (error) {
             console.error('Error al crear el ticket:', error);
-            return res.status(500).json({ error: 'Error al crear el ticket', details: error.message });
+            next(error); // Enviar el error al middleware de manejo de errores
         }
     }
 
-    // Método para crear la carpeta si no existe
-    async createUploadDir(dirPath) {
-        try {
-            await fs.mkdir(dirPath, { recursive: true });
-            console.log('Carpeta creada o ya existente:', dirPath);
-        } catch (err) {
-            console.error('Error al crear la carpeta de subida:', err);
-            throw err;
-        }
-    }
-    // Método para obtener todos los tickets
-    async getAllTickets(req, res) {
-        try {
-            const { page = 1, limit = 10 } = req.query;
-            const tickets = await TicketService.getAllTickets(page, limit);
-            res.json(tickets);
-        } catch (error) {
-            res.status(500).json({ error: 'Error al obtener los tickets', details: error.message });
-        }
-    }
-
-    // Método para obtener un ticket por ID
-    async getTicketById(req, res) {
-        try {
-            const ticketId = req.params.id;
-            const ticket = await TicketService.getTicketWithDetails(ticketId);
-
-            if (!ticket) {
-                return res.status(404).json({ error: 'Ticket no encontrado' });
-            }
-
-            res.json(ticket);
-        } catch (error) {
-            res.status(500).json({ error: 'Error al obtener el ticket', details: error.message });
-        }
-    }
-
-    // Método para actualizar un ticket
-    async updateTicket(req, res) {
-        try {
-            const ticketId = req.params.id;
-            const updatedData = req.body;
-
-            const updatedTicket = await TicketService.updateTicket(ticketId, updatedData);
-            if (!updatedTicket) {
-                return res.status(404).json({ error: 'Ticket no encontrado' });
-            }
-            return res.status(200).json(updatedTicket);
-        } catch (error) {
-            return res.status(500).json({ error: 'Error al actualizar el ticket', details: error.message });
-        }
-    }
-
-    // Método para eliminar un ticket
-    async deleteTicket(req, res) {
-        try {
-            const ticketId = req.params.id;
-
-            const deletedTicket = await TicketService.deleteTicket(ticketId);
-            if (!deletedTicket) {
-                return res.status(404).json({ error: 'Ticket no encontrado' });
-            }
-            return res.status(200).json({ message: 'Ticket eliminado exitosamente' });
-        } catch (error) {
-            return res.status(500).json({ error: 'Error al eliminar el ticket', details: error.message });
-        }
-    }
-
-    // Función para generar un código amigable para el ticket
     generateFriendlyCode() {
         return `TCKT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
     }
+
+    // Controlador
+    async gettickets(req, res, next) {
+        try {
+            const {
+                page = 1,
+                limit = 10,
+                search = '',
+                filterColumn = '',
+                filterValue = '',
+                sortBy = 'id',
+                sortDirection = 'asc',
+                status = '',
+                priority = '',
+                dateRange = ''  // Nuevo parámetro de rango de fechas
+            } = req.query;
+
+            const ticketData = await TicketService.gettickets(
+                parseInt(page),
+                parseInt(limit),
+                search,
+                filterColumn,
+                filterValue,
+                sortBy,
+                sortDirection,
+                status,
+                priority,
+                dateRange  // Pasar el rango de fecha
+            );
+
+            return res.status(200).json(ticketData);
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+
+    async getTicketByFriendlyCode(req, res, next) {
+        try {
+            const { friendlyCode } = req.params;
+            const ticket = await TicketService.getTicketByFriendlyCode(friendlyCode);
+            return res.status(200).json(ticket);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getMonthlyTicketCounts(req, res, next) {
+        try {
+            const monthlyCounts = await TicketService.getMonthlyTicketCounts();
+            res.status(200).json(monthlyCounts);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getDailyTicketStatusCounts(req, res, next) {
+        try {
+            const dailyCounts = await TicketService.getDailyTicketStatusCounts();
+            res.status(200).json(dailyCounts);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async updateTicket(req, res, next) {
+        try {
+            const { friendlyCode } = req.params; // Obtener el código amigable del ticket desde los parámetros de la URL
+            const { status_name, priority_name, assigned_user_id } = req.body; // Obtener los datos de actualización del cuerpo de la solicitud
+            const updatedBy = req.user.id; // ID del usuario que hace la actualización
+    
+            // Llama al servicio para actualizar el ticket usando nombres
+            const updatedTicket = await TicketService.updateTicketByFriendlyCode(friendlyCode, {
+                status_name,
+                priority_name,
+                assigned_user_id,
+                updated_by: updatedBy // Incluye el ID del usuario que está actualizando
+            });
+    
+            return res.status(200).json(updatedTicket); // Retorna el ticket actualizado en formato JSON
+        } catch (error) {
+            console.error('Error al actualizar el ticket:', error); // Log de error para depuración
+            next(error); // Enviar el error al middleware de manejo de errores
+        }
+    }
+    
+    
+    
+
 }
 
 export default new TicketController();

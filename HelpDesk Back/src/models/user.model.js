@@ -1,49 +1,31 @@
 import pool from '../config/db.js';
 import bcrypt from 'bcryptjs';
-import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar identificadores únicos
 
 class User {
     //*Funcionalidades generadas correctamente y aprobadas
 
-    //? Metodo para busqueda de un correo por medio de un texto, devuelve toda la info, pero recupera lo necesario
+    //Metodo para busqueda de un correo por medio de un texto, devuelve toda la info, pero recupera lo necesario
     async getUserByEmail(email) {
-        //pool.query para buscar el comando sql
-        const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        return result.rows[0];
+        try {
+            // Ejecuta la consulta SQL para buscar el usuario por correo
+            const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+            return result.rows[0];
+        } catch (error) {
+            // Lanza un error con un mensaje específico para que el controlador lo gestione
+            throw new Error('Error al buscar el usuario por correo: ' + error.message);
+        }
     }
-    //? Contraseña comparativa que sirve para desencriptarse
+
+    // Método para validar la contraseña encriptada
     async validatePassword(storedPassword, providedPassword) {
-        //bcrypt es para comparar con el metodo blowfish 
-        return await bcrypt.compare(providedPassword, storedPassword);
+        try {
+            // Usa bcrypt para comparar la contraseña proporcionada con la almacenada
+            return await bcrypt.compare(providedPassword, storedPassword);
+        } catch (error) {
+            // Lanza un error con un mensaje específico para que el controlador lo gestione
+            throw new Error('Error al validar la contraseña: ' + error.message);
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     async getUsers(page = 1, limit = 10, search = '', filterColumn = '', filterValue = '', sortBy = 'id', sortDirection = 'ASC', status = '', role_name = '') {
         try {
@@ -157,12 +139,68 @@ class User {
         }
     }
 
+    async getUserById(userId) {
+        const result = await pool.query(
+            `SELECT id, friendly_code, first_name, last_name, email, phone_number, status, company, role_id, department_id 
+             FROM users 
+             WHERE id = $1`,
+            [userId]
+        );
+        return result.rows[0];
+    }
+
+    async findByEmail(email) {
+        const result = await pool.query(
+            `SELECT * FROM users WHERE email = $1`,
+            [email]
+        );
+        return result.rows[0];
+    }
+
+    async findByPhoneNumber(phone_number) {
+        const result = await pool.query(
+            `SELECT * FROM users WHERE phone_number = $1`,
+            [phone_number]
+        );
+        return result.rows[0];
+    }
+
+    async createUser({ first_name, last_name, email, password, phone_number, status, company, role_id, department_id, friendly_code }) {
+        try {
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const result = await pool.query(
+                `INSERT INTO users (first_name, last_name, email, password, phone_number, status, company, role_id, department_id, friendly_code)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+                [first_name, last_name, email, hashedPassword, phone_number, status, company, role_id, department_id, friendly_code]
+            );
+
+            return result.rows[0];
+        } catch (error) {
+            console.error("Error al crear usuario en el backend:", error);
+            throw error;
+        }
+    }
 
 
 
-    async countUsers() {
-        const result = await pool.query('SELECT COUNT(*) FROM users');
-        return result.rows[0].count;
+    async deleteUser(friendly_code) {
+        try {
+            const result = await pool.query(
+                'UPDATE users SET status = false WHERE friendly_code = $1 RETURNING *',
+                [friendly_code]
+            );
+
+            // Verificamos si el usuario fue encontrado y actualizado
+            if (result.rowCount === 0) {
+                return null;  // Si no se encuentra el usuario
+            }
+
+            return result.rows[0];  // Retorna el usuario actualizado
+        } catch (error) {
+            console.error('Error al realizar el borrado lógico del usuario:', error.message);
+            throw error;  // Lanza el error para que sea manejado por el controlador o servicio
+        }
     }
 
     async getUserByFriendlyCode(friendly_code) {
@@ -184,29 +222,6 @@ class User {
         return result.rows[0];
     }
 
-
-    
-
-    async generateFriendlyCode() {
-        const datePart = new Date().toISOString().replace(/[-:.TZ]/g, ''); // Parte de la fecha
-        const randomPart = uuidv4().split('-')[0]; // Parte aleatoria
-        return `${datePart}-${randomPart}`; // Combina ambos para generar el friendly_code
-    }
-
-    async createUser({ first_name, last_name, email, password, phone_number, status, company, role_id, department_id }) {
-        // Generar el friendly_code
-        const friendly_code = await this.generateFriendlyCode();
-
-        // Hash the password before saving it
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const result = await pool.query(
-            `INSERT INTO users (friendly_code, first_name, last_name, email, password, phone_number, status, company, role_id, department_id)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
-            [friendly_code, first_name, last_name, email, hashedPassword, phone_number, status, company, role_id, department_id]
-        );
-        return result.rows[0];
-    }
-
     async updateUser(friendly_code, { first_name, last_name, email, phone_number, status, company, role_id, department_id }) {
         const result = await pool.query(
             `UPDATE users SET 
@@ -225,8 +240,6 @@ class User {
         return result.rows[0];
     }
 
-
-    
     async updatePassword(friendly_code, newPassword) {
         try {
             // Encriptar la nueva contraseña
@@ -252,35 +265,6 @@ class User {
             throw error;
         }
     }
-
-    async deleteUser(friendly_code) {
-        try {
-            const result = await pool.query(
-                'UPDATE users SET status = false WHERE friendly_code = $1 RETURNING *',
-                [friendly_code]
-            );
-
-            // Verificamos si el usuario fue encontrado y actualizado
-            if (result.rowCount === 0) {
-                return null;  // Si no se encuentra el usuario
-            }
-
-            return result.rows[0];  // Retorna el usuario actualizado
-        } catch (error) {
-            console.error('Error al realizar el borrado lógico del usuario:', error.message);
-            throw error;  // Lanza el error para que sea manejado por el controlador o servicio
-        }
-    }
-    async getUserById(userId) {
-        const result = await pool.query(
-            `SELECT id, friendly_code, first_name, last_name, email, phone_number, status, company, role_id, department_id 
-             FROM users 
-             WHERE id = $1`,
-            [userId]
-        );
-        return result.rows[0];
-    }
-
     async getAssignableUsers(search = '') {
         try {
             let query = `

@@ -1,0 +1,774 @@
+Error ID: ba5669cd-c6da-4278-b282-07c76eec8cac
+Timestamp: 2024-11-02T22:00:01.050Z
+Error Type: HTTP POST Error
+Status Code: 403
+Message: Cuenta inactiva, contacte al administrador
+Stack: Error: Cuenta inactiva, contacte al administrador
+    at AuthService.login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/auth.service.js:17:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:8:27)
+
+Error ID: 9f28469c-7d8b-475d-ba7d-f7f4784d77c9
+Timestamp: 2024-11-07T20:08:49.244Z
+Error Type: Database Error
+Status Code: 500
+Message: falta una entrada para la tabla «ticket» en la cláusula FROM
+Stack: error: falta una entrada para la tabla «ticket» en la cláusula FROM
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:159:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:108:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:73:32)
+
+Error ID: 14d06dbe-e3b5-4926-a28f-9934b929f753
+Timestamp: 2024-11-07T20:17:49.404Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: sortBy is not defined
+Stack: ReferenceError: sortBy is not defined
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:77:17)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 7c2b8bb3-3d0c-4d82-a1a0-2a7974e37ee0
+Timestamp: 2024-11-07T20:17:49.447Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: sortBy is not defined
+Stack: ReferenceError: sortBy is not defined
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:77:17)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: bd529d99-5faa-4c07-8817-0ee62d6d204b
+Timestamp: 2024-11-07T20:17:52.393Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: sortBy is not defined
+Stack: ReferenceError: sortBy is not defined
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:77:17)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 73cb88d0-457c-4db5-9e0c-fa2c909d059d
+Timestamp: 2024-11-07T20:17:52.396Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: sortBy is not defined
+Stack: ReferenceError: sortBy is not defined
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:77:17)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 9c341e06-b29c-49a0-90d6-4231321bb815
+Timestamp: 2024-11-07T20:17:55.529Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: sortBy is not defined
+Stack: ReferenceError: sortBy is not defined
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:77:17)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 59a31129-693e-46b1-99a9-4e00548cf0db
+Timestamp: 2024-11-07T20:17:55.547Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: sortBy is not defined
+Stack: ReferenceError: sortBy is not defined
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:77:17)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 4391217b-cb1f-48d0-adfb-67985f8b1b2f
+Timestamp: 2024-11-07T23:31:01.719Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: fs is not defined
+Stack: ReferenceError: fs is not defined
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/app.js:72:9
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:280:10)
+    at authenticateFileAccess (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/app.js:60:5)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:286:9
+
+Error ID: 1b59bd14-3668-4dbe-b6c5-8491321eb7f8
+Timestamp: 2024-11-07T23:31:03.793Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: fs is not defined
+Stack: ReferenceError: fs is not defined
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/app.js:72:9
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:280:10)
+    at authenticateFileAccess (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/app.js:60:5)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:286:9
+
+Error ID: 9df2b7f6-eeac-4d0e-9e89-2f1e5f57b7b7
+Timestamp: 2024-11-07T23:31:18.139Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: fs is not defined
+Stack: ReferenceError: fs is not defined
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/app.js:72:9
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:280:10)
+    at authenticateFileAccess (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/app.js:60:5)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\index.js:286:9
+
+Error ID: f27468c3-00f7-476c-a988-6050ba556783
+Timestamp: 2024-11-08T00:53:19.686Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: af6462c9-b90e-47ce-9791-8f2ba0b44ba6
+Timestamp: 2024-11-08T00:55:00.993Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: 507ef8d5-15d2-4088-950c-d0db0087ceb5
+Timestamp: 2024-11-08T00:56:08.932Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: c51f3228-6e19-4ea3-8b90-360813c08b57
+Timestamp: 2024-11-08T00:57:47.155Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: 3a0b5d8f-9364-477f-8179-53c21d8d3871
+Timestamp: 2024-11-08T00:57:48.327Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: cd7fea68-bba9-454a-ba22-ef0e16b8e074
+Timestamp: 2024-11-08T00:59:15.435Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: c4496d8a-f33e-4879-bb22-b1932918134f
+Timestamp: 2024-11-08T01:00:39.996Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: f182aff6-617b-470a-90ec-5d000e9c573f
+Timestamp: 2024-11-08T01:01:38.033Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Ticket no encontrado
+Stack: Error: Ticket no encontrado
+    at TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:95:28)
+
+Error ID: e62d66db-2f5f-4f0d-a177-72455c512afe
+Timestamp: 2024-11-08T05:34:16.456Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: priorityModel is not defined
+Stack: ReferenceError: priorityModel is not defined
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:188:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 4b983e63-44c7-4853-9320-a492438f0daa
+Timestamp: 2024-11-08T05:38:27.803Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: priorityModel is not defined
+Stack: ReferenceError: priorityModel is not defined
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:188:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 427f7b2a-f725-4d1c-b955-f7c1bb9239e7
+Timestamp: 2024-11-08T05:38:51.928Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: priorityModel is not defined
+Stack: ReferenceError: priorityModel is not defined
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:188:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: ca465be0-8223-4998-8d5d-ce10008b8339
+Timestamp: 2024-11-08T05:39:40.122Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: priorityModel is not defined
+Stack: ReferenceError: priorityModel is not defined
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:188:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 4e09da40-7365-490d-8053-acc81a632e49
+Timestamp: 2024-11-08T14:02:17.038Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: 22e7a7a6-4129-4001-9174-9ce335cc6fec
+Timestamp: 2024-11-08T14:02:17.139Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: f532c359-7840-4159-bc64-a2582cc51d6f
+Timestamp: 2024-11-08T14:02:21.266Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: bfe65ca0-798a-4b2e-b832-e96aa438042b
+Timestamp: 2024-11-08T14:02:21.269Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: 202111ac-098b-4552-b48f-1880e1a83386
+Timestamp: 2024-11-08T14:09:30.667Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: 8679a90c-1e78-42eb-afe3-3a294be1f865
+Timestamp: 2024-11-08T14:09:33.095Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: f46cb44d-9591-4d54-b26a-a335a34768ef
+Timestamp: 2024-11-08T14:09:33.253Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: 74d6d1a5-089f-4010-bf6e-b84605fc2c6b
+Timestamp: 2024-11-08T15:44:35.289Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe el esquema «u3»
+Stack: error: no existe el esquema «u3»
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:216:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:135:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:99:28)
+
+Error ID: af11793f-68d9-49fa-a4b4-ed68f6ee88fa
+Timestamp: 2024-11-08T16:47:20.741Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna «status_id»
+Stack: error: no existe la columna «status_id»
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Status.findById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:10:24)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:213:39)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 37c8a65d-6b74-4238-9f71-9bcf43983dfa
+Timestamp: 2024-11-08T16:48:11.285Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna «status_id»
+Stack: error: no existe la columna «status_id»
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Status.findById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:10:24)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:213:39)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 9d4ae5b7-ace8-4fce-b6a8-46368f033ffd
+Timestamp: 2024-11-08T16:52:17.350Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: No se pudo registrar el cambio de estado
+Stack: Error: No se pudo registrar el cambio de estado
+    at Status.create (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:46:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:225:17)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 09463463-7c6d-4cd6-aa09-ed9da2bd03e6
+Timestamp: 2024-11-08T16:52:53.281Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: No se pudo registrar el cambio de estado
+Stack: Error: No se pudo registrar el cambio de estado
+    at Status.create (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:46:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:225:17)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 7843bebf-c518-4c9f-b4dd-876e21e8ef08
+Timestamp: 2024-11-08T16:55:16.639Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: No se pudo registrar el cambio de estado: la sintaxis de entrada no es válida para tipo bigint: «{"ticket_id":"9","old_status":"1","new_status":"3","changed_by_user_id":"2"}»
+Stack: Error: No se pudo registrar el cambio de estado: la sintaxis de entrada no es válida para tipo bigint: «{"ticket_id":"9","old_status":"1","new_status":"3","changed_by_user_id":"2"}»
+    at Status.create (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:46:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:225:17)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 45d8c8ea-e7cb-41e3-aa20-2ba5ee56fd6a
+Timestamp: 2024-11-08T16:58:14.604Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: No se pudo registrar el cambio de estado: la sintaxis de entrada no es válida para tipo bigint: «{"ticket_id":"9","old_status":"3","new_status":"1","changed_by_user_id":"2"}»
+Stack: Error: No se pudo registrar el cambio de estado: la sintaxis de entrada no es válida para tipo bigint: «{"ticket_id":"9","old_status":"3","new_status":"1","changed_by_user_id":"2"}»
+    at Status.create (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:47:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:225:17)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:131:35)
+
+Error ID: 6b031c21-9c69-42b3-b749-40da60f8e7bb
+Timestamp: 2024-11-08T17:20:50.912Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:74:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 0b8a5d29-da4b-42c4-bac8-25d977a7a7b7
+Timestamp: 2024-11-08T17:20:51.020Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:74:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 5b984c9b-099d-4fc5-9c79-06ef99c3f33d
+Timestamp: 2024-11-08T17:22:55.432Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:74:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 9a600f5b-4d83-4af1-9091-a1bb9144ec3d
+Timestamp: 2024-11-08T17:22:58.644Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:74:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 6733785e-1c30-4ae4-845e-54b2869ca19c
+Timestamp: 2024-11-08T17:22:58.651Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:74:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async getStatusHistory (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 46b8189e-e7cf-43e7-b868-5e034fb13b55
+Timestamp: 2024-11-08T17:32:44.447Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 8156cdab-90bb-4813-9a2e-a7fe8bee2c01
+Timestamp: 2024-11-08T17:32:44.548Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 3be29c49-9d7f-4ee5-aa6f-a48b4ba4f726
+Timestamp: 2024-11-08T17:33:13.847Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 8acfce3b-4de7-4234-bded-c1f0f49d95ee
+Timestamp: 2024-11-08T17:33:13.947Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 65db3961-04ec-4ec0-a75c-97fcfbf92d5d
+Timestamp: 2024-11-08T17:34:09.391Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: c11f84d9-e98f-497c-83fd-25cd3486249b
+Timestamp: 2024-11-08T17:34:09.467Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:29:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 25b28f49-afc0-45aa-ba27-6e5419a45391
+Timestamp: 2024-11-08T17:36:07.868Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: TicketModel is not defined
+Stack: ReferenceError: TicketModel is not defined
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:30:24)
+    at StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:49)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/routes/status.routes.js:15:26
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: ecc765e5-3eb3-4851-a01c-91285b938f3c
+Timestamp: 2024-11-08T17:36:07.890Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: TicketModel is not defined
+Stack: ReferenceError: TicketModel is not defined
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:30:24)
+    at StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:49)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/routes/status.routes.js:15:26
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: b9711cfa-af1d-4958-9926-a3f7477fc33e
+Timestamp: 2024-11-08T17:36:10.661Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: TicketModel is not defined
+Stack: ReferenceError: TicketModel is not defined
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:30:24)
+    at StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:49)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/routes/status.routes.js:15:26
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: ed0b32db-5b5c-4df0-ae5a-a2bc8a0630b9
+Timestamp: 2024-11-08T17:36:10.668Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: TicketModel is not defined
+Stack: ReferenceError: TicketModel is not defined
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:30:24)
+    at StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:49)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/routes/status.routes.js:15:26
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 53ca8917-c1ec-4f42-8934-a693dad791bc
+Timestamp: 2024-11-08T17:36:38.748Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: StatusModel.getStatusHistoryByTicketId is not a function
+Stack: TypeError: StatusModel.getStatusHistoryByTicketId is not a function
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:40:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 6e6bdbaa-5891-49ea-9aa6-063447b8d207
+Timestamp: 2024-11-08T17:36:38.998Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: StatusModel.getStatusHistoryByTicketId is not a function
+Stack: TypeError: StatusModel.getStatusHistoryByTicketId is not a function
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:40:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: c0f88660-c886-488f-b3c0-05a20bcd9816
+Timestamp: 2024-11-08T17:36:56.479Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: StatusModel.getStatusHistoryByTicketId is not a function
+Stack: TypeError: StatusModel.getStatusHistoryByTicketId is not a function
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:40:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 7686ed3b-eb6d-48fc-aa17-893e01103db0
+Timestamp: 2024-11-08T17:36:56.574Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: StatusModel.getStatusHistoryByTicketId is not a function
+Stack: TypeError: StatusModel.getStatusHistoryByTicketId is not a function
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:40:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: b06433cd-2577-4df0-a7a9-cc7a64d165bd
+Timestamp: 2024-11-08T17:38:01.860Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: statusModel.getStatusHistoryByTicketId is not a function
+Stack: TypeError: statusModel.getStatusHistoryByTicketId is not a function
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:41:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 517a03df-8c47-4a0d-9f78-ee07ce68cf87
+Timestamp: 2024-11-08T17:38:01.935Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: statusModel.getStatusHistoryByTicketId is not a function
+Stack: TypeError: statusModel.getStatusHistoryByTicketId is not a function
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:41:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 39830e41-661d-4157-a9fe-291e02bef76a
+Timestamp: 2024-11-08T17:38:59.862Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:41:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: e1b876fd-f08d-4f1b-a842-2b6b2a51fffe
+Timestamp: 2024-11-08T17:38:59.956Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:41:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 815ceaaf-93a5-4baa-bb55-060ea95a60c7
+Timestamp: 2024-11-08T17:39:02.958Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:41:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 0a226d71-6448-42c7-83b3-ec4b81300f36
+Timestamp: 2024-11-08T17:39:02.962Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at Status.getStatusHistoryByTicketId (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/status.model.js:102:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:41:25)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 70e03350-9a04-4dee-9de9-d215799e7f7b
+Timestamp: 2024-11-08T17:41:28.771Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:43:19)
+    at StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:49)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/routes/status.routes.js:15:26
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 42150d9d-9370-4a39-b005-36caf825ff37
+Timestamp: 2024-11-08T17:41:28.857Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:43:19)
+    at StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:49)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/routes/status.routes.js:15:26
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:24:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 38e728c6-c07f-496d-91df-0b7fce1242c7
+Timestamp: 2024-11-08T17:41:58.752Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 886d09a9-d7bf-492b-9420-5e8fee93bb7c
+Timestamp: 2024-11-08T17:41:58.844Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 8941b61b-ed29-4b7f-9985-57ca9b5cd269
+Timestamp: 2024-11-08T17:42:16.667Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:42:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 49e3cf8d-5332-4853-88e4-a9718fdb17fd
+Timestamp: 2024-11-08T17:42:16.752Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:42:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:63:29)
+
+Error ID: 62eed4dc-bd12-4c9f-b4fa-b74d3a76dc84
+Timestamp: 2024-11-14T15:54:38.688Z
+Error Type: HTTP POST Error
+Status Code: 403
+Message: Cuenta inactiva, contacte al administrador
+Stack: Error: Cuenta inactiva, contacte al administrador
+    at AuthService.login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/auth.service.js:17:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:8:27)
+

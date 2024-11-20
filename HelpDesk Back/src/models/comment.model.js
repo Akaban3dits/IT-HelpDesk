@@ -1,43 +1,26 @@
 import pool from '../config/db.js';
 
 class Comment {
-    async findById(comment_id) {
-        const result = await pool.query('SELECT * FROM comments WHERE comment_id = $1', [comment_id]);
+    async createComment(commentData) {
+        const { comment_text, ticket_id, user_id, parent_comment_id } = commentData;
+        const result = await db.query(
+            `INSERT INTO comments (comment_text, ticket_id, user_id, parent_comment_id, created_at)
+             VALUES ($1, $2, $3, $4, NOW()) RETURNING *`,
+            [comment_text, ticket_id, user_id, parent_comment_id]
+        );
         return result.rows[0];
     }
 
-    async findAllByTicket(ticket_id) {
-        const result = await pool.query('SELECT * FROM comments WHERE ticket_id = $1 ORDER BY created_at ASC', [ticket_id]);
+    async getCommentsByFriendlyCode(friendly_code) {
+        // Obtener el `ticket_id` mediante `friendly_code`
+        const ticket = await TicketModel.getTicketByFriendlyCode(friendly_code);
+        if (!ticket) throw new Error('Ticket no encontrado');
+
+        const result = await db.query(
+            `SELECT * FROM comments WHERE ticket_id = $1 ORDER BY created_at ASC`,
+            [ticket.id]
+        );
         return result.rows;
-    }
-
-    async create({ comment_text, created_at, ticket_id, user_id, parent_comment_id }) {
-        const result = await pool.query(
-            `INSERT INTO comments (comment_text, created_at, ticket_id, user_id, parent_comment_id)
-             VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [comment_text, created_at, ticket_id, user_id, parent_comment_id]
-        );
-        return result.rows[0];
-    }
-
-    async update(comment_id, { comment_text, created_at, ticket_id, user_id, parent_comment_id }) {
-        const result = await pool.query(
-            `UPDATE comments SET 
-                comment_text = $1,
-                created_at = $2,
-                ticket_id = $3,
-                user_id = $4,
-                parent_comment_id = $5
-            WHERE 
-                comment_id = $6 RETURNING *`,
-            [comment_text, created_at, ticket_id, user_id, parent_comment_id, comment_id]
-        );
-        return result.rows[0];
-    }
-
-    async delete(comment_id) {
-        const result = await pool.query('DELETE FROM comments WHERE comment_id = $1 RETURNING *', [comment_id]);
-        return result.rows[0];
     }
 }
 

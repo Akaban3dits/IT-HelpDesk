@@ -1,45 +1,53 @@
-import dotenv from 'dotenv'; // Carga variables de entorno desde un archivo .env
-import pkg from 'pg'; // Importa el paquete 'pg' para interactuar con PostgreSQL
-import fs from 'fs'; // Módulo para manejar el sistema de archivos
-import path from 'path'; // Módulo para manejar y transformar rutas de archivos
-import { fileURLToPath } from 'url'; // Para simular __dirname en módulos ES
-import handleError from '../middlewares/errorHandler.js'; // Importa tu error handler
+import dotenv from 'dotenv';
+import pkg from 'pg';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import handleError from '../middlewares/errorHandler.js';
 
-// Simular __dirname y __filename en un módulo ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config(); // Carga las variables de entorno del archivo .env
+dotenv.config();
 
-const { Pool, Client } = pkg; // Extrae Pool y Client del paquete 'pg'
+const { Pool, Client } = pkg;
 
-// Configuración de la conexión a la base de datos usando un pool de conexiones
+// Configuración del pool con parámetros adicionales para UTF-8
 const pool = new Pool({
-    user: process.env.DB_USER, // Usuario de la base de datos
-    host: process.env.DB_HOST, // Host de la base de datos
-    database: process.env.DB_NAME, // Nombre de la base de datos
-    password: process.env.DB_PASSWORD, // Contraseña del usuario de la base de datos
-    port: process.env.DB_PORT, // Puerto de la base de datos
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    // Añadimos configuración específica para UTF-8
+    options: `-c client_encoding=UTF8`,
+    // Configuración adicional para el manejo de caracteres
+    clientEncoding: 'utf-8'
 });
 
-// Función para verificar y crear la base de datos y las tablas si no existen
 const checkAndCreateDatabaseAndTables = async () => {
     const client = new Client({
         user: process.env.DB_USER,
         host: process.env.DB_HOST,
         password: process.env.DB_PASSWORD,
         port: process.env.DB_PORT,
+        // Añadimos configuración UTF-8 para el cliente inicial
+        options: `-c client_encoding=UTF8`
     });
 
     try {
         await client.connect();
-
+        
         // Verificar si la base de datos existe
-        const res = await client.query(`SELECT 1 FROM pg_database WHERE datname = '${process.env.DB_NAME}'`);
-        if (res.rows.length === 0) {
-            await client.query(`CREATE DATABASE ${process.env.DB_NAME}`);
-        }
+        const res = await client.query(`
+            SELECT 1 FROM pg_database WHERE datname = $1
+        `, [process.env.DB_NAME]);
 
+        if (res.rows.length === 0) {
+            // Crear base de datos con codificación UTF-8
+            await client.query(`CREATE DATABASE ${process.env.DB_NAME} ENCODING 'UTF8' LC_COLLATE 'en_US.UTF-8' LC_CTYPE 'en_US.UTF-8' TEMPLATE template0`);
+        }
+        
         await client.end();
 
         const dbClient = new Client({
@@ -48,9 +56,16 @@ const checkAndCreateDatabaseAndTables = async () => {
             database: process.env.DB_NAME,
             password: process.env.DB_PASSWORD,
             port: process.env.DB_PORT,
+            // Configuración UTF-8 para el cliente de la base de datos
+            options: `-c client_encoding=UTF8`
         });
+
         await dbClient.connect();
 
+        // Establecer codificación de cliente
+        await dbClient.query('SET client_encoding TO utf8');
+
+        // Leer y ejecutar el schema
         const schemaPath = path.join(__dirname, '../../db/schema.sql');
         const schemaSQL = fs.readFileSync(schemaPath, 'utf8');
 
@@ -62,20 +77,44 @@ const checkAndCreateDatabaseAndTables = async () => {
             }
         }
 
-        await dbClient.query('SELECT NOW() AS "theTime"');
+        // Verificar la configuración de codificación
+        await dbClient.query(`
+            SELECT current_setting('client_encoding') as encoding,
+                   current_setting('server_encoding') as server_encoding
+        `).then(result => {
+            console.log('Database encodings:', result.rows[0]);
+        });
 
         return dbClient;
-
     } catch (err) {
         handleError(err, null, null, null);
         process.exit(1);
     }
 };
 
-// Ejecutar la función de verificación y creación de la base de datos
-checkAndCreateDatabaseAndTables().then(dbClient => {
-    console.log('Base de datos lista y conexión activa.');
-}).catch(err => handleError(err, null, null, null));
+// Función para normalizar strings antes de guardarlos en la base de datos
+const normalizeString = (str) => {
+    if (typeof str !== 'string') return str;
+    return str.normalize('NFC');
+};
+
+// Middleware para normalizar los datos antes de las operaciones de base de datos
+pool.on('connect', (client) => {
+    const originalQuery = client.query.bind(client);
+    client.query = function (...args) {
+        // Si hay parámetros, normalizar strings
+        if (args[1] && Array.isArray(args[1])) {
+            args[1] = args[1].map(param => normalizeString(param));
+        }
+        return originalQuery(...args);
+    };
+});
+
+checkAndCreateDatabaseAndTables()
+    .then(dbClient => {
+        console.log('Base de datos lista y conexión activa con soporte UTF-8.');
+    })
+    .catch(err => handleError(err, null, null, null));
 
 // Conectar al pool de la base de datos
 pool.connect((err, client, release) => {

@@ -28,46 +28,9 @@ class Device {
             // Retornar las filas de resultados obtenidas
             return result.rows;
         } catch (error) {
-            // Manejar errores de consulta, lanzando el error para su manejo en el nivel superior
-            throw error;
+            throw new Error('Error al ejecutar la consulta en departamentos: ' + error.message);
         }
     }
-
-
-    //! Funcionalidades sin uso
-
-
-    async findAll() {
-        const result = await pool.query('SELECT * FROM devices');
-        return result.rows;
-    }
-
-    async findById(id) {
-        const result = await pool.query('SELECT * FROM devices WHERE id = $1', [id]);
-        return result.rows[0];
-    }
-
-    async create({ device_name, device_type_id }) {
-        const result = await pool.query(
-            'INSERT INTO devices (device_name, device_type_id) VALUES ($1, $2) RETURNING *',
-            [device_name, device_type_id]
-        );
-        return result.rows[0];
-    }
-
-    async update(id, { device_name, device_type_id }) {
-        const result = await pool.query(
-            'UPDATE devices SET device_name = $1, device_type_id = $2 WHERE id = $3 RETURNING *',
-            [device_name, device_type_id, id]
-        );
-        return result.rows[0];
-    }
-
-    async delete(id) {
-        const result = await pool.query('DELETE FROM devices WHERE id = $1 RETURNING *', [id]);
-        return result.rows[0];
-    }
-
 
 }
 
