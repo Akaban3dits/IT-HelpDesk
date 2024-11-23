@@ -35,7 +35,7 @@ class User {
 
             const offset = (page - 1) * limit;
             let query = `
-                SELECT users.id, users.friendly_code, users.first_name, users.last_name, users.email, users.phone_number, users.status, users.company,
+                SELECT users.friendly_code, users.first_name, users.last_name, users.email, users.phone_number, users.status, users.company,
                        roles.role_name, departments.department_name
                 FROM users
                 LEFT JOIN roles ON users.role_id = roles.id
@@ -141,9 +141,9 @@ class User {
 
     async getUserById(userId) {
         const result = await pool.query(
-            `SELECT id, friendly_code, first_name, last_name, email, phone_number, status, company, role_id, department_id 
+            `SELECT  friendly_code, first_name, last_name, email, phone_number, status, company, role_id, department_id 
              FROM users 
-             WHERE id = $1`,
+             WHERE friendly_code = $1`,
             [userId]
         );
         return result.rows[0];
@@ -206,7 +206,6 @@ class User {
     async getUserByFriendlyCode(friendly_code) {
         const result = await pool.query(`
             SELECT 
-                id, 
                 friendly_code, 
                 first_name, 
                 last_name, 
@@ -250,7 +249,7 @@ class User {
                 `UPDATE users 
                  SET password = $1 
                  WHERE friendly_code = $2 
-                 RETURNING id, friendly_code, first_name, last_name, email, phone_number, status, company, role_id, department_id`,
+                 RETURNING friendly_code, first_name, last_name, email, phone_number, status, company, role_id, department_id`,
                 [hashedPassword, friendly_code]
             );
 
@@ -268,7 +267,7 @@ class User {
     async getAssignableUsers(search = '') {
         try {
             let query = `
-                SELECT users.id, users.first_name, users.last_name
+                SELECT users.friendly_code, users.first_name, users.last_name
                 FROM users
                 JOIN roles ON users.role_id = roles.id
                 WHERE roles.role_name IN ('Administrador', 'Observador', 'Superadministrador')

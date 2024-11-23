@@ -20,14 +20,12 @@ router.get(
     '/tickets/:friendlyCode',
     authenticateToken,
     (req, res, next) => {
-        console.log("Hola");
         TicketController.getTicketByFriendlyCode(req, res, next);
     }
 );
 
 router.get('/tickets-monthly', authenticateToken, async (req, res, next) => {
     try {
-        console.log("Hola"); // Verificación de que la ruta está siendo llamada
         await TicketController.getMonthlyTicketCounts(req, res, next);
     } catch (error) {
         console.error("Error en /tickets/monthly:", error);

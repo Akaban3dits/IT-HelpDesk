@@ -12,6 +12,15 @@ class DeviceService {
         }
     }
 
+    async getById(id){
+        try {
+            const device = await DeviceModel.getDeviceById(id);
+            return device;
+        } catch (error) {
+            throw error;
+            
+        }
+    }
 }
 
 export default new DeviceService();

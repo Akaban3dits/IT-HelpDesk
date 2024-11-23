@@ -55,8 +55,6 @@ app.use('/uploads',
     (req, res, next) => {
         // Corregir la ruta completa al archivo
         const filePath = path.join(__dirname, '../uploads', req.url); 
-        console.log('Intentando acceder al archivo:', req.url);
-        console.log('Ruta completa en el sistema de archivos:', filePath);
 
         // Verificar si el archivo realmente existe
         fs.access(filePath, fs.constants.F_OK, (err) => {
@@ -64,14 +62,12 @@ app.use('/uploads',
                 console.error('Error: Archivo no encontrado:', filePath);
                 return res.status(404).json({ message: 'Archivo no encontrado' });
             } else {
-                console.log('Archivo encontrado:', filePath);
                 next(); // Procede solo si el archivo existe
             }
         });
     },
     express.static(path.join(__dirname, '../uploads'), {
         setHeaders: (res, path, stat) => {
-            console.log('Configurando headers CORS para:', path);
             res.set('Cross-Origin-Resource-Policy', 'cross-origin');
             res.set('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:3000');
         }

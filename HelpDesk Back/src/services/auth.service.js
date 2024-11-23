@@ -38,7 +38,7 @@ class AuthService {
         // Generación del token
         const token = jwt.sign(
             {
-                userId: user.id,
+                userId: user.friendly_code,
                 username: `${user.first_name} ${user.last_name}`,
                 role: {
                     id: role.id,

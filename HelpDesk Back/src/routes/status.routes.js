@@ -11,7 +11,6 @@ router.get(
     '/tickets/:friendlyCode/status-history',
     authenticateToken,
     (req, res, next) => {
-        console.log("Obteniendo historial de estados para friendlyCode:", req.params.friendlyCode);
         StatusController.getStatusHistoryByFriendlyCode(req, res, next);
     }
 );

@@ -20,7 +20,7 @@ class TicketService {
                 // Actualizar los attachments con el ID del ticket recién creado
                 const enrichedAttachments = attachments.map(attachment => ({
                     ...attachment,
-                    ticket_id: ticket.id
+                    ticket_id: ticket.friendly_code
                 }));
 
                 // Insertar los attachments en la base de datos
@@ -31,7 +31,7 @@ class TicketService {
             }
 
             // Obtener el ticket completo con sus attachments
-            const completeTicket = await this.getTicketById(ticket.id);
+            const completeTicket = await this.getTicketById(ticket.friendly_code);
             return completeTicket;
 
         } catch (error) {
@@ -136,7 +136,7 @@ class TicketService {
         }
 
         // Obtener los detalles completos de los attachments asociados al ticket
-        const attachments = await attachmentModel.getAttachmentsByTicketId(ticket.id);
+        const attachments = await attachmentModel.getAttachmentsByTicketId(ticket.friendly_code);
         return {
             ...ticket,
             attachments // Añade los archivos adjuntos completos al ticket
@@ -165,80 +165,70 @@ class TicketService {
 
     async updateTicketByFriendlyCode(friendlyCode, updateData) {
         try {
-            // Obtener el ticket actual para verificar el estado actual
+            // Obtener el ticket actual
             const currentTicket = await TicketModel.getTicketByFriendlyCode(friendlyCode);
             if (!currentTicket) {
                 throw new Error('El ticket no existe');
             }
     
-            // Convertir `status_name` a `status_id` solo si se proporciona `status_name`
-            if (updateData.status_name) {
-                updateData.status_id = await statusModel.getStatusIdByName(updateData.status_name);
-                if (!updateData.status_id) {
-                    throw new Error(`El estado "${updateData.status_name}" no existe en la base de datos`);
-                }
-                delete updateData.status_name; // Remover `status_name` después de obtener el ID
-            } else {
-                updateData.status_id = currentTicket.status_id; // Mantener el estado actual si no se envía
-            }
-    
-            // Convertir `priority_name` a `priority_id` solo si se proporciona `priority_name`
-            if (updateData.priority_name) {
-                updateData.priority_id = await priorityModel.getPriorityIdByName(updateData.priority_name);
-                if (!updateData.priority_id) {
-                    throw new Error(`La prioridad "${updateData.priority_name}" no existe en la base de datos`);
-                }
-                delete updateData.priority_name; // Remover `priority_name` después de obtener el ID
-            } else {
-                updateData.priority_id = currentTicket.priority_id; // Mantener la prioridad actual si no se envía
-            }
-    
-            // Si `assigned_user_id` no se proporciona, mantener el valor actual
-            updateData.assigned_user_id = updateData.assigned_user_id || currentTicket.assigned_user_id;
-    
-            // Obtener el ID correspondiente al estado "Cerrado"
-            const closedStatusId = await statusModel.getStatusIdByName('Cerrado');
-            if (!closedStatusId) {
-                throw new Error('No se pudo encontrar el estado "Cerrado" en la base de datos');
-            }
-    
-            // Actualizar la fecha de cierre si el estado cambia a "Cerrado"
-            let closedAt = currentTicket.closed_at; // Mantener el valor actual
-            let statusUpdated = false; // Bandera para verificar si el estado fue actualizado
-    
-            if (updateData.status_id !== currentTicket.status_id) {
-                statusUpdated = true; // Indica que el estado ha cambiado
-                if (updateData.status_id === closedStatusId) {
-                    closedAt = new Date(); // Asigna la fecha de cierre actual
-                }
-            }
-    
-            // Obtener el nombre del estado actual (antes de la actualización)
-            const currentStatusName = await statusModel.getStatusNameById(currentTicket.status_id);
-    
-            // Actualizar el ticket en el modelo
-            const updatedTicket = await TicketModel.updateByFriendlyCode(friendlyCode, {
-                ...updateData,
-                closed_at: closedAt,
+            // Preparar campos a actualizar
+            const fieldsToUpdate = {
+                title: updateData.title || currentTicket.title,
+                description: updateData.description || currentTicket.description,
+                status_id: currentTicket.status_id,
+                priority_id: currentTicket.priority_id,
+                assigned_user_id: updateData.assigned_user_id || currentTicket.assigned_user_id,
+                department_id: updateData.department_id || currentTicket.department_id,
+                closed_at: currentTicket.closed_at,
                 updated_at: new Date() // Actualiza `updated_at` con la fecha actual
-            });
+            };
     
-            // Llamar a status.create si el estado ha cambiado
-            if (statusUpdated) {
-                const newStatusName = await statusModel.getStatusNameById(updateData.status_id);
+            // Convertir `status_name` a `status_id` si es necesario
+            if (updateData.status_name) {
+                fieldsToUpdate.status_id = await statusModel.getStatusIdByName(updateData.status_name);
+                if (!fieldsToUpdate.status_id) {
+                    throw new Error(`El estado "${updateData.status_name}" no existe`);
+                }
+            }
+    
+            // Convertir `priority_name` a `priority_id` si es necesario
+            if (updateData.priority_name) {
+                fieldsToUpdate.priority_id = await priorityModel.getPriorityIdByName(updateData.priority_name);
+                if (!fieldsToUpdate.priority_id) {
+                    throw new Error(`La prioridad "${updateData.priority_name}" no existe`);
+                }
+            }
+    
+            // Actualizar fecha de cierre si el estado cambia a "Cerrado"
+            const closedStatusId = await statusModel.getStatusIdByName('Cerrado');
+            if (fieldsToUpdate.status_id !== currentTicket.status_id) {
+                if (fieldsToUpdate.status_id === closedStatusId) {
+                    fieldsToUpdate.closed_at = new Date();
+                } else {
+                    fieldsToUpdate.closed_at = null; // Limpiar la fecha de cierre si ya no está cerrado
+                }
+            }
+    
+            // Actualizar ticket en la base de datos
+            const updatedTicket = await TicketModel.updateByFriendlyCode(friendlyCode, fieldsToUpdate);
+    
+            // Registrar cambio de estado (si aplica)
+            if (fieldsToUpdate.status_id !== currentTicket.status_id) {
                 await statusModel.create(
-                    updatedTicket.id,
-                    currentStatusName, // Estado anterior en formato de nombre
-                    newStatusName, // Nombre del nuevo estado
-                    updateData.assigned_user_id // Usuario que realizó el cambio
+                    friendlyCode,
+                    await statusModel.getStatusNameById(currentTicket.status_id), // Estado anterior
+                    await statusModel.getStatusNameById(fieldsToUpdate.status_id), // Nuevo estado
+                    updateData.updated_by || null // Usuario que realizó el cambio
                 );
             }
     
             return updatedTicket; // Retornar el ticket actualizado
         } catch (error) {
-            throw error; // Lanza el error para que el controlador lo capture
+            console.error('Error en updateTicketByFriendlyCode:', error.message);
+            throw new Error('Error al actualizar el ticket: ' + error.message);
         }
     }
+    
     
 }
 

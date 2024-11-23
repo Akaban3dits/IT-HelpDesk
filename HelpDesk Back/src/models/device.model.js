@@ -28,9 +28,26 @@ class Device {
             // Retornar las filas de resultados obtenidas
             return result.rows;
         } catch (error) {
-            throw new Error('Error al ejecutar la consulta en departamentos: ' + error.message);
+            throw new Error('Error al ejecutar la consulta: ' + error.message);
         }
     }
+
+    async getDeviceById(id) {
+        try {
+            const query = `
+                SELECT d.device_name, dt.type_code
+                FROM devices d
+                JOIN device_types dt ON d.device_type_id = dt.id
+                WHERE d.id = $1
+            `;
+            const result = await pool.query(query, [id]);
+            return result.rows[0] || null;
+        } catch (error) {
+            console.error('Error al obtener el dispositivo:', error.message);
+            throw new Error('Error al obtener el dispositivo');
+        }
+    }
+    
 
 }
 

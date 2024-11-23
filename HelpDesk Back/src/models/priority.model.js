@@ -5,7 +5,6 @@ class Priority {
     //*Funcion en uso
     async findAll() {
         try {
-            console.log("result.rows")
             const result = await pool.query('SELECT * FROM priority');
             return result.rows;
         } catch (error) {

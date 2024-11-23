@@ -772,3 +772,1377 @@ Stack: Error: Cuenta inactiva, contacte al administrador
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:8:27)
 
+Error ID: 8432a78a-28f4-42fb-a621-c84c07ff9713
+Timestamp: 2024-11-20T16:03:01.560Z
+Error Type: General Error
+Status Code: 500
+Message: Error al conectar a la base de datos
+Stack: Error: Error al conectar a la base de datos
+    at PendingItem.callback (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/config/db.js:122:21)
+    at Client._connectionCallback (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:254:23)
+    at Client._handleErrorWhileConnecting (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:327:19)
+    at Client._handleErrorMessage (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:347:19)
+    at Connection.emit (node:events:514:28)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\connection.js:117:12
+    at Parser.parse (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\parser.js:36:17)
+    at Socket.<anonymous> (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\index.js:11:42)
+    at Socket.emit (node:events:514:28)
+    at addChunk (node:internal/streams/readable:324:12)
+
+Error ID: 370e2196-1c25-41fb-b464-8f2c7584b3a8
+Timestamp: 2024-11-20T16:03:34.880Z
+Error Type: General Error
+Status Code: 500
+Message: Error al conectar a la base de datos
+Stack: Error: Error al conectar a la base de datos
+    at PendingItem.callback (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/config/db.js:122:21)
+    at Client._connectionCallback (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:254:23)
+    at Client._handleErrorWhileConnecting (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:327:19)
+    at Client._handleErrorMessage (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:347:19)
+    at Connection.emit (node:events:514:28)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\connection.js:117:12
+    at Parser.parse (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\parser.js:36:17)
+    at Socket.<anonymous> (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\index.js:11:42)
+    at Socket.emit (node:events:514:28)
+    at addChunk (node:internal/streams/readable:324:12)
+
+Error ID: 592af0a3-ae7b-46df-9273-1aacdf5fa567
+Timestamp: 2024-11-20T16:35:20.458Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: ef3d6995-163d-4252-87dd-8f5a4ef6bd5a
+Timestamp: 2024-11-20T16:35:20.543Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: 8dc739ea-9809-40bd-be16-2070dbd1dfe5
+Timestamp: 2024-11-20T16:36:45.873Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: 2e4c1e47-c624-4010-894b-f598bc62f76a
+Timestamp: 2024-11-20T16:36:45.970Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: df89dc32-c467-4d68-8580-c85f2697900e
+Timestamp: 2024-11-20T16:40:43.856Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: da5f2d67-1a53-43b1-89c8-4a594f4b604e
+Timestamp: 2024-11-20T16:40:43.863Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: 8b1759b6-8405-4d3c-8a47-ea86235d11f0
+Timestamp: 2024-11-20T16:40:50.728Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: c408165e-83e3-4ddf-bfe4-2785a75427e0
+Timestamp: 2024-11-20T16:40:50.735Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: 7d84cf3d-ba83-466b-9f77-618af642be14
+Timestamp: 2024-11-20T16:43:08.720Z
+Error Type: General Error
+Status Code: 500
+Message: Error al conectar a la base de datos
+Stack: Error: Error al conectar a la base de datos
+    at PendingItem.callback (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/config/db.js:76:21)
+    at Client._connectionCallback (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:254:23)
+    at Client._handleErrorWhileConnecting (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:327:19)
+    at Client._handleErrorMessage (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:347:19)
+    at Connection.emit (node:events:514:28)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\connection.js:117:12
+    at Parser.parse (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\parser.js:36:17)
+    at Socket.<anonymous> (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\index.js:11:42)
+    at Socket.emit (node:events:514:28)
+    at addChunk (node:internal/streams/readable:324:12)
+
+Error ID: 2a906e95-7a65-4fe5-bea9-7ef98e5ae3ec
+Timestamp: 2024-11-20T16:43:14.654Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: fe2b138c-9218-4633-99a7-d4d18ac36dad
+Timestamp: 2024-11-20T16:43:14.679Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 2e1af8d0-54e1-4a36-a841-8a12773c2a14
+Timestamp: 2024-11-20T16:43:14.715Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 3a5f91f1-4ae9-4179-8676-9029424f223a
+Timestamp: 2024-11-20T16:43:14.740Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 24b12590-86f3-4a3c-afb2-60b9cbcb0869
+Timestamp: 2024-11-20T16:43:14.756Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: d106cf9a-f6b6-4a6b-8df0-84b881ce737a
+Timestamp: 2024-11-20T16:43:14.833Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 9a7152ba-562d-451c-b1c9-8a5f73958f3b
+Timestamp: 2024-11-20T16:43:15.948Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 81f1b8ab-17b1-45a1-bea7-ee8532f4b1c8
+Timestamp: 2024-11-20T16:43:17.208Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: e9d37ffc-0a78-4933-b050-35f4acc9e2f4
+Timestamp: 2024-11-20T16:43:18.368Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: b2636690-ed53-4b77-91bd-b22d90e37787
+Timestamp: 2024-11-20T16:43:19.012Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 609ba954-0ed3-4774-ba81-06a13b9b8602
+Timestamp: 2024-11-20T16:43:20.534Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: c7e85deb-12e5-4533-b76f-0db144548b31
+Timestamp: 2024-11-20T16:43:20.551Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 40a8aa51-7af6-4946-ac01-5d74cb39699b
+Timestamp: 2024-11-20T16:43:22.396Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: c436ec26-7cd0-4c71-a140-442410189bec
+Timestamp: 2024-11-20T16:43:22.532Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: aa5f3689-cf61-48f0-92e1-8a200135fe83
+Timestamp: 2024-11-20T16:43:22.741Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 1d536e9b-97d5-47e0-b27a-d3ab4494fba6
+Timestamp: 2024-11-20T16:43:24.039Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 37edef21-a90f-4b2c-bb14-c2975ff44da4
+Timestamp: 2024-11-20T16:45:13.101Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 3ca54886-2109-4be2-a077-91b996062d2f
+Timestamp: 2024-11-20T16:45:13.127Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: ac1cbb71-e30e-46c7-8308-39d47237ec00
+Timestamp: 2024-11-20T16:45:13.169Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 094a1b26-7104-476a-b8fc-7969ae680a72
+Timestamp: 2024-11-20T16:45:13.215Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: f678b5eb-0df9-4dc8-ba3c-eb178f082c5a
+Timestamp: 2024-11-20T16:45:13.222Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: a9698642-69a0-4cb9-9cc1-3e0f39534bf1
+Timestamp: 2024-11-20T16:45:13.286Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 12dfc119-380a-48dd-918d-e51a5b0d8f94
+Timestamp: 2024-11-20T16:46:05.532Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al buscar el usuario por correo: no existe la relación «users»
+Stack: Error: Error al buscar el usuario por correo: no existe la relación «users»
+    at User.getUserByEmail (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/user.model.js:15:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AuthService.login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/auth.service.js:8:22)
+    at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:8:27)
+
+Error ID: d99e8a54-bcb1-465c-92c6-1e758b8264d0
+Timestamp: 2024-11-20T16:46:25.343Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: fa850118-13ce-41c1-84a4-59bbc7e6a8a8
+Timestamp: 2024-11-20T16:46:25.409Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: a724e3f9-b804-4c51-8405-5a5e351fbf04
+Timestamp: 2024-11-20T16:46:25.414Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: a02a36f8-061b-4cc2-8861-e9af2eda7007
+Timestamp: 2024-11-20T16:46:25.437Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 911d7553-d180-43ba-9676-dd0d03d965dc
+Timestamp: 2024-11-20T16:46:25.458Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 79c162cb-2821-4d78-97c3-93211c678867
+Timestamp: 2024-11-20T16:46:25.550Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+Stack: Error: Error al ejecutar la consulta en departamentos: no existe la relación «departments»
+    at Department.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/department.model.js:43:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DepartmentService.searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/department.service.js:8:20)
+    at async searchDepartments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/department.controller.js:11:33)
+
+Error ID: 74294114-3661-4e29-a9d5-12825d263967
+Timestamp: 2024-11-20T16:47:32.632Z
+Error Type: General Error
+Status Code: 500
+Message: Error al conectar a la base de datos
+Stack: Error: Error al conectar a la base de datos
+    at PendingItem.callback (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/config/db.js:76:21)
+    at Client._connectionCallback (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:254:23)
+    at Client._handleErrorWhileConnecting (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:327:19)
+    at Client._handleErrorMessage (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\client.js:347:19)
+    at Connection.emit (node:events:514:28)
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg\lib\connection.js:117:12
+    at Parser.parse (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\parser.js:36:17)
+    at Socket.<anonymous> (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-protocol\dist\index.js:11:42)
+    at Socket.emit (node:events:514:28)
+    at addChunk (node:internal/streams/readable:324:12)
+
+Error ID: 462085f9-e06f-494a-81ee-6e853734bed3
+Timestamp: 2024-11-20T17:49:02.001Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna users.id
+Stack: error: no existe la columna users.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: 77a503cb-96a9-46ee-a189-bc5e3f2c61d6
+Timestamp: 2024-11-20T17:49:02.182Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna users.id
+Stack: error: no existe la columna users.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: a6ce3d47-2680-4516-b18f-4091d58ea059
+Timestamp: 2024-11-20T17:54:23.344Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna users.id
+Stack: error: no existe la columna users.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: 92b7eb60-ab01-4f65-9343-8c2f828ea02e
+Timestamp: 2024-11-20T17:54:23.365Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna users.id
+Stack: error: no existe la columna users.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: b437a5ab-e075-4d2d-a754-301621d3e9c0
+Timestamp: 2024-11-20T17:55:35.966Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna users.id
+Stack: error: no existe la columna users.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: 64c5e6b2-5cf8-44d5-8f8b-b71f354a1275
+Timestamp: 2024-11-20T17:55:36.218Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna users.id
+Stack: error: no existe la columna users.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: 895c4fb8-203d-4ca4-b6c2-3be34a8fb10d
+Timestamp: 2024-11-20T17:56:36.650Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna tickets.id
+Stack: error: no existe la columna tickets.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: 867ccf11-1d16-4c54-a0a6-e88ca2c7e392
+Timestamp: 2024-11-20T17:56:36.666Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna tickets.id
+Stack: error: no existe la columna tickets.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:176:28)
+    at async TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:112:28)
+    at async gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:75:32)
+
+Error ID: b06186f0-67c6-41dc-b065-b4a25804a28f
+Timestamp: 2024-11-20T17:59:41.418Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+Stack: Error: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:46:28)
+
+Error ID: 009bac72-066e-4e62-8da1-6a300b297f4e
+Timestamp: 2024-11-20T18:04:01.125Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+Stack: Error: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:46:28)
+
+Error ID: 486cecbc-88b7-480c-ab1f-9351d2ab9a21
+Timestamp: 2024-11-20T18:04:03.989Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+Stack: Error: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:46:28)
+
+Error ID: 6f7d6885-b43e-451b-9a4d-617254f3f716
+Timestamp: 2024-11-20T18:04:31.928Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+Stack: Error: Error al crear el ticket: el valor nulo en la columna «ticket_id» de la relación «attachments» viola la restricción de no nulo
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:46:28)
+
+Error ID: 1a9f8981-4c80-473e-ba3d-21b55e08e7d2
+Timestamp: 2024-11-20T18:06:13.787Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: no existe la columna u1.id
+Stack: Error: Error al crear el ticket: no existe la columna u1.id
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:35:28)
+
+Error ID: 84835ea7-3650-46b5-a2be-ce976ce80853
+Timestamp: 2024-11-20T18:06:16.570Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: no existe la columna u1.id
+Stack: Error: Error al crear el ticket: no existe la columna u1.id
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:35:28)
+
+Error ID: f7840f32-22b7-4d26-8ece-daafe391cc3f
+Timestamp: 2024-11-20T18:13:09.403Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: no existe la columna u1.id
+Stack: Error: Error al crear el ticket: no existe la columna u1.id
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: 5fe87b79-d643-4a3b-8974-adfa9fc5d983
+Timestamp: 2024-11-20T18:13:11.906Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: no existe la columna u1.id
+Stack: Error: Error al crear el ticket: no existe la columna u1.id
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: 0c0f1fb8-e83f-40bf-bc19-a2d92e4cda40
+Timestamp: 2024-11-20T18:14:28.441Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:216:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:101:28)
+
+Error ID: f28e3f5d-4d01-443f-9319-171426aed1ab
+Timestamp: 2024-11-20T18:14:28.444Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:216:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:101:28)
+
+Error ID: 6be172ad-d78e-4ee5-8063-c07571ba44c4
+Timestamp: 2024-11-20T18:15:30.193Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: no existe la columna u1.id
+Stack: Error: Error al crear el ticket: no existe la columna u1.id
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: 53b690bb-822b-44b9-821d-b2f8f22859dc
+Timestamp: 2024-11-20T18:16:18.607Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Ticket no encontrado
+Stack: Error: Error al crear el ticket: Ticket no encontrado
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: 93b4bf78-f69d-4aa3-943d-4d1749abb06f
+Timestamp: 2024-11-20T18:16:24.745Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Ticket no encontrado
+Stack: Error: Error al crear el ticket: Ticket no encontrado
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: a5e1d100-9682-4773-ac8b-f6a6b7c6fef2
+Timestamp: 2024-11-20T18:17:27.908Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:216:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:101:28)
+
+Error ID: 3997e2d2-f63a-4eb3-85a1-66bbc21d526e
+Timestamp: 2024-11-20T18:17:27.915Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:216:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:101:28)
+
+Error ID: caf3bfa7-eb0f-4404-8fcb-059f94fc5ff7
+Timestamp: 2024-11-20T18:18:07.622Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Ticket no encontrado
+Stack: Error: Error al crear el ticket: Ticket no encontrado
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: 227e794a-367f-4261-881b-678b4b63358d
+Timestamp: 2024-11-20T18:19:48.477Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Ticket no encontrado
+Stack: Error: Error al crear el ticket: Ticket no encontrado
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: b0199933-72c2-4815-8fc3-c5d319613488
+Timestamp: 2024-11-20T18:21:11.542Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: el mensaje de «bind» entrega 11 parámetros, pero la sentencia preparada «» requiere 10
+Stack: Error: Error al crear el ticket: el mensaje de «bind» entrega 11 parámetros, pero la sentencia preparada «» requiere 10
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: 31e8775f-44c0-477e-9f05-d8805a4a8358
+Timestamp: 2024-11-20T18:21:39.067Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Ticket no encontrado
+Stack: Error: Error al crear el ticket: Ticket no encontrado
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:48:28)
+
+Error ID: 8dfcad0b-5105-47f1-b43d-e4aa51507edc
+Timestamp: 2024-11-20T18:22:54.136Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:101:28)
+
+Error ID: 7d797198-35f2-47fb-8c97-ce1cb5b9905b
+Timestamp: 2024-11-20T18:22:54.146Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:101:28)
+
+Error ID: 0f67bd97-5041-4958-b6f7-f8ee31cdac66
+Timestamp: 2024-11-20T18:46:19.275Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:113:28)
+
+Error ID: dbff1c03-2334-4cf9-b4d0-301d7fa07e8c
+Timestamp: 2024-11-20T18:46:19.282Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u1.id
+Stack: error: no existe la columna u1.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:113:28)
+
+Error ID: 79f1517c-5abc-4164-b109-d16a8626ab3f
+Timestamp: 2024-11-20T18:47:38.346Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u3.id
+Stack: error: no existe la columna u3.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:113:28)
+
+Error ID: 0bf94d42-160a-4271-8b44-407eef7e0986
+Timestamp: 2024-11-20T18:47:38.363Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u3.id
+Stack: error: no existe la columna u3.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:113:28)
+
+Error ID: 42e248f1-2040-40b8-99a7-740d28e72549
+Timestamp: 2024-11-20T18:47:58.333Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u3.id
+Stack: error: no existe la columna u3.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:113:28)
+
+Error ID: 3149fa99-f14d-48b2-a02d-a2494e600019
+Timestamp: 2024-11-20T18:47:58.347Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u3.id
+Stack: error: no existe la columna u3.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.findByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:218:24)
+    at async TicketService.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:133:24)
+    at async TicketController.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:113:28)
+
+Error ID: 27bf0f1b-5b2c-4785-a906-91d9bebcd84b
+Timestamp: 2024-11-20T18:52:41.790Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u.id
+Stack: error: no existe la columna u.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:345:28)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:169:35)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:145:35)
+
+Error ID: 4db69921-3464-49e5-be11-5c3972e9d1bf
+Timestamp: 2024-11-20T19:01:06.362Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: INSERT tiene más columnas de destino que expresiones
+Stack: Error: Error al crear el ticket: INSERT tiene más columnas de destino que expresiones
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:57:28)
+
+Error ID: 88a0069a-72ad-4d7f-8d40-5e684cf28490
+Timestamp: 2024-11-20T19:08:23.050Z
+Error Type: Database Error
+Status Code: 500
+Message: no existe la columna u.id
+Stack: error: no existe la columna u.id
+    at C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Ticket.getTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:351:28)
+    at async TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:169:35)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:145:35)
+
+Error ID: 5e80467e-3eaa-4e24-859f-6e7a491fba1b
+Timestamp: 2024-11-20T19:21:21.445Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: Error al actualizar el ticket: statusModel.create is not a function
+Stack: Error: Error al actualizar el ticket: statusModel.create is not a function
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:228:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:145:35)
+
+Error ID: 751df48c-956b-4049-a0a0-26c8c8974f70
+Timestamp: 2024-11-20T19:21:32.894Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: Error al actualizar el ticket: statusModel.create is not a function
+Stack: Error: Error al actualizar el ticket: statusModel.create is not a function
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:228:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:145:35)
+
+Error ID: 86cf2823-1387-4a6b-aed8-f2c30089b900
+Timestamp: 2024-11-20T19:21:41.022Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: Error al actualizar el ticket: statusModel.create is not a function
+Stack: Error: Error al actualizar el ticket: statusModel.create is not a function
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:228:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:145:35)
+
+Error ID: 26e4a3a7-aa07-4339-b3c5-ed660b7ac8dc
+Timestamp: 2024-11-20T19:21:42.216Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: 3a4a10d8-6832-4833-ae7f-279efd5d03fa
+Timestamp: 2024-11-20T19:21:42.227Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: fcfe04b9-a956-4211-a4f3-03dac4cc15d0
+Timestamp: 2024-11-20T19:22:25.039Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: 2ea7ba9b-6132-4241-b87f-2b1ec84f78a2
+Timestamp: 2024-11-20T19:22:25.050Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: cf1f9361-2fa8-4191-9462-7fe07d53686c
+Timestamp: 2024-11-20T19:24:07.718Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: Error al actualizar el ticket: No se pudo registrar el cambio de estado: el valor nulo en la columna «changed_by_user_id» de la relación «status_history» viola la restricción de no nulo
+Stack: Error: Error al actualizar el ticket: No se pudo registrar el cambio de estado: el valor nulo en la columna «changed_by_user_id» de la relación «status_history» viola la restricción de no nulo
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:228:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:145:35)
+
+Error ID: eda6a701-dd8c-4b55-a737-89eb1684097c
+Timestamp: 2024-11-20T19:32:24.898Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: d365022f-d5ba-405d-b211-3a1651a24635
+Timestamp: 2024-11-20T19:32:25.093Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: No se pudo obtener el historial de estados
+Stack: Error: No se pudo obtener el historial de estados
+    at StatusService.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/status.service.js:19:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async StatusController.getStatusHistoryByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/status.controller.js:19:29)
+
+Error ID: f7cf339b-89ed-4e9a-987d-55c290db464e
+Timestamp: 2024-11-20T20:23:03.719Z
+Error Type: HTTP POST Error
+Status Code: 401
+Message: Credenciales inválidas
+Stack: Error: Credenciales inválidas
+    at AuthService.login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/auth.service.js:10:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/auth.controller.js:8:27)
+
+Error ID: 6302b80d-290d-4160-af62-94f6ffd5c613
+Timestamp: 2024-11-20T21:52:58.283Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: b9ff54cf-4ac4-41c8-9da3-da5ac15d86ae
+Timestamp: 2024-11-20T21:52:58.408Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: ae9585c1-7643-4874-a0a6-279bbb9fcff1
+Timestamp: 2024-11-20T21:53:10.166Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: f3a16e64-0f08-445a-b66a-43701566bfe1
+Timestamp: 2024-11-20T21:53:10.235Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:18:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:30)
+
+Error ID: b5fa6788-2fdc-4888-b534-662516cb4879
+Timestamp: 2024-11-20T21:53:15.650Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: TicketService is not defined
+Stack: ReferenceError: TicketService is not defined
+    at createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:11:28)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:38:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: d3c4e341-919f-43bc-a321-fb4eed0a4a76
+Timestamp: 2024-11-20T21:57:12.329Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario
+Stack: Error: Error al crear el comentario
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:10:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: ba812523-c1d1-42f1-822e-f93e6a1d937f
+Timestamp: 2024-11-20T21:59:02.598Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario: db is not defined
+Stack: Error: Error al crear el comentario: db is not defined
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:11:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: 373d3b2b-c393-4cf1-835e-2a334496c6c0
+Timestamp: 2024-11-20T21:59:45.196Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario: db is not defined
+Stack: Error: Error al crear el comentario: db is not defined
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:11:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: b57931b4-2ab9-4aca-9f3c-2a6975135cbb
+Timestamp: 2024-11-20T21:59:55.749Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario: db is not defined
+Stack: Error: Error al crear el comentario: db is not defined
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:11:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: bbaf34b0-8ef0-4c6e-9a64-69cbf88d5c36
+Timestamp: 2024-11-20T22:00:37.999Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+Stack: Error: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:11:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: 087bd050-2cbe-4cab-9877-1d5e23dd1729
+Timestamp: 2024-11-20T22:01:54.978Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:21:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: da1a9c1f-892e-4c9b-84e3-1e7bfa87fe7f
+Timestamp: 2024-11-20T22:01:55.850Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+Stack: Error: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:11:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: 4ecceca0-d8b3-4007-b9e6-5500752acc43
+Timestamp: 2024-11-20T22:02:10.855Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:21:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 764d0383-b464-4be4-816e-2ac6b95fdd2c
+Timestamp: 2024-11-20T22:02:10.864Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:21:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 57309e01-e43d-4a80-bd1d-182642dc8dc0
+Timestamp: 2024-11-20T22:02:12.997Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+Stack: Error: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:11:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: 824bcba9-bb75-44d9-a63a-9b117baf1ef1
+Timestamp: 2024-11-20T22:03:43.255Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+Stack: Error: Error al crear el comentario: el valor nulo en la columna «ticket_id» de la relación «comments» viola la restricción de no nulo
+    at CommentService.createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:11:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:32:32)
+
+Error ID: f89c8701-eb7e-4fd8-92cb-06521df23bc5
+Timestamp: 2024-11-20T22:04:36.452Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:21:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: e2354060-ee85-4ecd-8f5e-205228501723
+Timestamp: 2024-11-20T22:04:36.468Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al crear el comentario: ReferenceError: TicketModel is not defined
+Stack: Error: Error al crear el comentario: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:21:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: aba8aedc-2624-40bd-adb0-7f3a0201a56c
+Timestamp: 2024-11-20T22:08:22.846Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 125b0c14-5ead-45e7-a225-26aed2db5b87
+Timestamp: 2024-11-20T22:09:53.372Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 492368c5-a1c5-42dd-b53e-e694d3660c85
+Timestamp: 2024-11-20T22:09:53.377Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 7e5fd1c4-85d2-465e-834b-26cdc5b124ce
+Timestamp: 2024-11-20T22:10:22.857Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: fafc390b-37eb-4bb2-ae1c-68879ef9f137
+Timestamp: 2024-11-20T22:10:26.001Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 45804719-a8f3-4e38-80d6-5cdf8e588840
+Timestamp: 2024-11-20T22:10:26.016Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: TicketModel is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 47644d08-8481-4ce8-8d73-72e1bddfa847
+Timestamp: 2024-11-20T22:12:40.388Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: db is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: db is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: ee9b2111-6e11-4626-8d19-ad2ed1c49c24
+Timestamp: 2024-11-20T22:12:40.585Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: db is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: db is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 5ee2cb9c-3844-40a3-8953-cbc116cda685
+Timestamp: 2024-11-20T22:12:53.087Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: ticket is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: ticket is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 00ad00b1-8353-45e7-a26a-031f5cbbc013
+Timestamp: 2024-11-20T22:12:53.108Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: ticket is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: ticket is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 0c3bfea7-3393-43ee-8fe5-f3030e1acafa
+Timestamp: 2024-11-20T22:13:03.677Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: ticket is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: ticket is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: 63abaf25-1f4f-487d-aada-9cc4006e4e9b
+Timestamp: 2024-11-20T22:13:03.681Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: Error al obtener los comentarios: ReferenceError: ticket is not defined
+Stack: Error: Error al obtener los comentarios: ReferenceError: ticket is not defined
+    at CommentService.getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getComments (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:44:30)
+
+Error ID: eb3d01e0-18f9-48d4-a7b4-0df961905ec1
+Timestamp: 2024-11-20T22:26:13.254Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: CommentService.getCommentById is not a function
+Stack: TypeError: CommentService.getCommentById is not a function
+    at createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:16:60)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 463c3591-d79f-4a4b-9e18-733c0f105a4c
+Timestamp: 2024-11-21T15:05:50.671Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «hola»
+Stack: Error: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «hola»
+    at CommentService.getCommentById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
+
+Error ID: 0640720a-cceb-4772-bbb4-e26fd5cd6d47
+Timestamp: 2024-11-21T15:05:55.708Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+Stack: Error: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+    at CommentService.getCommentById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
+
+Error ID: c9316bde-e7b8-4ead-b350-142da96c0ab2
+Timestamp: 2024-11-21T15:06:22.649Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+Stack: Error: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+    at CommentService.getCommentById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
+
+Error ID: 2af347b5-5b9a-466e-9431-66e965a0666f
+Timestamp: 2024-11-21T15:06:31.795Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+Stack: Error: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+    at CommentService.getCommentById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
+
+Error ID: 6d80a078-8839-4114-b496-7c4b101ea8f3
+Timestamp: 2024-11-21T15:06:54.185Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+Stack: Error: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+    at CommentService.getCommentById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
+
+Error ID: f5af1428-6f23-4104-ae88-35b1d8660fe0
+Timestamp: 2024-11-21T15:07:13.189Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «s»
+Stack: Error: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «s»
+    at CommentService.getCommentById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
+
+Error ID: a39a899f-49bf-41de-9a3a-5d05e1a642e5
+Timestamp: 2024-11-21T15:08:09.377Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+Stack: Error: Error al obtener el comentario por ID: Error al obtener el comentario por ID: la sintaxis de entrada no es válida para tipo bigint: «a»
+    at CommentService.getCommentById (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/comment.service.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
+

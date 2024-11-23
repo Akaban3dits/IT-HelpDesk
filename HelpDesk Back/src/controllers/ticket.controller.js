@@ -2,15 +2,15 @@
 import TicketService from '../services/ticket.service.js';
 import UserService from '../services/user.service.js';
 import uploadConfig from '../config/multerConfig.js';
+import deviceService from '../services/device.service.js';
 
 class TicketController {
     async createTicket(req, res, next) {
         try {
             // Obtiene el ID del usuario autenticado desde el token
-            const createdBy = req.user.id;
-
-            // Genera un código amigable para el ticket
-            const friendlyCode = this.generateFriendlyCode();
+            const createdBy = req.user.id; 
+            const createdByName = req.user.username; 
+    
             // Procesa archivos subidos
             let attachments = [];
             if (req.files && req.files.length > 0) {
@@ -22,39 +22,53 @@ class TicketController {
                     is_image: uploadConfig.isImage(file.mimetype)
                 }));
             }
-
+    
             // Verificar si el usuario asignado existe
-            const { assigned_user_id } = req.body;
+            const { assigned_user_id, device_id } = req.body;
             if (assigned_user_id) {
                 const assignedUser = await UserService.getUserById(assigned_user_id);
                 if (!assignedUser) {
                     return res.status(400).json({ error: 'El usuario asignado no existe.' });
                 }
             }
-
+    
+            // Obtener el type_code del dispositivo
+            const device = await deviceService.getById(device_id);
+            if (!device) {
+                return res.status(400).json({ error: 'El dispositivo especificado no existe.' });
+            }
+            const typeCode = device.type_code;
+    
+            // Generar el friendly_code utilizando el type_code
+            const friendlyCode = this.generateFriendlyCode(typeCode);
+    
             // Agrega los datos adicionales necesarios
             const ticketData = {
                 ...req.body,
                 created_by: createdBy,
+                created_by_name: createdByName,
                 updated_by: createdBy,
                 friendly_code: friendlyCode,
                 created_at: new Date(),
                 closed_at: null
             };
-
+    
             // Crear el ticket con los datos y los adjuntos confirmados
             const ticket = await TicketService.createTicket(ticketData, attachments);
-
+    
             return res.status(201).json(ticket);
         } catch (error) {
             console.error('Error al crear el ticket:', error);
             next(error); // Enviar el error al middleware de manejo de errores
         }
     }
-
-    generateFriendlyCode() {
-        return `TCKT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    
+    generateFriendlyCode(typeCode) {
+        const timestamp = Date.now(); // Timestamp actual en milisegundos
+        const randomPart = Math.random().toString(36).substr(2, 6).toUpperCase(); // Código aleatorio alfanumérico
+        return `TCKT-${typeCode}${timestamp}-${randomPart}`;
     }
+    
 
     // Controlador
     async gettickets(req, res, next) {
@@ -126,7 +140,7 @@ class TicketController {
             const { friendlyCode } = req.params; // Obtener el código amigable del ticket desde los parámetros de la URL
             const { status_name, priority_name, assigned_user_id } = req.body; // Obtener los datos de actualización del cuerpo de la solicitud
             const updatedBy = req.user.id; // ID del usuario que hace la actualización
-    
+
             // Llama al servicio para actualizar el ticket usando nombres
             const updatedTicket = await TicketService.updateTicketByFriendlyCode(friendlyCode, {
                 status_name,
@@ -134,16 +148,16 @@ class TicketController {
                 assigned_user_id,
                 updated_by: updatedBy // Incluye el ID del usuario que está actualizando
             });
-    
+
             return res.status(200).json(updatedTicket); // Retorna el ticket actualizado en formato JSON
         } catch (error) {
             console.error('Error al actualizar el ticket:', error); // Log de error para depuración
             next(error); // Enviar el error al middleware de manejo de errores
         }
     }
-    
-    
-    
+
+
+
 
 }
 

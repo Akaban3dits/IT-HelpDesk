@@ -1,28 +1,47 @@
 import jwt from 'jsonwebtoken';
-import UserService from '../services/user.service.js'; // Asegúrate de importar tu UserService
+import UserService from '../services/user.service.js'; // Asegúrate de que esté correctamente importado
 
 const authenticateToken = async (req, res, next) => {
-    const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
-    if (!token) return res.sendStatus(401);
-
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-        if (err) return res.sendStatus(403);
-
-        // Verificar si el usuario existe y está activo
-        const user = await UserService.getUserById(decodedToken.userId);
-        if (!user) {
-            return res.sendStatus(403); // Retorna un error si el usuario no existe o no está activo
+    try {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ message: 'No se proporcionó un token de autorización' });
         }
 
-        // Extraer el userId y otras propiedades necesarias del token decodificado y del usuario actualizado
-        req.user = {
-            id: user.id, // Usar el ID desde la base de datos en caso de necesitar validaciones adicionales
-            username: `${user.first_name} ${user.last_name}`, // Ejemplo de cómo podrías manejar los nombres
-            role: user.role, // Asumiendo que el rol también se guarda en la base de datos
-        };
+        // Verificar el token JWT
+        jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+            if (err) {
+                console.error('Error al verificar el token:', err.message);
+                return res.status(403).json({ message: 'Token inválido o expirado' });
+            }
 
-        next(); // Continúa con la siguiente función en la cadena de middlewares
-    });
+            // Extraer el userId del token decodificado
+            const userId = decodedToken.userId;
+
+            // Verificar si el usuario existe en la base de datos
+            const user = await UserService.getUserById(userId);
+            if (!user) {
+                return res.status(403).json({ message: 'Usuario no encontrado o inactivo' });
+            }
+
+            // Adjuntar la información del usuario a la solicitud
+            req.user = {
+                id: user.friendly_code, // ID desde la base de datos
+                username: `${user.first_name} ${user.last_name}`, // Combina nombres
+                role: {
+                    id: decodedToken.role.id,
+                    name: decodedToken.role.name, // Rol desde el token
+                },
+            };
+
+            next(); // Continúa con la siguiente función de middleware
+        });
+    } catch (error) {
+        console.error('Error en el middleware de autenticación:', error.message);
+        res.status(500).json({ message: 'Error interno en el servidor' });
+    }
 };
 
 export default authenticateToken;
+

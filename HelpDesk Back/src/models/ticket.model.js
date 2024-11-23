@@ -13,9 +13,10 @@ class Ticket {
                 assigned_user_id,
                 department_id,
                 created_by,
+                created_by_name,
                 updated_by
             } = ticketData;
-
+    
             const result = await pool.query(
                 `INSERT INTO tickets (
                     friendly_code,
@@ -27,8 +28,9 @@ class Ticket {
                     assigned_user_id,
                     department_id,
                     created_by,
+                    created_by_name,
                     updated_by
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
                 [
                     friendly_code,
                     title,
@@ -39,15 +41,18 @@ class Ticket {
                     assigned_user_id,
                     department_id,
                     created_by,
+                    created_by_name,
                     updated_by
                 ]
             );
 
             return result.rows[0];
         } catch (error) {
-            throw error; // Lanzar el error para que el controlador lo capture
+            console.error('Error en create:', error.message);
+            throw new Error('Error al crear el ticket: ' + error.message);
         }
     }
+    
 
     async delete(ticketId) {
         try {
@@ -69,22 +74,24 @@ class Ticket {
                         p.priority_name,
                         dp.department_name
                  FROM tickets t
-                 LEFT JOIN users u1 ON t.created_by = u1.id
-                 LEFT JOIN users u2 ON t.updated_by = u2.id
-                 LEFT JOIN users u3 ON t.assigned_user_id = u3.id
+                 LEFT JOIN users u1 ON t.created_by = u1.friendly_code
+                 LEFT JOIN users u2 ON t.updated_by = u2.friendly_code
+                 LEFT JOIN users u3 ON t.assigned_user_id = u3.friendly_code
                  LEFT JOIN devices d ON t.device_id = d.id
                  LEFT JOIN status s ON t.status_id = s.id
                  LEFT JOIN priority p ON t.priority_id = p.id
                  LEFT JOIN departments dp ON t.department_id = dp.id
-                 WHERE t.id = $1`,
+                 WHERE t.friendly_code = $1`,
                 [ticketId]
             );
-
+    
             return result.rows[0] || null;
         } catch (error) {
-            throw error; // Lanzar el error para que el controlador lo capture
+            console.error('Error en findById:', error.message);
+            throw error; // Re-lanza el error
         }
     }
+    
 
     // Modelo
     async gettickets(
@@ -101,13 +108,13 @@ class Ticket {
     ) {
         try {
             const offset = (page - 1) * limit;
-            let query = `SELECT tickets.id, tickets.friendly_code, tickets.title, tickets.created_at, 
+            let query = `SELECT tickets.friendly_code, tickets.title, tickets.created_at, 
                      CONCAT(users.first_name, ' ', users.last_name) AS created_by_name, 
                      status.status_name, priority.priority_name 
                      FROM tickets
                      LEFT JOIN status ON tickets.status_id = status.id
                      LEFT JOIN priority ON tickets.priority_id = priority.id
-                     LEFT JOIN users ON tickets.created_by = users.id`;
+                     LEFT JOIN users ON tickets.created_by = users.friendly_code`;
 
             let queryParams = [];
             let countQueryParams = [];
@@ -181,7 +188,7 @@ class Ticket {
                           FROM tickets 
                           LEFT JOIN status ON tickets.status_id = status.id
                           LEFT JOIN priority ON tickets.priority_id = priority.id
-                          LEFT JOIN users ON tickets.created_by = users.id`;
+                          LEFT JOIN users ON tickets.created_by = users.friendly_code`;
 
             if (whereConditions.length > 0) {
                 countQuery += ` WHERE ` + whereConditions.join(` AND `);
@@ -215,7 +222,6 @@ class Ticket {
     async findByFriendlyCode(friendlyCode) {
         const result = await pool.query(
             `SELECT 
-                t.id, 
                 t.friendly_code, 
                 t.title, 
                 t.description, 
@@ -226,7 +232,7 @@ class Ticket {
                     'last_name', u1.last_name
                 ) AS created_by,
                 json_build_object(
-                    'id', u3.id,
+                    'id', u3.friendly_code,
                     'first_name', u3.first_name,
                     'last_name', u3.last_name
                 ) AS assigned_user,
@@ -246,9 +252,9 @@ class Ticket {
                     )
                 ) AS device
              FROM tickets t
-             LEFT JOIN users u1 ON t.created_by = u1.id
-             LEFT JOIN users u2 ON t.updated_by = u2.id
-             LEFT JOIN users u3 ON t.assigned_user_id = u3.id
+             LEFT JOIN users u1 ON t.created_by = u1.friendly_code
+             LEFT JOIN users u2 ON t.updated_by = u2.friendly_code
+             LEFT JOIN users u3 ON t.assigned_user_id = u3.friendly_code
              LEFT JOIN devices d ON t.device_id = d.id
              LEFT JOIN device_types dt ON d.device_type_id = dt.id
              LEFT JOIN status s ON t.status_id = s.id
@@ -343,7 +349,6 @@ class Ticket {
         try {
             const result = await pool.query(
                 `SELECT 
-                    t.id, 
                     t.friendly_code, 
                     t.title, 
                     t.description, 
@@ -366,7 +371,7 @@ class Ticket {
                  LEFT JOIN status s ON t.status_id = s.id
                  LEFT JOIN priority p ON t.priority_id = p.id
                  LEFT JOIN devices d ON t.device_id = d.id
-                 LEFT JOIN users u ON t.assigned_user_id = u.id
+                 LEFT JOIN users u ON t.assigned_user_id = u.friendly_code
                  WHERE t.friendly_code = $1
                  LIMIT 1`,
                 [friendlyCode]

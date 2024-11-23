@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS departments (
 
 -- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS users (
-    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    friendly_code TEXT NOT NULL UNIQUE,
+    friendly_code TEXT PRIMARY KEY,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
@@ -25,7 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
     department_id BIGINT NOT NULL REFERENCES departments (id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_by BIGINT REFERENCES users (id) -- Puede ser nulo inicialmente
+    updated_by TEXT REFERENCES users (friendly_code)
 );
 
 -- Tabla de estados
@@ -40,36 +39,36 @@ CREATE TABLE IF NOT EXISTS priority (
     priority_name TEXT NOT NULL
 );
 
--- Tabla de tipos de dispositivos
+-- Tabla de tipos de dispositivos con siglas
 CREATE TABLE IF NOT EXISTS device_types (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    type_name TEXT NOT NULL
+    type_name TEXT NOT NULL,
+    type_code TEXT NOT NULL UNIQUE
 );
 
--- Tabla de dispositivos con la referencia a tipos de dispositivos
+-- Tabla de dispositivos referenciando el ID de device_types
 CREATE TABLE IF NOT EXISTS devices (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     device_name TEXT NOT NULL,
-    device_type_id BIGINT REFERENCES device_types (id)
+    device_type_id BIGINT NOT NULL REFERENCES device_types (id)
 );
 
--- Tabla de tickets (ajustes finales para el manejo de usuarios eliminados)
+-- Tabla de tickets
 CREATE TABLE IF NOT EXISTS tickets (
-    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    friendly_code TEXT NOT NULL UNIQUE,
+    friendly_code TEXT PRIMARY KEY,
     title TEXT NOT NULL,
     description TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    closed_at TIMESTAMP WITH TIME ZONE, -- Puede ser nulo si el ticket no está cerrado
+    closed_at TIMESTAMP WITH TIME ZONE,
     status_id BIGINT NOT NULL REFERENCES status (id),
-    priority_id BIGINT REFERENCES priority (id), -- Puede ser nulo
-    device_id BIGINT NOT NULL REFERENCES devices (id),
-    assigned_user_id BIGINT REFERENCES users (id) ON DELETE SET NULL,
-    department_id BIGINT NOT NULL REFERENCES departments (id),
-    parent_ticket_id BIGINT REFERENCES tickets (id), -- Puede ser nulo si no hay jerarquía de tickets
-    created_by BIGINT REFERENCES users (id) ON DELETE SET NULL,
-    created_by_name TEXT, -- Almacenar el nombre del usuario que creó el ticket
-    updated_by BIGINT REFERENCES users (id) ON DELETE SET NULL, -- Cambiado para manejar la eliminación del usuario que actualizó el ticket
+    priority_id BIGINT REFERENCES priority (id),
+    device_id BIGINT REFERENCES devices (id) ON DELETE SET NULL,
+    assigned_user_id TEXT REFERENCES users (friendly_code) ON DELETE SET NULL,
+    department_id BIGINT REFERENCES departments (id) ON DELETE SET NULL, 
+    parent_ticket_id TEXT REFERENCES tickets (friendly_code),
+    created_by TEXT REFERENCES users (friendly_code) ON DELETE SET NULL,
+    created_by_name TEXT,
+    updated_by TEXT REFERENCES users (friendly_code) ON DELETE SET NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -78,9 +77,9 @@ CREATE TABLE IF NOT EXISTS comments (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     comment_text TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    ticket_id BIGINT NOT NULL REFERENCES tickets (id),
-    user_id BIGINT NOT NULL REFERENCES users (id),
-    parent_comment_id BIGINT REFERENCES comments (id) -- Puede ser nulo si no es una respuesta
+    ticket_id TEXT NOT NULL REFERENCES tickets (friendly_code),
+    user_id TEXT NOT NULL REFERENCES users (friendly_code),
+    parent_comment_id BIGINT REFERENCES comments (id)
 );
 
 -- Tabla de adjuntos
@@ -89,7 +88,7 @@ CREATE TABLE IF NOT EXISTS attachments (
     file_path TEXT NOT NULL,
     original_filename TEXT NOT NULL,
     uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    ticket_id BIGINT NOT NULL REFERENCES tickets (id),
+    ticket_id TEXT NOT NULL REFERENCES tickets (friendly_code),
     is_image BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -99,18 +98,18 @@ CREATE TABLE IF NOT EXISTS status_history (
     changed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     old_status TEXT NOT NULL,
     new_status TEXT NOT NULL,
-    ticket_id BIGINT NOT NULL REFERENCES tickets (id),
-    changed_by_user_id BIGINT NOT NULL REFERENCES users (id)
+    ticket_id TEXT NOT NULL REFERENCES tickets (friendly_code),
+    changed_by_user_id TEXT NOT NULL REFERENCES users (friendly_code)
 );
 
 -- Tabla de tareas
 CREATE TABLE IF NOT EXISTS tasks (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     task_description TEXT NOT NULL,
-    assigned_to_user_id BIGINT NOT NULL REFERENCES users (id),
+    assigned_to_user_id TEXT NOT NULL REFERENCES users (friendly_code),
     is_completed BOOLEAN NOT NULL DEFAULT FALSE,
     due_date TIMESTAMP WITH TIME ZONE NOT NULL,
-    ticket_id BIGINT NOT NULL REFERENCES tickets (id)
+    ticket_id TEXT NOT NULL REFERENCES tickets (friendly_code)
 );
 
 -- Tabla de notificaciones
@@ -118,104 +117,51 @@ CREATE TABLE IF NOT EXISTS notifications (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     message TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    ticket_id BIGINT REFERENCES tickets (id) -- Puede ser nulo si la notificación no es de un ticket
+    ticket_id TEXT REFERENCES tickets (friendly_code)
 );
 
 -- Relación entre notificaciones y usuarios
 CREATE TABLE IF NOT EXISTS notification_user (
     notification_id BIGINT NOT NULL REFERENCES notifications (id),
-    user_id BIGINT NOT NULL REFERENCES users (id),
-    read_at TIMESTAMP WITH TIME ZONE, -- Puede ser nulo si la notificación no ha sido leída
+    user_id TEXT NOT NULL REFERENCES users (friendly_code),
+    read_at TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY (notification_id, user_id)
 );
 
+INSERT INTO roles (role_name) VALUES ('Usuario');
+INSERT INTO roles (role_name) VALUES ('Administrador');
+INSERT INTO roles (role_name) VALUES ('Observador');
+INSERT INTO roles (role_name) VALUES ('Superadministrador');
 
--- Insertar roles
-INSERT INTO roles (role_name)
-SELECT 'Usuario'
-WHERE NOT EXISTS (SELECT 1 FROM roles WHERE role_name = 'Usuario');
 
-INSERT INTO roles (role_name)
-SELECT 'Administrador'
-WHERE NOT EXISTS (SELECT 1 FROM roles WHERE role_name = 'Administrador');
+INSERT INTO departments (department_name) VALUES ('Soporte Técnico');
+INSERT INTO departments (department_name) VALUES ('Desarrollo');
+INSERT INTO departments (department_name) VALUES ('Recursos Humanos');
 
-INSERT INTO roles (role_name)
-SELECT 'Observador'
-WHERE NOT EXISTS (SELECT 1 FROM roles WHERE role_name = 'Observador');
+INSERT INTO status (status_name) VALUES ('Abierto');
+INSERT INTO status (status_name) VALUES ('Cerrado');
+INSERT INTO status (status_name) VALUES ('En Progreso');
+INSERT INTO status (status_name) VALUES ('Pendiente');
 
-INSERT INTO roles (role_name)
-SELECT 'Superadministrador'
-WHERE NOT EXISTS (SELECT 1 FROM roles WHERE role_name = 'Superadministrador');
 
--- Insertar departamentos
-INSERT INTO departments (department_name)
-SELECT 'Soporte Técnico'
-WHERE NOT EXISTS (SELECT 1 FROM departments WHERE department_name = 'Soporte Técnico');
+INSERT INTO priority (priority_name) VALUES ('Alta');
+INSERT INTO priority (priority_name) VALUES ('Media');
+INSERT INTO priority (priority_name) VALUES ('Baja');
 
-INSERT INTO departments (department_name)
-SELECT 'Desarrollo'
-WHERE NOT EXISTS (SELECT 1 FROM departments WHERE department_name = 'Desarrollo');
 
-INSERT INTO departments (department_name)
-SELECT 'Recursos Humanos'
-WHERE NOT EXISTS (SELECT 1 FROM departments WHERE department_name = 'Recursos Humanos');
+INSERT INTO device_types (type_name, type_code) VALUES ('Hardware', 'HDW');
+INSERT INTO device_types (type_name, type_code) VALUES ('Periférico', 'PRF');
+INSERT INTO device_types (type_name, type_code) VALUES ('Software', 'SFT');
 
--- Insertar estados
-INSERT INTO status (status_name)
-SELECT 'Abierto'
-WHERE NOT EXISTS (SELECT 1 FROM status WHERE status_name = 'Abierto');
-
-INSERT INTO status (status_name)
-SELECT 'Cerrado'
-WHERE NOT EXISTS (SELECT 1 FROM status WHERE status_name = 'Cerrado');
-
-INSERT INTO status (status_name)
-SELECT 'En Progreso'
-WHERE NOT EXISTS (SELECT 1 FROM status WHERE status_name = 'En Progreso');
-
-INSERT INTO status (status_name)
-SELECT 'Pendiente'
-WHERE NOT EXISTS (SELECT 1 FROM status WHERE status_name = 'Pendiente');
-
--- Insertar prioridades
-INSERT INTO priority (priority_name)
-SELECT 'Alta'
-WHERE NOT EXISTS (SELECT 1 FROM priority WHERE priority_name = 'Alta');
-
-INSERT INTO priority (priority_name)
-SELECT 'Media'
-WHERE NOT EXISTS (SELECT 1 FROM priority WHERE priority_name = 'Media');
-
-INSERT INTO priority (priority_name)
-SELECT 'Baja'
-WHERE NOT EXISTS (SELECT 1 FROM priority WHERE priority_name = 'Baja');
-
--- Insertar tipos de dispositivos
-INSERT INTO device_types (type_name)
-SELECT 'Hardware'
-WHERE NOT EXISTS (SELECT 1 FROM device_types WHERE type_name = 'Hardware');
-
-INSERT INTO device_types (type_name)
-SELECT 'Periférico'
-WHERE NOT EXISTS (SELECT 1 FROM device_types WHERE type_name = 'Periférico');
-
-INSERT INTO device_types (type_name)
-SELECT 'Software'
-WHERE NOT EXISTS (SELECT 1 FROM device_types WHERE type_name = 'Software');
-
--- Insertar dispositivos con los tipos de dispositivos
-INSERT INTO devices (device_name, device_type_id)
-SELECT 'Laptop', (SELECT id FROM device_types WHERE type_name = 'Hardware')
-WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Laptop');
 
 INSERT INTO devices (device_name, device_type_id)
-SELECT 'Teléfono', (SELECT id FROM device_types WHERE type_name = 'Hardware')
-WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Teléfono');
+VALUES ('Laptop', (SELECT id FROM device_types WHERE type_code = 'HDW'));
 
 INSERT INTO devices (device_name, device_type_id)
-SELECT 'Router', (SELECT id FROM device_types WHERE type_name = 'Periférico')
-WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Router');
+VALUES ('Teléfono', (SELECT id FROM device_types WHERE type_code = 'HDW'));
 
 INSERT INTO devices (device_name, device_type_id)
-SELECT 'Impresora', (SELECT id FROM device_types WHERE type_name = 'Periférico')
-WHERE NOT EXISTS (SELECT 1 FROM devices WHERE device_name = 'Impresora');
+VALUES ('Router', (SELECT id FROM device_types WHERE type_code = 'PRF'));
+
+INSERT INTO devices (device_name, device_type_id)
+VALUES ('Impresora', (SELECT id FROM device_types WHERE type_code = 'PRF'));

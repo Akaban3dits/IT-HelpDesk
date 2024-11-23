@@ -10,7 +10,6 @@ class Role {
             throw new Error('Error al buscar el rol por ID: ' + error.message);
         }
     }
-    //!Sin funcionalidad
     async findAll() {
         const result = await pool.query('SELECT * FROM roles');
         return result.rows;

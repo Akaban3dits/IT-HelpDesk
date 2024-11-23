@@ -9,5 +9,4 @@ const HOST = process.env.HOST || 'localhost'; // Puedes configurar el host en .e
 
 app.listen(PORT, () => {
     console.log(`Server running at http://${HOST}:${PORT}/`);
-    console.log(`Swagger UI available at http://${HOST}:${PORT}/api-docs`);
 });
