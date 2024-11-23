@@ -86,17 +86,47 @@ const RegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Datos del formulario antes de la validación:", formData);
+    
         if (validateForm()) {
+            // Limpieza de datos antes de enviar
+            const cleanedData = {
+                ...formData,
+                company: formData.company === 'true',       // Convertir a booleano
+                status: formData.status === true,           // Asegurarse de que sea booleano
+                role_id: Number(formData.role_id),          // Convertir a número si es necesario
+                department_id: Number(formData.department_id)  // Convertir a número si es necesario
+            };
+            
+            console.log("Datos limpios a enviar:", cleanedData);
+    
             try {
-                await createUser(formData);
+                const response = await createUser(cleanedData);
+                console.log("Respuesta del servidor:", response);
+    
                 setAlertType('success');
                 setAlertMessage('Usuario creado con éxito');
             } catch (error) {
+                let errorMessage = 'Error no especificado';
+    
+                // Verifica si el error tiene una respuesta desde el servidor
+                if (error.response) {
+                    errorMessage = error.response.data.error || 'Error al crear el usuario. Intente nuevamente más tarde.';
+                    console.error("Error en la respuesta del servidor:", error.response);
+                } else {
+                    errorMessage = error.message || 'Error de conexión. Verifique su red e intente nuevamente.';
+                    console.error("Error de conexión o en la solicitud:", error);
+                }
+                
                 setAlertType('error');
-                setAlertMessage('Error al crear el usuario');
+                setAlertMessage(errorMessage);
             }
+        } else {
+            console.log("Errores de validación:", errors);
         }
     };
+    
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -122,7 +152,7 @@ const RegisterForm = () => {
     return (
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-semibold text-gray-900">Crear usuario</h2>
+                <h2 className="text-2xl font-semibold text-gray-900">Registrar</h2>
                 <button
                     onClick={handleNavigate}
                     className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

@@ -50,7 +50,6 @@ const renewTokenIfPossible = async () => {
     }
 };
 
-// Iniciar sesión y obtener el accessToken
 export const loginUser = async (email, password) => {
     try {
         const response = await apiClient.post('/auth/login', { email, password });
@@ -64,9 +63,16 @@ export const loginUser = async (email, password) => {
         }
         return response.data;
     } catch (error) {
-        throw error;
+        // Captura y muestra el mensaje de error en la consola
+        const errorMessage = error.response?.data?.message || error.message;
+        console.error('Error en loginUser:', errorMessage);
+        
+        // Lanza el error para manejarlo externamente si es necesario
+        throw errorMessage;
     }
 };
+
+
 
 // Cerrar sesión eliminando los tokens
 export const logoutUser = () => {

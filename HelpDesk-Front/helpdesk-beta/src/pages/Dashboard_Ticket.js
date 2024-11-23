@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserTable from '../components/Tables/UserTable';
 import Button from '../components/ui/Button';
 import { readToken } from '../api/auth/authService';
+import TicketsTable from '../components/Tables/TicketsTable';
 
-const DashboardUser = ({ isSidebarOpen }) => {
+const DashboardTicket = ({ isSidebarOpen }) => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -47,6 +47,7 @@ const DashboardUser = ({ isSidebarOpen }) => {
     >
       {/* Contenedor flex para alinear título y botón en pantallas grandes */}
       <div className="px-4 sm:px-0 sm:flex sm:items-center sm:justify-between">
+        <h1 className="text-2xl font-semibold text-gray-900">Gestión de Usuarios</h1>
         {(userRole === 'Administrador' || userRole === 'Superadministrador') && (
           <Button
             onClick={() => navigate('/admin/create-user')}
@@ -58,11 +59,10 @@ const DashboardUser = ({ isSidebarOpen }) => {
       </div>
 
       <div className="mt-4 sm:mt-6">
-        {/* Contenedor de la tabla ajustado */}
-          <UserTable />
+        <TicketsTable></TicketsTable>
       </div>
     </div>
   );
 };
 
-export default DashboardUser;
+export default DashboardTicket;

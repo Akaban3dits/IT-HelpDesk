@@ -1,119 +1,100 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { Trash2, MessageSquare } from 'lucide-react';
 
-const ImageLightbox = ({ src, alt, onClose }) => (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onClick={onClose}>
-        <div className="relative max-w-[90vw] max-h-[90vh]">
-            <img src={src} alt={alt} className="max-h-full max-w-full object-contain" />
-            <button
-                onClick={(e) => { e.stopPropagation(); onClose(); }}
-                className="absolute top-2 right-2 text-white hover:text-gray-300 bg-black bg-opacity-50 rounded-full p-1"
-                aria-label="Close lightbox"
-            >
-                <X size={24} />
-            </button>
-        </div>
-    </div>
-);
+const Comment = ({
+    comment_text,
+    created_at,
+    first_name,
+    last_name,
+    user_id,
+    replies = [],
+    onReply,
+    onDelete,
+    currentUserId
+}) => {
+    const [isRepliesExpanded, setIsRepliesExpanded] = useState(false);
+    const [isReplying, setIsReplying] = useState(false);
+    const [replyText, setReplyText] = useState('');
 
-const Comment = ({ author, date, content, imgSrc, replies = [] }) => {
-    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-    const [showReplies, setShowReplies] = useState(false); // Para manejar la visibilidad de las respuestas
-    const [replyText, setReplyText] = useState(''); // Para manejar el texto de la respuesta
-    const [localReplies, setLocalReplies] = useState(replies); // Estado local para las respuestas
-    const [isReplying, setIsReplying] = useState(false); // Controla si se está mostrando el área para responder
+    const toggleRepliesExpansion = () => {
+        setIsRepliesExpanded(!isRepliesExpanded);
+        if (!isRepliesExpanded) setIsReplying(false);
+    };
 
-    const handleAddReply = () => {
-        if (replyText.trim() !== '') {
-            // Lógica para agregar una nueva respuesta
-            const newReply = {
-                id: new Date().getTime(),
-                author: "Tú", // El nombre del usuario que responde
-                date: new Date().toLocaleString(),
-                content: replyText,
-            };
-            setLocalReplies([...localReplies, newReply]);
+    const toggleReplying = () => {
+        setIsReplying(!isReplying);
+        if (!isReplying) setIsRepliesExpanded(false);
+    };
+
+    const handleReply = () => {
+        if (replyText.trim()) {
+            onReply(replyText);
             setReplyText('');
-            setIsReplying(false); // Ocultar el área de respuesta después de enviar
+            setIsReplying(false);
         }
     };
 
-    return (
-        <div className="bg-white p-4 rounded-lg shadow mb-4">
-            <div className="flex justify-between items-center mb-2">
-                <span className="font-semibold text-blue-600">{author}</span>
-                <span className="text-sm text-gray-500">{date}</span>
-            </div>
-            <p className="text-gray-700">{content}</p>
-            {imgSrc && (
-                <div className="mt-4 flex justify-center">
-                    <img 
-                        src={imgSrc} 
-                        alt={content} 
-                        className="w-64 h-32 object-cover rounded-lg cursor-pointer" 
-                        onClick={() => setIsLightboxOpen(true)}
-                    />
-                </div>
-            )}
-            {isLightboxOpen && (
-                <ImageLightbox 
-                    src={imgSrc} 
-                    alt={content} 
-                    onClose={() => setIsLightboxOpen(false)} 
-                />
-            )}
+    const canDelete = currentUserId === user_id || currentUserId === String(user_id);
 
-            {/* Mostrar las respuestas si existen */}
-            {localReplies.length > 0 && (
-                <div className="mt-4">
-                    <button
-                        onClick={() => setShowReplies(!showReplies)}
-                        className="text-blue-500 text-sm"
-                    >
-                        {showReplies ? 'Ocultar Respuestas' : `Ver Respuestas (${localReplies.length})`}
-                    </button>
-                    {showReplies && (
-                        <div className="mt-2 space-y-2">
-                            {localReplies.map((reply) => (
-                                <div key={reply.id} className="pl-4 border-l-2 border-gray-300">
-                                    <div className="flex justify-between items-center mb-1">
-                                        <span className="font-semibold text-blue-600">{reply.author}</span>
-                                        <span className="text-sm text-gray-500">{reply.date}</span>
-                                    </div>
-                                    <p className="text-gray-700">{reply.content}</p>
-                                </div>
-                            ))}
-                        </div>
+    return (
+        <div className="bg-white p-4 rounded-lg shadow mb-4 relative">
+            {/* Header Row */}
+            <div className="flex justify-between items-start mb-3">
+                <div className="flex items-center space-x-2">
+                    <MessageSquare className="h-5 w-5 text-blue-500" />
+                    <h4 className="font-semibold text-blue-600">{`${first_name} ${last_name}`}</h4>
+                </div>
+                <div className="flex items-center space-x-4">
+                    <span className="text-sm text-gray-500">{new Date(created_at).toLocaleString()}</span>
+                    {canDelete && (
+                        <button
+                            onClick={() => onDelete()}
+                            className="text-red-500 hover:text-red-700 transition-all p-1"
+                            aria-label="Eliminar comentario"
+                        >
+                            <Trash2 className="h-5 w-5" />
+                        </button>
                     )}
                 </div>
-            )}
+            </div>
 
-            {/* Botón para mostrar/ocultar el área de respuesta */}
-            {!isReplying && (
+            {/* Comment Text */}
+            <p className="text-gray-700 mb-4">{comment_text}</p>
+
+            {/* Action Buttons */}
+            <div className="flex items-center justify-between">
                 <button
-                    onClick={() => setIsReplying(true)}
-                    className="text-blue-600 hover:text-blue-800 font-semibold mt-4"
+                    onClick={toggleReplying}
+                    className={`text-blue-500 hover:text-blue-700 font-medium ${isReplying ? 'underline' : ''}`}
                 >
                     Responder
                 </button>
-            )}
+                {replies.length > 0 && (
+                    <button
+                        onClick={toggleRepliesExpansion}
+                        className={`text-blue-500 hover:text-blue-700 font-medium ${isRepliesExpanded ? 'underline' : ''}`}
+                    >
+                        {isRepliesExpanded ? 'Ocultar respuestas' : `Ver respuestas (${replies.length})`}
+                    </button>
+                )}
+            </div>
 
-            {/* Input para agregar una respuesta (solo visible si se presiona "Responder") */}
+            {/* Reply Form */}
             {isReplying && (
                 <div className="mt-4">
                     <textarea
                         value={replyText}
                         onChange={(e) => setReplyText(e.target.value)}
-                        placeholder="Responder al comentario..."
                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        rows="2"
+                        placeholder="Escribe tu respuesta..."
+                        rows="3"
                     />
                     <div className="flex justify-end mt-2">
                         <button
-                            onClick={handleAddReply}
+                            onClick={handleReply}
                             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
                         >
-                            Enviar Respuesta
+                            Enviar
                         </button>
                         <button
                             onClick={() => setIsReplying(false)}
@@ -122,6 +103,21 @@ const Comment = ({ author, date, content, imgSrc, replies = [] }) => {
                             Cancelar
                         </button>
                     </div>
+                </div>
+            )}
+
+            {/* Recursive Replies */}
+            {isRepliesExpanded && (
+                <div className="ml-4 border-l-2 border-gray-300 pl-4 mt-4">
+                    {replies.map((reply) => (
+                        <Comment
+                            key={reply.id}
+                            {...reply}
+                            onReply={(replyText) => onReply(replyText)}
+                            onDelete={() => onDelete()}
+                            currentUserId={currentUserId}
+                        />
+                    ))}
                 </div>
             )}
         </div>

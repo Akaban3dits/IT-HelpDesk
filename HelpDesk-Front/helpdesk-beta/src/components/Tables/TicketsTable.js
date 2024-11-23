@@ -8,7 +8,7 @@ import { MoreVertical, Edit3, Eye } from 'lucide-react';
 import Alert from '../ui/Alert';
 import Input from '../ui/Input';
 
-const RecentTicketsTable = () => {
+const TicketsTable = () => {
     const [openMenuId, setOpenMenuId] = useState(null);
     const [tickets, setTickets] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,8 +20,7 @@ const RecentTicketsTable = () => {
     const [alertType, setAlertType] = useState('info');
     const [filters, setFilters] = useState({
         status: '',
-        priority: '',
-        dateRange: 'Ultimos 3 dias'
+        priority: ''
     });
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -109,53 +108,43 @@ const RecentTicketsTable = () => {
                         <option value="Media">Media</option>
                         <option value="Baja">Baja</option>
                     </select>
-                    <select
-                        value={filters.dateRange}  // Establece el valor seleccionado en el estado `dateRange`
-                        onChange={(e) => handleFilter('dateRange', e.target.value)}
-                        className="w-full sm:w-auto p-2 border border-indigo-200 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm text-gray-700"
-                    >
-                        <option value="Ultimos 3 dias">Últimos 3 días</option>
-                        <option value="Ultimos 2 dias">Últimos 2 días</option>  {/* Primera opción y valor por defecto */}
-                        <option value="Hoy">Hoy</option>
-
-                    </select>
                 </div>
             </div>
 
             {/* Table Section */}
             <div className="hidden sm:block relative z-10">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <Table className="relative z-20 w-full table-auto border-collapse">
-                        <Table.Header className="sticky top-0 bg-indigo-50 z-10">
-                            <Table.Row>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-20">Código</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-48">Título</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-32">Creado por</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-40">Fecha de Creación</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-24">Estado</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-24">Prioridad</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-20">Acciones</Table.Head>
+                    <Table className="relative z-20">
+                        <Table.Header>
+                            <Table.Row className="bg-indigo-50">
+                                <Table.Head className="text-indigo-900 font-semibold">Código</Table.Head>
+                                <Table.Head className="text-indigo-900 font-semibold">Título</Table.Head>
+                                <Table.Head className="text-indigo-900 font-semibold">Creado por</Table.Head>
+                                <Table.Head className="text-indigo-900 font-semibold">Fecha de Creación</Table.Head>
+                                <Table.Head className="text-indigo-900 font-semibold">Estado</Table.Head>
+                                <Table.Head className="text-indigo-900 font-semibold">Prioridad</Table.Head>
+                                <Table.Head className="text-indigo-900 font-semibold">Acciones</Table.Head>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
                             {tickets.length > 0 ? (
                                 tickets.map((ticket) => (
                                     <Table.Row key={ticket.friendly_code} className="hover:bg-gray-50 transition-colors duration-150">
-                                        <Table.Cell className="px-4 py-3 text-gray-900 w-20 truncate">{ticket.friendly_code}</Table.Cell>
-                                        <Table.Cell className="px-4 py-3 text-gray-900 w-48 truncate">{ticket.title}</Table.Cell>
-                                        <Table.Cell className="px-4 py-3 text-gray-900 w-32 truncate">{ticket.created_by_name}</Table.Cell>
-                                        <Table.Cell className="px-4 py-3 text-gray-700 w-40 truncate">{new Date(ticket.created_at).toLocaleString()}</Table.Cell>
-                                        <Table.Cell className="px-4 py-3 w-24">
-                                            <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${ticket.status_name === 'Pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
+                                        <Table.Cell className="text-gray-900">{ticket.friendly_code}</Table.Cell>
+                                        <Table.Cell className="text-gray-900">{ticket.title}</Table.Cell>
+                                        <Table.Cell className="text-gray-900">{ticket.created_by_name}</Table.Cell>
+                                        <Table.Cell className="text-gray-700">{new Date(ticket.created_at).toLocaleDateString()}</Table.Cell>
+                                        <Table.Cell>
+                                            <span className={`px-3 py-1 text-xs font-medium rounded-full ${ticket.status_name === 'Pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
                                                 {ticket.status_name}
                                             </span>
                                         </Table.Cell>
-                                        <Table.Cell className="px-4 py-3 w-24">
-                                            <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${ticket.priority_name === 'Alta' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}`}>
+                                        <Table.Cell>
+                                            <span className={`px-3 py-1 text-xs font-medium rounded-full ${ticket.priority_name === 'Alta' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}`}>
                                                 {ticket.priority_name}
                                             </span>
                                         </Table.Cell>
-                                        <Table.Cell className="px-4 py-3 w-20 text-right">
+                                        <Table.Cell>
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
@@ -176,6 +165,16 @@ const RecentTicketsTable = () => {
                                                         <Eye className="h-4 w-4 mr-2 text-indigo-600" />
                                                         Ver publicación
                                                     </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            handleEditTicket(ticket.friendly_code);
+                                                            setOpenMenuId(null);
+                                                        }}
+                                                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-150"
+                                                    >
+                                                        <Edit3 className="h-4 w-4 mr-2 text-indigo-600" />
+                                                        Editar ticket
+                                                    </button>
                                                 </div>
                                             )}
                                         </Table.Cell>
@@ -183,7 +182,7 @@ const RecentTicketsTable = () => {
                                 ))
                             ) : (
                                 <Table.Row>
-                                    <Table.Cell colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                                    <Table.Cell colSpan={7} className="text-center py-8 text-gray-500">
                                         {isLoading ? 'Cargando...' : 'No se encontraron tickets'}
                                     </Table.Cell>
                                 </Table.Row>
@@ -224,13 +223,23 @@ const RecentTicketsTable = () => {
                                                 <Eye className="h-4 w-4 mr-2 text-indigo-600" />
                                                 Ver publicación
                                             </button>
+                                            <button
+                                                onClick={() => {
+                                                    handleEditTicket(ticket.friendly_code);
+                                                    setOpenMenuId(null);
+                                                }}
+                                                className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-150"
+                                            >
+                                                <Edit3 className="h-4 w-4 mr-2 text-indigo-600" />
+                                                Editar ticket
+                                            </button>
                                         </div>
                                     )}
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <div className="text-sm text-gray-600">Código: {ticket.friendly_code}</div>
-                                <div className="text-sm text-gray-600">Fecha: {new Date(ticket.created_at).toLocaleString()}</div>
+                                <div className="text-sm text-gray-600">Fecha: {new Date(ticket.created_at).toLocaleDateString()}</div>
                                 <div className="text-sm">
                                     Estado:
                                     <span className={`ml-2 px-3 py-1 text-xs font-medium rounded-full ${ticket.status_name === 'Pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
@@ -283,4 +292,4 @@ const RecentTicketsTable = () => {
     );
 };
 
-export default RecentTicketsTable;
+export default TicketsTable;

@@ -1,35 +1,38 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, BarChart2, FileText, ShoppingCart, Settings, MessageSquare, User, LogOut, Menu, X, User2 } from 'lucide-react';
+import { Home, Ticket, User2, Monitor, Building2, LogOut, Menu, X, ClipboardList } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     const location = useLocation();
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024); // Cambiado a 1024px para pantallas pequeñas
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
     const { userName, userRole, logout } = useContext(AuthContext); // Obtener el nombre y rol del usuario
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 1024); // Ajustado para considerar 1024px como límite móvil
+            setIsMobile(window.innerWidth < 1024);
         };
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Menú completo
     const menuItems = [
-        { icon: Home, label: 'Dashboard', path: '/admin/dashboard' },
-        { icon: User2, label: 'Usuarios', path: '/admin/users' },
-        { icon: BarChart2, label: 'Insights', path: '/admin/insights' },
-        { icon: FileText, label: 'Docs', path: '/admin/docs' },
-        { icon: ShoppingCart, label: 'Products', path: '/admin/products' },
-        { icon: Settings, label: 'Settings', path: '/admin/settings' },
-        { icon: MessageSquare, label: 'Messages', path: '/admin/messages' },
+        { icon: Home, label: 'Dashboard', path: '/admin/dashboard', roles: ['Observador', 'Administrador', 'Superadministrador'] },
+        { icon: ClipboardList, label: 'Mis Encargos', path: '/admin/my-tasks', roles: ['Observador'] }, // Nueva opción para "Mis Encargos"
+        { icon: User2, label: 'Usuarios', path: '/admin/users', roles: ['Administrador', 'Superadministrador'] },
+        { icon: Ticket, label: 'Historial', path: '/admin/tickets', roles: ['Observador', 'Administrador', 'Superadministrador'] },
+        { icon: Monitor, label: 'Devices', path: '/admin/devices', roles: ['Administrador', 'Superadministrador'] },
+        { icon: Building2, label: 'Departamento', path: '/admin/department', roles: ['Administrador', 'Superadministrador'] },
+        
     ];
+
+    // Filtrar opciones según el rol del usuario
+    const filteredMenuItems = menuItems.filter(item => item.roles.includes(userRole));
 
     return (
         <>
-            {/* Solo mostrar el botón de menú en móvil cuando el sidebar está cerrado */}
             {isMobile && !isOpen && (
                 <button
                     onClick={toggleSidebar}
@@ -39,7 +42,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 </button>
             )}
 
-            {/* Sidebar con `absolute` para que se superponga al contenido */}
             <div className={`
                 fixed inset-y-0 left-0 z-40
                 flex flex-col bg-indigo-700 text-white 
@@ -63,7 +65,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
                 <nav className="flex-grow overflow-y-auto">
                     <ul className="py-4">
-                        {menuItems.map((item, index) => (
+                        {filteredMenuItems.map((item, index) => (
                             <li key={index}>
                                 <Link
                                     to={item.path}
@@ -81,7 +83,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <div className="p-4">
                     <div className="flex items-center">
                         <div className="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center flex-shrink-0">
-                            <User className="w-6 h-6 text-gray-600" />
+                            <User2 className="w-6 h-6 text-gray-600" />
                         </div>
                         {(isOpen || isMobile) && (
                             <div className="ml-3">

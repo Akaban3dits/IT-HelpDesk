@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { debounce } from 'lodash';
 
@@ -12,21 +12,29 @@ const SearchableSelect = ({
     error,
     name,
     fetchOptions,
+    required = false, // Añadido para soportar validación requerida
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [selectedLabel, setSelectedLabel] = useState('');
+    const wrapperRef = useRef(null);
 
     const debouncedFetchOptions = useCallback(
         debounce(async (search) => {
             setLoading(true);
             try {
                 const data = await fetchOptions(search);
-                setOptions(data);
+                if (Array.isArray(data)) {
+                    setOptions(data);
+                } else {
+                    console.error('fetchOptions should return an array:', data);
+                    setOptions([]);
+                }
             } catch (err) {
                 console.error('Error al obtener opciones:', err);
+                setOptions([]);
             } finally {
                 setLoading(false);
             }
@@ -39,9 +47,15 @@ const SearchableSelect = ({
             setLoading(true);
             try {
                 const data = await fetchOptions(searchValue);
-                setOptions(data);
+                if (Array.isArray(data)) {
+                    setOptions(data);
+                } else {
+                    console.error('Initial fetchOptions should return an array:', data);
+                    setOptions([]);
+                }
             } catch (err) {
                 console.error('Error al obtener opciones iniciales:', err);
+                setOptions([]);
             } finally {
                 setLoading(false);
             }
@@ -55,6 +69,8 @@ const SearchableSelect = ({
             const selectedOption = options.find(option => option.value === selectedValue);
             if (selectedOption) {
                 setSelectedLabel(selectedOption.label);
+            } else {
+                setSelectedLabel('');
             }
         }
     }, [selectedValue, options]);
@@ -63,7 +79,11 @@ const SearchableSelect = ({
         const value = e.target.value;
         setInputValue(value);
         onSearchChange(value);
-        debouncedFetchOptions(value);
+        if (value) {
+            debouncedFetchOptions(value);
+        } else {
+            setOptions([]);
+        }
     };
 
     const handleInputFocus = () => {
@@ -77,19 +97,36 @@ const SearchableSelect = ({
         setIsOpen(false);
     };
 
+    const handleClickOutside = (event) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="relative w-full">
+        <div className="relative w-full" ref={wrapperRef}>
             <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
-                {label}
+                {label} {required && <span className="text-red-500">*</span>}
             </label>
             <div className="relative">
                 <div
-                    className="p-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer sm:text-sm"
+                    className={`p-2 bg-white border ${
+                        error ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm cursor-pointer sm:text-sm`}
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {selectedLabel || placeholder || `Selecciona ${label}`}
                     <ChevronDown
-                        className={`absolute right-3 top-3 h-5 w-5 text-gray-400 transition-transform ${isOpen ? 'transform rotate-180' : ''}`}
+                        className={`absolute right-3 top-3 h-5 w-5 text-gray-400 transition-transform ${
+                            isOpen ? 'transform rotate-180' : ''
+                        }`}
                     />
                 </div>
 
@@ -116,7 +153,9 @@ const SearchableSelect = ({
                                 options.map((option) => (
                                     <li
                                         key={option.value}
-                                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${selectedValue === option.value ? 'bg-blue-200' : ''}`}
+                                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
+                                            selectedValue === option.value ? 'bg-blue-200' : ''
+                                        }`}
                                         onClick={() => handleSelectOption(option)}
                                     >
                                         {option.label}
@@ -128,6 +167,9 @@ const SearchableSelect = ({
                 )}
             </div>
             {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+            {required && !selectedValue && (
+                <p className="mt-1 text-sm text-red-600">Este campo es obligatorio.</p>
+            )}
         </div>
     );
 };

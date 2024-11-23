@@ -1,41 +1,46 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { readToken, loginUser, logoutUser, isAuthenticated } from '../api/auth/authService'; // Ajustar la ruta de authService
+import { readToken, loginUser, logoutUser, isAuthenticated } from '../api/auth/authService';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [authToken, setAuthToken] = useState(null); // Estado para el token
-    const [userRole, setUserRole] = useState(null); // Estado para el rol del usuario
-    const [userName, setUserName] = useState(null); // Estado para el nombre del usuario
-    const [loading, setLoading] = useState(true); // Estado de carga
-    const [authError, setAuthError] = useState(null); // Estado para el error de autenticación
+    const [authToken, setAuthToken] = useState(null);
+    const [userRole, setUserRole] = useState(null);
+    const [userName, setUserName] = useState(null);
+    const [isInitializing, setIsInitializing] = useState(true); // Solo para la carga inicial
+    const [isLoggingIn, setIsLoggingIn] = useState(false); // Estado específico para el proceso de login
+    const [authError, setAuthError] = useState(null);
     const navigate = useNavigate();
 
-    // Función para actualizar la información del usuario
     const updateUserInfo = useCallback((token) => {
         setAuthToken(token);
-        setUserRole(token?.role?.name || null); // Verifica si token y token.role existen
-        setUserName(token?.username || null); // Verifica si token.username existe
+        setUserRole(token?.role?.name || null);
+        setUserName(token?.username || null);
     }, []);
 
-    // Inicializar autenticación cuando el componente se monta
+    // Inicialización solo se ejecuta una vez al montar el componente
     useEffect(() => {
         const initAuth = async () => {
-            const token = await readToken();
-            if (token) {
-                updateUserInfo(token);
+            try {
+                const token = await readToken();
+                if (token) {
+                    updateUserInfo(token);
+                }
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            } finally {
+                setIsInitializing(false);
             }
-            setLoading(false); // Finaliza el estado de carga cuando se inicializa la autenticación
         };
 
         initAuth();
     }, [updateUserInfo]);
 
-    // Función de login con manejo de errores y actualización del estado de autenticación
     const login = async (email, password) => {
-        setLoading(true);
-        setAuthError(null); // Reiniciar cualquier error previo
+        setIsLoggingIn(true);
+        setAuthError(null);
+
         try {
             const userData = await loginUser(email, password);
 
@@ -43,31 +48,26 @@ export const AuthProvider = ({ children }) => {
                 throw new Error('Datos de usuario incompletos');
             }
 
-            const token = await readToken(); // Espera a que se lea el token
+            const token = await readToken();
             if (!token) {
                 throw new Error('No se pudo leer el token después del login');
             }
+            const roleName = token?.role?.name;
+            updateUserInfo(token);
 
-            updateUserInfo(token); // Actualiza la información del usuario después de obtener el token
-
-            // Redireccionar basado en el rol del usuario
-            const roleName = token?.role?.name; // Verifica si el rol existe
-            if (['SuperAdministrador', 'Administrador', 'Observador'].includes(roleName)) {
+            if (['Superadministrador', 'Administrador', 'Observador'].includes(roleName)) {
                 navigate('/admin/dashboard', { replace: true });
             } else if (roleName === 'Usuario') {
                 navigate('/home', { replace: true });
-            } else {
-                throw new Error('Rol no reconocido');
             }
         } catch (error) {
-            setAuthError('Credenciales incorrectas o problemas con el servidor'); // Manejo del error
+            setAuthError('Credenciales incorrectas o problemas con el servidor');
             throw error;
         } finally {
-            setLoading(false); // Detener la carga al finalizar la operación de login
+            setIsLoggingIn(false);
         }
     };
 
-    // Función de logout que limpia el estado y redirige al login
     const logout = useCallback(() => {
         logoutUser();
         setAuthToken(null);
@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }) => {
         navigate('/', { replace: true });
     }, [navigate]);
 
-    // Función para verificar el estado de autenticación
     const checkAuthStatus = useCallback(() => {
         const token = readToken();
         if (!token) {
@@ -87,7 +86,6 @@ export const AuthProvider = ({ children }) => {
         return true;
     }, [logout, updateUserInfo]);
 
-    // Valor que se expone a través del contexto
     const value = {
         authToken,
         userRole,
@@ -96,16 +94,15 @@ export const AuthProvider = ({ children }) => {
         logout,
         isAuthenticated: () => isAuthenticated(),
         checkAuthStatus,
-        loading,
-        authError, // Añadido para manejar errores de autenticación en otros componentes
+        isLoggingIn,        // Expone el estado de login para componentes específicos
+        authError,
     };
 
-    // Mostrar componente de carga si el estado es "loading"
-    if (loading) {
-        return <div>Cargando...</div>; // Puedes personalizar esto con un componente de carga más complejo si lo deseas
+    // Solo muestra el loading inicial, no en cada operación
+    if (isInitializing) {
+        return <div></div>;
     }
 
-    // Retorna el proveedor de contexto que expone el estado y las funciones a los componentes hijos
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

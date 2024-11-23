@@ -33,7 +33,11 @@ export const createUser = async (userData) => {
         const response = await apiClient.post('/users', userData);
         return response.data;
     } catch (error) {
-        throw error;
+        if (error.response && error.response.data && error.response.data.error) {
+            throw new Error(error.response.data.error);
+        } else {
+            throw new Error('Error al crear el usuario.');
+        }
     }
 };
 
@@ -103,4 +107,3 @@ export const changeUserPassword = async (friendlyCode, newPassword) => {
         throw error;
     }
 };
-
