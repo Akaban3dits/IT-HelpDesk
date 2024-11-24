@@ -8,7 +8,7 @@ import { MoreVertical, Edit3, Eye } from 'lucide-react';
 import Alert from '../ui/Alert';
 import Input from '../ui/Input';
 
-const RecentTicketsTable = () => {
+const RecentTicketsTable = ({ isAssigned = null, isUser = null }) => { // Recibe isAssigned como prop
     const [openMenuId, setOpenMenuId] = useState(null);
     const [tickets, setTickets] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,17 +21,20 @@ const RecentTicketsTable = () => {
     const [filters, setFilters] = useState({
         status: '',
         priority: '',
-        dateRange: 'Ultimos 3 dias'
+        dateOption: 'Ultimos 3 dias',
+        
     });
     const [searchTerm, setSearchTerm] = useState('');
 
     const navigate = useNavigate();
 
+    // Cargar tickets
     const loadTickets = async () => {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetchRecentTickets(currentPage, itemsPerPage, searchTerm, filters);
+            console.log('Cargando tickets con filtros:', { ...filters, isAssigned });
+            const response = await fetchRecentTickets(currentPage, itemsPerPage, searchTerm, { ...filters, isAssigned });
             if (response && response.tickets) {
                 setTickets(response.tickets);
                 setTotalPages(response.total_pages || 1);
@@ -40,6 +43,7 @@ const RecentTicketsTable = () => {
                 setTickets([]);
             }
         } catch (error) {
+            console.error('Error al cargar los tickets:', error);
             setError('Error al cargar los tickets. Por favor, intente de nuevo.');
             setTickets([]);
         } finally {
@@ -47,6 +51,7 @@ const RecentTicketsTable = () => {
         }
     };
 
+    // useEffect para cargar datos y manejar actualizaciones
     useEffect(() => {
         loadTickets();
         const intervalId = setInterval(() => {
@@ -54,19 +59,22 @@ const RecentTicketsTable = () => {
         }, 60000); // Actualiza cada minuto (60000 ms)
 
         return () => clearInterval(intervalId); // Limpia el intervalo al desmontar
-    }, [currentPage, filters, searchTerm]);
+    }, [currentPage, filters, searchTerm, isAssigned]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    const handleEditTicket = (friendlyCode) => {
-        navigate(`/admin/edit/${friendlyCode}`);
-    };
-
     const handleViewTicket = (friendlyCode) => {
-        navigate(`/admin/view/${friendlyCode}`);
+        if (isUser) {
+            // Redirige a la ruta específica cuando isUser es true
+            navigate(`/ticket/${friendlyCode}`);
+        } else {
+            // Redirige a la ruta por defecto
+            navigate(`/admin/view/${friendlyCode}`);
+        }
     };
+    
 
     const handleFilter = (key, value) => {
         setFilters(prev => ({ ...prev, [key]: value }));
@@ -110,13 +118,14 @@ const RecentTicketsTable = () => {
                         <option value="Baja">Baja</option>
                     </select>
                     <select
-                        value={filters.dateRange}  // Establece el valor seleccionado en el estado `dateRange`
-                        onChange={(e) => handleFilter('dateRange', e.target.value)}
+                        value={filters.dateOption}  // Establece el valor seleccionado en el estado `dateRange`
+                        onChange={(e) => handleFilter('dateOption', e.target.value)}
                         className="w-full sm:w-auto p-2 border border-indigo-200 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm text-gray-700"
                     >
                         <option value="Ultimos 3 dias">Últimos 3 días</option>
                         <option value="Ultimos 2 dias">Últimos 2 días</option>  {/* Primera opción y valor por defecto */}
                         <option value="Hoy">Hoy</option>
+                        {isAssigned !== null && <option value="">Todas las fechas</option>}
 
                     </select>
                 </div>
@@ -130,10 +139,14 @@ const RecentTicketsTable = () => {
                             <Table.Row>
                                 <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-20">Código</Table.Head>
                                 <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-48">Título</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-32">Creado por</Table.Head>
+                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-32">
+                                    {isUser ? 'Asignado a' : 'Creado por'}
+                                </Table.Head>
                                 <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-40">Fecha de Creación</Table.Head>
                                 <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-24">Estado</Table.Head>
-                                <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-24">Prioridad</Table.Head>
+                                {!isUser && (
+                                    <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-24">Prioridad</Table.Head>
+                                )}
                                 <Table.Head className="px-4 py-3 text-left text-indigo-900 font-semibold w-20">Acciones</Table.Head>
                             </Table.Row>
                         </Table.Header>
@@ -143,18 +156,22 @@ const RecentTicketsTable = () => {
                                     <Table.Row key={ticket.friendly_code} className="hover:bg-gray-50 transition-colors duration-150">
                                         <Table.Cell className="px-4 py-3 text-gray-900 w-20 truncate">{ticket.friendly_code}</Table.Cell>
                                         <Table.Cell className="px-4 py-3 text-gray-900 w-48 truncate">{ticket.title}</Table.Cell>
-                                        <Table.Cell className="px-4 py-3 text-gray-900 w-32 truncate">{ticket.created_by_name}</Table.Cell>
+                                        <Table.Cell className="px-4 py-3 text-gray-900 w-32 truncate">
+                                            {isUser ? ticket.assigned_to_name : ticket.created_by_name}
+                                        </Table.Cell>
                                         <Table.Cell className="px-4 py-3 text-gray-700 w-40 truncate">{new Date(ticket.created_at).toLocaleString()}</Table.Cell>
                                         <Table.Cell className="px-4 py-3 w-24">
                                             <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${ticket.status_name === 'Pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
                                                 {ticket.status_name}
                                             </span>
                                         </Table.Cell>
-                                        <Table.Cell className="px-4 py-3 w-24">
-                                            <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${ticket.priority_name === 'Alta' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}`}>
-                                                {ticket.priority_name}
-                                            </span>
-                                        </Table.Cell>
+                                        {!isUser && (
+                                            <Table.Cell className="px-4 py-3 w-24">
+                                                <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${ticket.priority_name === 'Alta' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}`}>
+                                                    {ticket.priority_name}
+                                                </span>
+                                            </Table.Cell>
+                                        )}
                                         <Table.Cell className="px-4 py-3 w-20 text-right">
                                             <Button
                                                 variant="ghost"

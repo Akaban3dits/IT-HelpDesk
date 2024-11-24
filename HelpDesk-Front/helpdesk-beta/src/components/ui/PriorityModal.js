@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import { updateTicketByFriendlyCode } from '../../api/tickets/ticketService';
 
-const PriorityButtonModal = ({ friendlyCode, currentPriority, onPriorityChange }) => {
+const PriorityButtonModal = ({ friendlyCode, currentPriority, onPriorityChange, isUser = null, isAdmin = null }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPriority, setSelectedPriority] = useState(currentPriority);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,7 @@ const PriorityButtonModal = ({ friendlyCode, currentPriority, onPriorityChange }
     const colors = {
       'Alta': 'bg-red-100 text-red-700 border border-red-200',
       'Media': 'bg-yellow-100 text-yellow-700 border border-yellow-200',
-      'Baja': 'bg-green-100 text-green-700 border border-green-200'
+      'Baja': 'bg-green-100 text-green-700 border border-green-200',
     };
     return colors[priority] || 'bg-gray-100 text-gray-700 border border-gray-200';
   };
@@ -35,7 +35,7 @@ const PriorityButtonModal = ({ friendlyCode, currentPriority, onPriorityChange }
   const priorities = [
     { id: 1, name: 'Alta' },
     { id: 2, name: 'Media' },
-    { id: 3, name: 'Baja' }
+    { id: 3, name: 'Baja' },
   ];
 
   const handleSubmit = async () => {
@@ -58,19 +58,24 @@ const PriorityButtonModal = ({ friendlyCode, currentPriority, onPriorityChange }
     }
   };
 
+  if (isUser) {
+    // Si isUser es true, no renderizar nada
+    return null;
+  }
+
   return (
     <>
       {/* Priority Button */}
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="group transition-all duration-200 hover:ring-2 hover:ring-gray-200 rounded-lg"
-          aria-label="Change priority"
-        >
-          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${getPriorityColor(currentPriority)}`}>
-            <AlertCircle className="h-4 w-4 flex-shrink-0" />
-            <span className="text-sm font-medium">{currentPriority}</span>
-          </div>
-        </button>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="group transition-all duration-200 hover:ring-2 hover:ring-gray-200 rounded-lg"
+        aria-label="Change priority"
+      >
+        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${getPriorityColor(currentPriority)}`}>
+          <AlertCircle className="h-4 w-4 flex-shrink-0" />
+          <span className="text-sm font-medium">{currentPriority}</span>
+        </div>
+      </button>
 
       {/* Modal Overlay */}
       {isModalOpen && (
@@ -82,7 +87,7 @@ const PriorityButtonModal = ({ friendlyCode, currentPriority, onPriorityChange }
             {/* Modal Container */}
             <div
               className="w-full max-w-lg bg-white rounded-2xl shadow-xl transform transition-all mx-auto"
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">

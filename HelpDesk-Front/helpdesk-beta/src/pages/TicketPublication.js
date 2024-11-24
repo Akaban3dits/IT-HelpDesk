@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Building, Calendar, Monitor, Tag, FileText, MessageSquare, CheckSquare, UserCheck, AlertCircle, Clock, ChevronDown, ChevronUp, History, Copy, Check } from 'lucide-react';
+import { Building, Calendar, Monitor, Tag, FileText, CheckSquare, UserCheck, Clock, ChevronDown, ChevronUp, History, Copy, Check } from 'lucide-react';
 import ImageGallery from '../components/ui/ImageGallery';
-import Comment from '../components/ui/Comment';
 import TaskModal from '../components/ui/TaskModal';
 import StatusChangeModal from '../components/ui/StatusChangeModal';
 import { readToken } from '../api/auth/authService';
@@ -13,7 +12,7 @@ import PriorityButtonModal from '../components/ui/PriorityModal';
 import AssignUserModal from '../components/ui/AssignUserModal';
 import CommentsSection from '../components/ui/CommentSection';
 
-const TicketPublication = () => {
+const TicketPublication = ({ isUser = null }) => {
     const { friendlyCode } = useParams();
     const [ticketData, setTicketData] = useState(null);
     const [status, setStatus] = useState('');
@@ -186,11 +185,15 @@ const TicketPublication = () => {
                             friendlyCode={ticketData.friendly_code}
                             currentStatus={status}
                             onStatusChange={(newStatus) => setStatus(newStatus)}
+                            isUser={isUser}
+                            isAdmin={isAdmin}
                         />
                         <PriorityButtonModal
                             friendlyCode={ticketData.friendly_code}
                             currentPriority={priority}
                             onPriorityChange={(newPriority) => setPriority(newPriority)}
+                            isUser={isUser}
+                            isAdmin={isAdmin}
                         />
                     </div>
                 </div>
@@ -212,6 +215,8 @@ const TicketPublication = () => {
                         friendlyCode={ticketData.friendly_code} // Cambia según tu estructura de datos
                         currentAssignedUserId={ticketData.assigned_user.id}
                         onUserChange={handleUserChange}
+                        isUser={isUser}
+                        isAdmin={isAdmin}
                     />
                 </div>
             </div>
@@ -269,8 +274,8 @@ const TicketPublication = () => {
 
             {isTaskModalOpen && <TaskModal onClose={handleTaskModalClose} />}
             {isStatusModalOpen && (
-                <StatusChangeModal 
-                    onClose={handleStatusModalClose} 
+                <StatusChangeModal
+                    onClose={handleStatusModalClose}
                     friendlyCode={ticketData.friendly_code} // Asegúrate de pasar friendly_code aquí
                 />
             )}

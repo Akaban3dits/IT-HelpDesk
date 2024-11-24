@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Ticket, User2, Monitor, Building2, LogOut, Menu, X, ClipboardList } from 'lucide-react';
+import { Home, Ticket, User2, Monitor, Building2, LogOut, Menu, X, ClipboardList, History } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
@@ -20,13 +20,15 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     // Menú completo
     const menuItems = [
         { icon: Home, label: 'Dashboard', path: '/admin/dashboard', roles: ['Observador', 'Administrador', 'Superadministrador'] },
-        { icon: ClipboardList, label: 'Mis Encargos', path: '/admin/my-tasks', roles: ['Observador'] }, // Nueva opción para "Mis Encargos"
+        { icon: ClipboardList, label: 'Mis Encargos', path: '/admin/my-tasks', roles: ['Observador', 'Administrador', 'Superadministrador'] },
+        { icon: History, label: 'Mi Historial', path: '/admin/my-history', roles: ['Observador', 'Administrador', 'Superadministrador'] },
+        { icon: Ticket, label: 'Todos los tickets', path: '/admin/tickets', roles: ['Observador', 'Administrador', 'Superadministrador'] },
         { icon: User2, label: 'Usuarios', path: '/admin/users', roles: ['Administrador', 'Superadministrador'] },
-        { icon: Ticket, label: 'Historial', path: '/admin/tickets', roles: ['Observador', 'Administrador', 'Superadministrador'] },
-        { icon: Monitor, label: 'Devices', path: '/admin/devices', roles: ['Administrador', 'Superadministrador'] },
         { icon: Building2, label: 'Departamento', path: '/admin/department', roles: ['Administrador', 'Superadministrador'] },
-        
+        { icon: Monitor, label: 'Devices', path: '/admin/devices', roles: ['Administrador', 'Superadministrador'] }
     ];
+    
+
 
     // Filtrar opciones según el rol del usuario
     const filteredMenuItems = menuItems.filter(item => item.roles.includes(userRole));

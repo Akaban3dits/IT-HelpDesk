@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import Button from '../components/ui/Button';
-import StatCard from '../components/ui/StatCard';
 import RecentTicketsTable from '../components/Tables/RecentTicketsTable';
 import { readToken } from '../api/auth/authService';
 import { getMonthlyTicketCounts, getDailyTicketStatusCounts } from '../api/tickets/ticketService';
@@ -103,7 +102,20 @@ const DashboardHome = ({ isSidebarOpen }) => {
                             }`}
                     >
                         {monthlyTicketData.labels.length > 0 ? (
-                            <Bar data={monthlyTicketData} options={{ maintainAspectRatio: false }} />
+                            <Bar
+                                data={monthlyTicketData}
+                                options={{
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        y: {
+                                            ticks: {
+                                                precision: 0, // Asegura que los valores sean enteros
+                                            },
+                                            beginAtZero: true, // Comienza el eje Y en cero
+                                        },
+                                    },
+                                }}
+                            />
                         ) : (
                             <div className="text-gray-500 text-sm h-full w-full flex items-center justify-center">
                                 No hay datos por mostrar
@@ -111,6 +123,7 @@ const DashboardHome = ({ isSidebarOpen }) => {
                         )}
                     </div>
                 </div>
+
 
                 {/* Tarjeta de Estado de Tickets del Día */}
                 <div className="bg-white p-4 rounded-lg shadow">

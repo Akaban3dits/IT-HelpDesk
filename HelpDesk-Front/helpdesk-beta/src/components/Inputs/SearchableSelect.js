@@ -12,14 +12,16 @@ const SearchableSelect = ({
     error,
     name,
     fetchOptions,
-    required = false, // Añadido para soportar validación requerida
+    required = false,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [selectedLabel, setSelectedLabel] = useState('');
+    const [dropdownPosition, setDropdownPosition] = useState('bottom');
     const wrapperRef = useRef(null);
+    const dropdownRef = useRef(null);
 
     const debouncedFetchOptions = useCallback(
         debounce(async (search) => {
@@ -41,6 +43,34 @@ const SearchableSelect = ({
         }, 300),
         [fetchOptions]
     );
+
+    useEffect(() => {
+        if (selectedValue) {
+            const selectedOption = options.find(option => option.value === selectedValue);
+            if (selectedOption) {
+                setSelectedLabel(selectedOption.label);
+            } else {
+                setSelectedLabel('');
+            }
+        }
+    }, [selectedValue, options]);
+
+    const calculateDropdownPosition = useCallback(() => {
+        if (!wrapperRef.current || !dropdownRef.current) return;
+
+        const wrapperRect = wrapperRef.current.getBoundingClientRect();
+        const dropdownHeight = dropdownRef.current.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const spaceBelow = viewportHeight - wrapperRect.bottom;
+        const spaceAbove = wrapperRect.top;
+
+        // Si hay más espacio abajo que el alto del dropdown, o si hay más espacio abajo que arriba
+        if (spaceBelow >= dropdownHeight || spaceBelow >= spaceAbove) {
+            setDropdownPosition('bottom');
+        } else {
+            setDropdownPosition('top');
+        }
+    }, []);
 
     useEffect(() => {
         const fetchInitialOptions = async () => {
@@ -65,15 +95,13 @@ const SearchableSelect = ({
     }, [fetchOptions, searchValue]);
 
     useEffect(() => {
-        if (selectedValue) {
-            const selectedOption = options.find(option => option.value === selectedValue);
-            if (selectedOption) {
-                setSelectedLabel(selectedOption.label);
-            } else {
-                setSelectedLabel('');
-            }
+        if (isOpen) {
+            calculateDropdownPosition();
+            // Recalcular posición al cambiar el tamaño de la ventana
+            window.addEventListener('resize', calculateDropdownPosition);
+            return () => window.removeEventListener('resize', calculateDropdownPosition);
         }
-    }, [selectedValue, options]);
+    }, [isOpen, calculateDropdownPosition]);
 
     const handleInputChange = (e) => {
         const value = e.target.value;
@@ -131,7 +159,14 @@ const SearchableSelect = ({
                 </div>
 
                 {isOpen && (
-                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg sm:text-sm">
+                    <div
+                        ref={dropdownRef}
+                        className={`absolute z-50 w-full bg-white border border-gray-300 rounded-md shadow-lg sm:text-sm ${
+                            dropdownPosition === 'top'
+                                ? 'bottom-full mb-1'
+                                : 'top-full mt-1'
+                        }`}
+                    >
                         <input
                             type="text"
                             name={name}

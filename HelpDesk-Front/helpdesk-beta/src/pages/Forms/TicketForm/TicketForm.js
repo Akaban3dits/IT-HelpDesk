@@ -89,8 +89,6 @@ const CreateTicketForm = () => {
         if (!formData.title) newErrors.title = 'El título es obligatorio.';
         if (!formData.description) newErrors.description = 'La descripción es obligatoria.';
         if (!formData.department_id) newErrors.department_id = 'Debe seleccionar un departamento.';
-        if (!formData.priority_id) newErrors.priority_id = 'Debe seleccionar una prioridad.';
-        if (!formData.assigned_user_id) newErrors.assigned_user_id = 'Debe asignar un usuario.';
         if (!formData.device_id) newErrors.device_id = 'Debe seleccionar un dispositivo.';
 
         setErrors(newErrors);
@@ -190,7 +188,6 @@ const CreateTicketForm = () => {
                         value={formData.priority_id}
                         onChange={(e) => handleSelectChange(e.target.name, e.target.value)}
                         options={priorities.map(priority => ({ label: priority.priority_name, value: priority.id }))}
-                        required={true}
                         error={errors.priority_id}
                     />
 
@@ -203,7 +200,6 @@ const CreateTicketForm = () => {
                         selectedValue={formData.assigned_user_id}
                         onSelectChange={(value) => handleSelectChange('assigned_user_id', value)}
                         error={errors.assigned_user_id}
-                        required={true} // Agregada la propiedad required
                     />
                     <SearchableSelect
                         label="Departamento"

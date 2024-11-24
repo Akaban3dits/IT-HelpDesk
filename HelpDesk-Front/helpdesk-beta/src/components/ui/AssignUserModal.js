@@ -4,7 +4,7 @@ import { updateTicketByFriendlyCode } from '../../api/tickets/ticketService';
 import SearchableSelect from '../Inputs/SearchableSelect';
 import { fetchUserNames } from '../../api/users/userService';
 
-const AssignUserModal = ({ friendlyCode, currentAssignedUserId, onUserChange }) => {
+const AssignUserModal = ({ friendlyCode, currentAssignedUserId, onUserChange, isUser = null, isAdmin = null }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userSearch, setUserSearch] = useState('');
     const [users, setUsers] = useState([]);
@@ -69,12 +69,14 @@ const AssignUserModal = ({ friendlyCode, currentAssignedUserId, onUserChange }) 
 
     return (
         <>
+            {!isUser && (
             <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-blue-600 text-white rounded"
             >
                 Asignar Encargado
             </button>
+        )}
 
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}>

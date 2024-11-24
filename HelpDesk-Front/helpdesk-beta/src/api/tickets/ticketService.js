@@ -20,9 +20,18 @@ export const fetchRecentTickets = async (
     try {
         // Procesar los filtros para asegurarnos de que no haya valores vacíos
         const parsedFilters = Object.keys(filters).reduce((acc, key) => {
-            if (filters[key]) acc[key] = filters[key];
+            if (filters[key] !== undefined) acc[key] = filters[key]; // Incluye `false` y `null`
             return acc;
         }, {});
+
+        console.log('Enviando parámetros al backend:', {
+            page,
+            limit,
+            search,
+            sortBy: 'created_at',
+            sortDirection: 'desc',
+            ...parsedFilters
+        });
 
         const response = await apiClient.get('/tickets', {
             params: {
@@ -35,12 +44,14 @@ export const fetchRecentTickets = async (
             }
         });
 
+        console.log('Respuesta del backend:', response.data);
         return response.data;
     } catch (error) {
         console.log('Error en la obtención de tickets:', error);
         throw error;
     }
-}
+};
+
 
 export const getTicketByFriendlyCode = async (friendlyCode) => {
     try {

@@ -31,6 +31,13 @@ export const fetchComments = async (friendlyCode) => {
     }
 };
 
-export const deleteComment = async() => {
-
-}
+export const deleteComment = async (commentId) => {
+    try {
+        const response = await apiClient.delete(`/comments/${commentId}`);
+        return response.data;
+    } catch (error) {
+        const errorMessage = error.response?.data?.error || 'Error al eliminar el comentario';
+        console.error('Error al eliminar el comentario:', errorMessage);
+        throw new Error(errorMessage);
+    }
+};

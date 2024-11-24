@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { readToken } from '../api/auth/authService';
 import TicketsTable from '../components/Tables/TicketsTable';
+import RecentTicketsTable from '../components/Tables/RecentTicketsTable';
 
-const DashboardTicket = ({ isSidebarOpen }) => {
+const DashboardTicket = ({ isSidebarOpen, useRecentTickets = false, isAssigned = null, isUser=null }) => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -47,19 +48,22 @@ const DashboardTicket = ({ isSidebarOpen }) => {
     >
       {/* Contenedor flex para alinear título y botón en pantallas grandes */}
       <div className="px-4 sm:px-0 sm:flex sm:items-center sm:justify-between">
-        <h1 className="text-2xl font-semibold text-gray-900">Gestión de Usuarios</h1>
         {(userRole === 'Administrador' || userRole === 'Superadministrador') && (
           <Button
-            onClick={() => navigate('/admin/create-user')}
+            onClick={() => navigate('/admin/create-ticket')}
             className="mt-4 sm:mt-0 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
           >
-            Crear Usuario
+            Crear Ticket
           </Button>
         )}
       </div>
 
       <div className="mt-4 sm:mt-6">
-        <TicketsTable></TicketsTable>
+        {useRecentTickets ? (
+          <RecentTicketsTable isAssigned={isAssigned} isUser={isUser}></RecentTicketsTable>
+        ) : (
+          <TicketsTable></TicketsTable>
+        )}
       </div>
     </div>
   );

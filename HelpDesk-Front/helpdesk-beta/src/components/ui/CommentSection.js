@@ -23,7 +23,7 @@ const CommentsSection = ({ friendlyCode }) => {
             const data = await fetchComments(friendlyCode);
             setComments(data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
         } catch (error) {
-            console.error('Error fetching comments:', error);
+            console.error('Error fetching comments:', error.message);
         } finally {
             setIsLoading(false);
         }
@@ -35,7 +35,7 @@ const CommentsSection = ({ friendlyCode }) => {
                 const decodedToken = await readToken();
                 setCurrentUser(decodedToken);
             } catch (error) {
-                console.error('Error reading token:', error);
+                console.error('Error reading token:', error.message);
             }
         };
 
@@ -46,24 +46,30 @@ const CommentsSection = ({ friendlyCode }) => {
     const handleAddComment = async () => {
         if (comment.trim() !== '') {
             try {
+                setIsLoading(true);
                 await createComment(friendlyCode, { comment_text: comment });
                 await fetchAndSetComments();
                 setComment('');
             } catch (error) {
-                console.error('Error adding comment:', error);
+                console.error('Error adding comment:', error.message);
+            } finally {
+                setIsLoading(false);
             }
         }
     };
 
     const handleAddReply = async (parentCommentId, replyText) => {
         try {
+            setIsLoading(true);
             await createComment(friendlyCode, {
                 comment_text: replyText,
                 parent_comment_id: parentCommentId,
             });
             await fetchAndSetComments();
         } catch (error) {
-            console.error('Error adding reply:', error);
+            console.error('Error adding reply:', error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -75,12 +81,17 @@ const CommentsSection = ({ friendlyCode }) => {
     const handleDeleteComment = async () => {
         if (commentToDelete) {
             try {
+                setIsLoading(true);
                 await deleteComment(commentToDelete);
-                await fetchAndSetComments();
+                setComments((prevComments) =>
+                    prevComments.filter((comment) => comment.id !== commentToDelete)
+                );
+            } catch (error) {
+                console.error('Error deleting comment:', error.message);
+            } finally {
+                setIsLoading(false);
                 setIsModalOpen(false);
                 setCommentToDelete(null);
-            } catch (error) {
-                console.error('Error deleting comment:', error);
             }
         }
     };
@@ -89,7 +100,10 @@ const CommentsSection = ({ friendlyCode }) => {
         <div className="bg-gray-50 rounded-b-lg p-4 border-t border-gray-200">
             <Modal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setCommentToDelete(null);
+                }}
                 onConfirm={handleDeleteComment}
             />
 

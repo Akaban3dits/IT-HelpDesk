@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import { updateTicketByFriendlyCode } from '../../api/tickets/ticketService';
 
-const StatusButtonModal = ({ friendlyCode, currentStatus, onStatusChange }) => {
+const StatusButtonModal = ({ friendlyCode, currentStatus, onStatusChange, isUser = null, isAdmin = null}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(currentStatus);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +65,11 @@ const StatusButtonModal = ({ friendlyCode, currentStatus, onStatusChange }) => {
     <>
       {/* Status Button */}
       <button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          if (!isUser) {
+            setIsModalOpen(true);
+          }
+        }}
         className="group transition-all duration-200 hover:ring-2 hover:ring-gray-200 rounded-lg"
         aria-label="Cambiar estado"
       >
