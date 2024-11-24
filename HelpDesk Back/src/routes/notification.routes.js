@@ -6,6 +6,8 @@ const router = Router();
 
 //TODO Realizar un buscador de al menos 20 registros + Que no sean leidos + ID
 
-router.get('/notifications', authenticateToken, NotificationController.usernotification)
+router.get('/notifications', authenticateToken, NotificationController.userNotifications)
+
+router.patch('/notifications/:notificationId', authenticateToken, NotificationController.updateNotification);
 
 export default router;

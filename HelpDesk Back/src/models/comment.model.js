@@ -30,19 +30,25 @@ class Comment {
         );
         return result.rows;
     }
-    
-    
+
+
+    // Obtener un comentario por su ID
     async getCommentById(commentId) {
-        try {
-            const result = await pool.query(
-                `SELECT * FROM comments WHERE id = $1`,
-                [commentId]
-            );
-            return result.rows[0] || null; // Devuelve el comentario o null si no se encuentra
-        } catch (error) {
-            throw new Error('Error al obtener el comentario por ID: ' + error.message);
-        }
+        const result = await pool.query(
+            `SELECT * FROM comments WHERE id = $1`,
+            [commentId]
+        );
+        return result.rows[0]; // Retorna el comentario si existe, o `undefined` si no
     }
+
+    // Eliminar un comentario por su ID
+    async deleteCommentById(commentId) {
+        await pool.query(
+            `DELETE FROM comments WHERE id = $1`,
+            [commentId]
+        );
+    }
+
 }
 
 export default new Comment();

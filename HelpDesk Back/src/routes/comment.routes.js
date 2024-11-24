@@ -9,6 +9,10 @@ router.post('/tickets/:friendly_code/comments', authenticateToken, CommentContro
 // Ruta para obtener comentarios de un ticket específico usando `friendly_code`
 router.get('/tickets/:friendly_code/comments', authenticateToken, CommentController.getComments);
 
+// Ruta para eliminar un comentario por su ID
+router.delete('/comments/:id', authenticateToken, CommentController.deleteComment);
+
+
 export default router;
 
 

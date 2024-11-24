@@ -2146,3 +2146,165 @@ Stack: Error: Error al obtener el comentario por ID: Error al obtener el comenta
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async createComment (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/comment.controller.js:23:35)
 
+Error ID: ebb7f753-4461-4932-a023-a70678456ff1
+Timestamp: 2024-11-23T18:18:55.769Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+Stack: Error: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:57:28)
+
+Error ID: 255aedd6-05b7-42c3-8129-b949bf95992a
+Timestamp: 2024-11-23T18:19:39.946Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+Stack: Error: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:57:28)
+
+Error ID: 73b43229-509e-4a66-81fd-2456fcdc3d6f
+Timestamp: 2024-11-23T18:28:41.465Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+Stack: Error: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:71:28)
+
+Error ID: 009cde63-c317-4ee1-98a4-59e6412f2686
+Timestamp: 2024-11-23T18:37:22.642Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+Stack: Error: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:71:28)
+
+Error ID: 9beea663-aecc-489e-b8fb-8d7cfb367181
+Timestamp: 2024-11-23T18:37:47.594Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+Stack: Error: Error al crear el ticket: Error al crear el ticket: la sintaxis de entrada no es válida para tipo bigint: «»
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:44:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:71:28)
+
+Error ID: 7163d001-a23c-4754-83e7-040bfcb5018d
+Timestamp: 2024-11-24T15:30:52.109Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: TicketModel is not defined
+Stack: ReferenceError: TicketModel is not defined
+    at Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:114:13)
+    at TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:114:38)
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:111:52)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:38:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 0c9374e3-03e5-48a3-bbe2-88dd0e60aacc
+Timestamp: 2024-11-24T15:30:52.137Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: TicketModel is not defined
+Stack: ReferenceError: TicketModel is not defined
+    at Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:114:13)
+    at TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:114:38)
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:111:52)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:38:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: 76b0ade4-9c12-484f-93c6-1c62862213fd
+Timestamp: 2024-11-24T15:31:52.583Z
+Error Type: HTTP GET Error
+Status Code: 500
+Message: TicketModel is not defined
+Stack: ReferenceError: TicketModel is not defined
+    at Ticket.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/models/ticket.model.js:114:13)
+    at TicketService.gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:114:38)
+    at gettickets (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:111:52)
+    at Layer.handle [as handle_request] (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\admin\Documents\Proyectos Practica 2024\NODEJS\HelpDesk\HelpDesk Back\node_modules\express\lib\router\route.js:149:13)
+    at file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/middlewares/auth.js:38:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Error ID: cf0cd575-7ce0-46a7-8ccb-7e27389f7822
+Timestamp: 2024-11-24T20:15:47.175Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: No se pudo crear la notificación.
+Stack: Error: Error al crear el ticket: No se pudo crear la notificación.
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:67:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:56:28)
+
+Error ID: 2c7f9f06-483d-4422-8864-7b5b7d6ef279
+Timestamp: 2024-11-24T20:17:23.404Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: No se pudo crear la notificación.
+Stack: Error: Error al crear el ticket: No se pudo crear la notificación.
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:67:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:56:28)
+
+Error ID: 3077059a-b751-4ea5-8986-34aca9e9c5a5
+Timestamp: 2024-11-24T20:17:25.791Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: No se pudo crear la notificación.
+Stack: Error: Error al crear el ticket: No se pudo crear la notificación.
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:67:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:56:28)
+
+Error ID: 76ac52ee-c68c-4d56-9508-1862838c0a2a
+Timestamp: 2024-11-24T20:17:35.969Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: No se pudo crear la notificación.
+Stack: Error: Error al crear el ticket: No se pudo crear la notificación.
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:67:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:56:28)
+
+Error ID: 197aa3cd-d0e1-4702-9a78-8bfc8317d71f
+Timestamp: 2024-11-24T20:18:20.924Z
+Error Type: HTTP POST Error
+Status Code: 500
+Message: Error al crear el ticket: No se pudo crear la notificación.
+Stack: Error: Error al crear el ticket: No se pudo crear la notificación.
+    at TicketService.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:67:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.createTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:56:28)
+
+Error ID: cbde7f4c-1eef-4b12-b1d3-10bbed64b181
+Timestamp: 2024-11-24T20:42:28.944Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: Error al actualizar el ticket: NotificationService is not defined
+Stack: Error: Error al actualizar el ticket: NotificationService is not defined
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:301:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:164:35)
+
+Error ID: da1cc4ec-e24c-4eb0-8acc-8a1b8f041d04
+Timestamp: 2024-11-24T20:52:06.901Z
+Error Type: HTTP PUT Error
+Status Code: 500
+Message: Error al actualizar el ticket: NotificationService is not defined
+Stack: Error: Error al actualizar el ticket: NotificationService is not defined
+    at TicketService.updateTicketByFriendlyCode (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/services/ticket.service.js:301:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async TicketController.updateTicket (file:///C:/Users/admin/Documents/Proyectos%20Practica%202024/NODEJS/HelpDesk/HelpDesk%20Back/src/controllers/ticket.controller.js:164:35)
+

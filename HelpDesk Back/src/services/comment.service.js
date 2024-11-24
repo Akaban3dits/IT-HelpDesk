@@ -39,14 +39,29 @@ class CommentService {
                     }
                 }
             });
-    
-            console.log('Comentarios raíz con sus respuestas antes de enviar:', JSON.stringify(roots, null, 2));
             return roots; // Asegúrate de enviar los datos estructurados
         } catch (error) {
             console.error('Error al obtener los comentarios:', error);
             throw new Error('Error al obtener los comentarios: ' + error.message);
         }
     }
+    
+    async deleteComment(commentId) {
+        try {
+            // Verificar si el comentario existe antes de eliminarlo
+            const existingComment = await CommentModel.getCommentById(commentId);
+            if (!existingComment) {
+                throw new Error('El comentario no existe');
+            }
+    
+            // Eliminar el comentario
+            await CommentModel.deleteCommentById(commentId);
+        } catch (error) {
+            console.error('Error al eliminar el comentario:', error);
+            throw new Error('No se pudo eliminar el comentario: ' + error.message);
+        }
+    }
+    
     
     
     

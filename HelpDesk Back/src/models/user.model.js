@@ -299,6 +299,21 @@ class User {
         }
     }
 
+    async getUsersByRoles(roleNames) {
+        try {
+            const result = await pool.query(
+                `SELECT u.friendly_code, u.first_name, u.last_name, r.role_name
+                 FROM users u
+                 INNER JOIN roles r ON u.role_id = r.id
+                 WHERE r.role_name = ANY($1) AND u.status = true`, // Solo usuarios activos
+                [roleNames]
+            );
+            return result.rows;
+        } catch (error) {
+            console.error('Error al obtener usuarios por roles:', error.message);
+            throw new Error('No se pudieron obtener los usuarios con los roles especificados.');
+        }
+    }
 
 }
 

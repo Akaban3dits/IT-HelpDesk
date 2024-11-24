@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS comments (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     ticket_id TEXT NOT NULL REFERENCES tickets (friendly_code),
     user_id TEXT NOT NULL REFERENCES users (friendly_code),
-    parent_comment_id BIGINT REFERENCES comments (id)
+    parent_comment_id BIGINT REFERENCES comments (id) ON DELETE CASCADE
 );
 
 -- Tabla de adjuntos
@@ -114,19 +114,22 @@ CREATE TABLE IF NOT EXISTS tasks (
 
 -- Tabla de notificaciones
 CREATE TABLE IF NOT EXISTS notifications (
-    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    message TEXT NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    ticket_id TEXT REFERENCES tickets (friendly_code)
+    id BIGSERIAL PRIMARY KEY, -- ID único autoincremental
+    ticket_id TEXT REFERENCES tickets (friendly_code) ON DELETE CASCADE, -- Relación con la tabla de tickets
+    message TEXT NOT NULL, -- Mensaje de la notificación
+    type TEXT NOT NULL CHECK (type IN ('Nuevo Ticket', 'Actualización', 'Asignación')), -- Tipo de notificación
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() -- Fecha de creación de la notificación
 );
 
--- Relación entre notificaciones y usuarios
+-- Tabla de relación entre notificaciones y usuarios
 CREATE TABLE IF NOT EXISTS notification_user (
-    notification_id BIGINT NOT NULL REFERENCES notifications (id),
-    user_id TEXT NOT NULL REFERENCES users (friendly_code),
-    read_at TIMESTAMP WITH TIME ZONE,
-    PRIMARY KEY (notification_id, user_id)
+    notification_id BIGINT NOT NULL REFERENCES notifications (id) ON DELETE CASCADE, -- Relación con la tabla de notificaciones
+    user_id TEXT NOT NULL REFERENCES users (friendly_code) ON DELETE CASCADE, -- Relación con la tabla de usuarios
+    read_at TIMESTAMP WITH TIME ZONE, -- Fecha en la que se leyó la notificación
+    hidden BOOLEAN DEFAULT FALSE, -- Indica si la notificación está oculta
+    PRIMARY KEY (notification_id, user_id) -- Llave primaria compuesta para evitar duplicados
 );
+
 
 INSERT INTO roles (role_name) VALUES ('Usuario');
 INSERT INTO roles (role_name) VALUES ('Administrador');

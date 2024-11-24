@@ -8,15 +8,15 @@ class Ticket {
                 title,
                 description,
                 status_id,
-                priority_id,
+                priority_id = null,
                 device_id,
-                assigned_user_id,
+                assigned_user_id = null,
                 department_id,
                 created_by,
                 created_by_name,
                 updated_by
             } = ticketData;
-    
+
             const result = await pool.query(
                 `INSERT INTO tickets (
                     friendly_code,
@@ -36,9 +36,9 @@ class Ticket {
                     title,
                     description,
                     status_id,
-                    priority_id,
+                    priority_id || null, // Convertir vacío a null
                     device_id,
-                    assigned_user_id,
+                    assigned_user_id || null, // Convertir vacío a null
                     department_id,
                     created_by,
                     created_by_name,
@@ -52,11 +52,9 @@ class Ticket {
             throw new Error('Error al crear el ticket: ' + error.message);
         }
     }
-    
-
     async delete(ticketId) {
         try {
-            await pool.query('DELETE FROM tickets WHERE id = $1', [ticketId]);
+            await pool.query('DELETE FROM tickets WHERE friendly_code = $1', [ticketId]);
         } catch (error) {
             throw error; // Lanzar el error para que el controlador lo capture
         }
@@ -84,14 +82,14 @@ class Ticket {
                  WHERE t.friendly_code = $1`,
                 [ticketId]
             );
-    
+
             return result.rows[0] || null;
         } catch (error) {
             console.error('Error en findById:', error.message);
             throw error; // Re-lanza el error
         }
     }
-    
+
 
     // Modelo
     async gettickets(
@@ -104,48 +102,56 @@ class Ticket {
         sortDirection = 'desc',
         status = '',
         priority = '',
-        dateRange = ''  // Nuevo parámetro de rango de fechas
+        dateOption = '',
+        isAssigned = null,
+        createdBy // ID del usuario
     ) {
         try {
             const offset = (page - 1) * limit;
-            let query = `SELECT tickets.friendly_code, tickets.title, tickets.created_at, 
-                     CONCAT(users.first_name, ' ', users.last_name) AS created_by_name, 
-                     status.status_name, priority.priority_name 
-                     FROM tickets
-                     LEFT JOIN status ON tickets.status_id = status.id
-                     LEFT JOIN priority ON tickets.priority_id = priority.id
-                     LEFT JOIN users ON tickets.created_by = users.friendly_code`;
-
+            let query = `SELECT 
+                            tickets.friendly_code, 
+                            tickets.title, 
+                            tickets.created_at, 
+                            CONCAT(creator.first_name, ' ', creator.last_name) AS created_by_name, 
+                            CONCAT(assigned.first_name, ' ', assigned.last_name) AS assigned_to_name, 
+                            status.status_name, 
+                            priority.priority_name 
+                        FROM tickets
+                        LEFT JOIN status ON tickets.status_id = status.id
+                        LEFT JOIN priority ON tickets.priority_id = priority.id
+                        LEFT JOIN users AS creator ON tickets.created_by = creator.friendly_code
+                        LEFT JOIN users AS assigned ON tickets.assigned_user_id = assigned.friendly_code`;
+    
             let queryParams = [];
             let countQueryParams = [];
             let whereConditions = [];
             let index = 1;
-
+    
             // Filtro de búsqueda
             if (search) {
                 const searchTerms = search.split(' ');
                 searchTerms.forEach(term => {
                     whereConditions.push(`(
-                    tickets.friendly_code ILIKE $${index} OR
-                    tickets.title ILIKE $${index} OR
-                    users.first_name ILIKE $${index} OR 
-                    users.last_name ILIKE $${index}
-                )`);
+                        tickets.friendly_code ILIKE $${index} OR
+                        tickets.title ILIKE $${index} OR
+                        creator.first_name ILIKE $${index} OR 
+                        creator.last_name ILIKE $${index}
+                    )`);
                     const termParam = `%${term}%`;
                     queryParams.push(termParam);
                     countQueryParams.push(termParam);
                     index++;
                 });
             }
-
-            // Filtro de columna específica
+    
+            // Filtro por columna específica
             if (filterColumn && filterValue) {
                 whereConditions.push(`${filterColumn} = $${index}`);
                 queryParams.push(filterValue);
                 countQueryParams.push(filterValue);
                 index++;
             }
-
+    
             // Filtro por estado
             if (status) {
                 whereConditions.push(`status.status_name = $${index}`);
@@ -153,7 +159,7 @@ class Ticket {
                 countQueryParams.push(status);
                 index++;
             }
-
+    
             // Filtro por prioridad
             if (priority) {
                 whereConditions.push(`priority.priority_name = $${index}`);
@@ -161,52 +167,72 @@ class Ticket {
                 countQueryParams.push(priority);
                 index++;
             }
-
+    
             // Filtro por rango de fecha
-            if (dateRange) {
-                if (dateRange === 'Hoy') {
+            if (dateOption) {
+                if (dateOption === 'Hoy') {
                     whereConditions.push(`DATE(tickets.created_at) = CURRENT_DATE`);
-                } else if (dateRange === 'Ultimos 2 dias') {
+                } else if (dateOption === 'Ultimos 2 dias') {
                     whereConditions.push(`tickets.created_at >= CURRENT_DATE - INTERVAL '2 days'`);
-                } else if (dateRange === 'Ultimos 3 dias') {
+                } else if (dateOption === 'Ultimos 3 dias') {
                     whereConditions.push(`tickets.created_at >= CURRENT_DATE - INTERVAL '3 days'`);
                 }
             }
-
+    
+            // Filtro por `isAssigned` y `createdBy`
+            if (isAssigned !== null) {
+    
+                if (isAssigned === true || isAssigned === 'true') {
+                    whereConditions.push(`tickets.assigned_user_id = $${index}`);
+                } else if (isAssigned === false || isAssigned === 'false') {
+                    whereConditions.push(`tickets.created_by = $${index}`);
+                } else {
+                }
+    
+                queryParams.push(createdBy);
+                countQueryParams.push(createdBy);
+                index++;
+            }
+    
+            // Agregar condiciones WHERE si existen
             if (whereConditions.length > 0) {
                 query += ` WHERE ` + whereConditions.join(` AND `);
             }
-
+    
             query += ` ORDER BY ${sortBy} ${sortDirection} LIMIT $${index} OFFSET $${index + 1}`;
             queryParams.push(limit, offset);
-
             const result = await pool.query(query, queryParams);
+    
             let tickets = result.rows;
-
+    
             // Consulta para el conteo total de tickets
             let countQuery = `SELECT COUNT(*) 
-                          FROM tickets 
-                          LEFT JOIN status ON tickets.status_id = status.id
-                          LEFT JOIN priority ON tickets.priority_id = priority.id
-                          LEFT JOIN users ON tickets.created_by = users.friendly_code`;
-
+                              FROM tickets 
+                              LEFT JOIN status ON tickets.status_id = status.id
+                              LEFT JOIN priority ON tickets.priority_id = priority.id
+                              LEFT JOIN users AS creator ON tickets.created_by = creator.friendly_code
+                              LEFT JOIN users AS assigned ON tickets.assigned_user_id = assigned.friendly_code`;
+    
             if (whereConditions.length > 0) {
                 countQuery += ` WHERE ` + whereConditions.join(` AND `);
             }
-
+    
             const totalTicketsResult = await pool.query(countQuery, countQueryParams);
-            const totalTickets = parseInt(totalTicketsResult.rows[0].count, 10);
+    
+            const totalTickets = parseInt(totalTicketsResult.rows[0]?.count || 0, 10);
             const totalPages = Math.ceil(totalTickets / limit);
-
+    
+            // Asegurarse de incluir el campo `assigned_to_name`
             tickets = tickets.map(ticket => ({
                 friendly_code: ticket.friendly_code,
                 title: ticket.title,
                 created_at: ticket.created_at,
                 created_by_name: ticket.created_by_name,
+                assigned_to_name: ticket.assigned_to_name, // Incluye el campo del usuario asignado
                 status_name: ticket.status_name,
                 priority_name: ticket.priority_name
             }));
-
+    
             return {
                 current_page: page,
                 total_pages: totalPages,
@@ -214,9 +240,12 @@ class Ticket {
                 tickets
             };
         } catch (error) {
+            console.error('Error en gettickets:', error);
             throw error;
         }
     }
+    
+
 
 
     async findByFriendlyCode(friendlyCode) {
@@ -263,10 +292,10 @@ class Ticket {
              WHERE t.friendly_code = $1`,
             [friendlyCode]
         );
-    
+
         return result.rows[0] || null; // Devuelve el ticket o null si no existe
     }
-    
+
 
     async getMonthlyTicketCounts() {
         try {
@@ -338,7 +367,7 @@ class Ticket {
                  RETURNING *`,
                 [status_id, priority_id, assigned_user_id, updated_by, updated_at, closed_at, friendlyCode]
             );
-    
+
             return result.rows[0];
         } catch (error) {
             throw error; // Lanzar el error para que el controlador lo capture
@@ -376,14 +405,14 @@ class Ticket {
                  LIMIT 1`,
                 [friendlyCode]
             );
-    
+
             return result.rows[0] || null; // Devuelve el ticket o null si no existe
         } catch (error) {
             throw error; // Lanza el error para que el controlador lo capture
         }
     }
-    
-    
+
+
 
 }
 

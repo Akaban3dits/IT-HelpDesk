@@ -113,6 +113,21 @@ class UserService {
             throw error; // Lanza el error para que sea manejado por el controlador
         }
     }
+
+    async getAdminAndSuperadminIds() {
+        try {
+            const roles = ['Administrador', 'Superadministrador'];
+            const users = await User.getUsersByRoles(roles);
+
+            // Extrae únicamente los friendly_code
+            const adminAndSuperadminIds = users.map(user => user.friendly_code);
+
+            return adminAndSuperadminIds;
+        } catch (error) {
+            console.error('Error al obtener los IDs de Administradores y Superadministradores:', error.message);
+            throw new Error('No se pudieron obtener los usuarios con rol Administrador o Superadministrador.');
+        }
+    }
 }
 
 export default new UserService();

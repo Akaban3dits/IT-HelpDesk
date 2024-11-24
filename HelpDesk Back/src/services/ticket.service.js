@@ -3,6 +3,8 @@ import priorityModel from '../models/priority.model.js';
 import statusModel from '../models/status.model.js';
 import TicketModel from '../models/ticket.model.js';
 import fs from 'fs/promises';
+import notificationService from './notification.service.js';
+import userService from './user.service.js';
 
 class TicketService {
 
@@ -15,64 +17,94 @@ class TicketService {
             // Crear el ticket y obtener su ID
             ticket = await TicketModel.create(ticketData);
 
-            // Si hay archivos adjuntos, procesarlos
+            // Procesar archivos adjuntos, si existen
             if (attachments.length > 0) {
-                // Actualizar los attachments con el ID del ticket recién creado
-                const enrichedAttachments = attachments.map(attachment => ({
+                const enrichedAttachments = attachments.map((attachment) => ({
                     ...attachment,
-                    ticket_id: ticket.friendly_code
+                    ticket_id: ticket.friendly_code,
                 }));
 
-                // Insertar los attachments en la base de datos
-                await attachmentModel.createAttachments(enrichedAttachments);
-
-                // Registrar los archivos subidos para posible rollback
-                uploadedFiles.push(...enrichedAttachments);
+                try {
+                    await attachmentModel.createAttachments(enrichedAttachments);
+                    uploadedFiles.push(...enrichedAttachments);
+                } catch (attachmentError) {
+                    console.error('Error al procesar los attachments:', attachmentError);
+                    throw new Error('No se pudieron guardar los adjuntos. Se procederá con el rollback.');
+                }
             }
 
-            // Obtener el ticket completo con sus attachments
+            // Crear notificación para la creación del ticket
+            await notificationService.createNotification({
+                ticket_id: ticket.friendly_code,
+                type: 'Nuevo Ticket',
+                message: `Se ha creado un nuevo ticket: ${ticket.friendly_code}`,
+                recipients: await userService.getAdminAndSuperadminIds(), // Enviar a admins y superadmins
+            });
+
+            // Crear notificación si hay un usuario asignado
+            if (ticketData.assigned_user_id) {
+                const { assigned_user_id, created_by } = ticketData;
+
+                if (assigned_user_id !== created_by) {
+                    await notificationService.createNotification({
+                        ticket_id: ticket.friendly_code,
+                        type: 'Asignación',
+                        message: `Has sido asignado al ticket: ${ticket.friendly_code}`,
+                        recipients: [assigned_user_id],
+                    });
+                }
+            }
+
+            // Obtener el ticket completo con sus adjuntos
             const completeTicket = await this.getTicketById(ticket.friendly_code);
             return completeTicket;
-
         } catch (error) {
             console.error('Error en la creación del ticket:', error);
 
             // Realizar rollback en caso de error
-            await this.handleRollback(ticket?.id, uploadedFiles);
+            await this.handleRollback(ticket?.friendly_code, uploadedFiles);
 
-            // Lanzar el error para que el controlador lo maneje
             throw new Error(`Error al crear el ticket: ${error.message}`);
         }
     }
 
     async getTicketById(ticketId) {
-        const ticket = await TicketModel.findById(ticketId);
-        if (!ticket) {
-            throw new Error('Ticket no encontrado');
-        }
+        try {
+            const ticket = await TicketModel.findById(ticketId);
+            if (!ticket) {
+                throw new Error('Ticket no encontrado');
+            }
 
-        // Obtener los attachments asociados al ticket
-        const attachments = await attachmentModel.getAttachmentsByTicketId(ticketId);
-        return {
-            ...ticket,
-            attachments
-        };
+            // Obtener los attachments asociados al ticket
+            const attachments = await attachmentModel.getAttachmentsByTicketId(ticketId);
+            return {
+                ...ticket,
+                attachments,
+            };
+        } catch (error) {
+            console.error('Error al obtener el ticket:', error);
+            throw error;
+        }
     }
 
     async handleRollback(ticketId, uploadedFiles) {
+        console.log('Iniciando rollback...');
         try {
             // 1. Eliminar archivos físicos
             if (uploadedFiles.length > 0) {
+                console.log('Eliminando archivos físicos subidos...');
                 await this.deleteUploadedFiles(uploadedFiles);
             }
 
-            // 2. Eliminar registros de attachments si el ticket existe
+            // 2. Eliminar registros de adjuntos si el ticket existe
             if (ticketId) {
+                console.log('Eliminando registros de attachments del ticket...');
                 await attachmentModel.deleteAttachmentsByTicketId(ticketId);
             }
 
             // 3. Eliminar el ticket si existe
             if (ticketId) {
+                console.log('Eliminando el ticket...');
                 await TicketModel.delete(ticketId);
             }
         } catch (rollbackError) {
@@ -82,10 +114,11 @@ class TicketService {
     }
 
     async deleteUploadedFiles(attachments) {
+        console.log('Eliminando archivos subidos...');
         const deletePromises = attachments.map(async (attachment) => {
             try {
-                await fs.unlink(attachment.file_path);
-                console.log(`Archivo eliminado con éxito: ${attachment.file_path}`);
+                await fs.promises.unlink(attachment.file_path); // Uso de fs.promises para evitar callbacks
+                console.log(`Archivo eliminado: ${attachment.file_path}`);
             } catch (err) {
                 console.warn(`No se pudo eliminar el archivo: ${attachment.file_path}`, err);
                 // No lanzamos el error para continuar con los demás archivos
@@ -95,6 +128,7 @@ class TicketService {
         await Promise.allSettled(deletePromises);
     }
 
+
     // Servicio
     async gettickets(
         page = 1,
@@ -102,14 +136,16 @@ class TicketService {
         search = '',
         filterColumn = '',
         filterValue = '',
-        sortBy = 'id',
-        sortDirection = 'asc',
+        sortBy = 'created_at',
+        sortDirection = 'desc',
         status = '',
         priority = '',
-        dateRange = ''  // Nuevo parámetro de rango de fechas
+        dateOption = '', // Nuevo parámetro
+        isAssigned = null, // Booleano para assigned_user_id o created_by
+        createdBy = '' // Valor por defecto como string vacío
     ) {
         try {
-            const result = await TicketModel.gettickets(
+            const tickets = await TicketModel.gettickets(
                 page,
                 limit,
                 search,
@@ -119,13 +155,17 @@ class TicketService {
                 sortDirection,
                 status,
                 priority,
-                dateRange  // Pasar el rango de fecha al modelo
+                dateOption,
+                isAssigned,
+                createdBy
             );
-            return result;
+            return tickets;
         } catch (error) {
-            throw error;
+            console.error('Error en TicketService.gettickets:', error);
+            throw new Error('Error al obtener los tickets.');
         }
     }
+
 
 
 
@@ -212,14 +252,47 @@ class TicketService {
             // Actualizar ticket en la base de datos
             const updatedTicket = await TicketModel.updateByFriendlyCode(friendlyCode, fieldsToUpdate);
     
-            // Registrar cambio de estado (si aplica)
+            // Gestionar notificaciones
+            const notifications = [];
+    
+            // Notificar cambio de estado al creador si no es quien actualiza
             if (fieldsToUpdate.status_id !== currentTicket.status_id) {
-                await statusModel.create(
-                    friendlyCode,
-                    await statusModel.getStatusNameById(currentTicket.status_id), // Estado anterior
-                    await statusModel.getStatusNameById(fieldsToUpdate.status_id), // Nuevo estado
-                    updateData.updated_by || null // Usuario que realizó el cambio
-                );
+                if (currentTicket.created_by !== updateData.updated_by) {
+                    notifications.push({
+                        ticket_id: friendlyCode,
+                        type: 'Actualización',
+                        message: `El estado del ticket "${friendlyCode}" ha cambiado a "${await statusModel.getStatusNameById(fieldsToUpdate.status_id)}".`,
+                        recipients: [currentTicket.created_by]
+                    });
+                }
+            }
+    
+            // Notificar cambio de encargado
+            if (fieldsToUpdate.assigned_user_id !== currentTicket.assigned_user_id) {
+                // Al nuevo encargado
+                if (fieldsToUpdate.assigned_user_id) {
+                    notifications.push({
+                        ticket_id: friendlyCode,
+                        type: 'Asignación',
+                        message: `Se te ha asignado el ticket "${friendlyCode}".`,
+                        recipients: [fieldsToUpdate.assigned_user_id]
+                    });
+                }
+    
+                // Al encargado anterior
+                if (currentTicket.assigned_user_id) {
+                    notifications.push({
+                        ticket_id: friendlyCode,
+                        type: 'Asignación',
+                        message: `Ya no estás asignado al ticket "${friendlyCode}".`,
+                        recipients: [currentTicket.assigned_user_id]
+                    });
+                }
+            }
+    
+            // Crear las notificaciones en el servicio de notificaciones
+            for (const notification of notifications) {
+                await notificationService.createNotification(notification);
             }
     
             return updatedTicket; // Retornar el ticket actualizado
@@ -228,8 +301,6 @@ class TicketService {
             throw new Error('Error al actualizar el ticket: ' + error.message);
         }
     }
-    
-    
 }
 
 export default new TicketService();

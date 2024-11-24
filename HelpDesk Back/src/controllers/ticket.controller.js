@@ -25,21 +25,20 @@ class TicketController {
     
             // Verificar si el usuario asignado existe
             const { assigned_user_id, device_id } = req.body;
+    
             if (assigned_user_id) {
                 const assignedUser = await UserService.getUserById(assigned_user_id);
                 if (!assignedUser) {
+                    console.error('El usuario asignado no existe.');
                     return res.status(400).json({ error: 'El usuario asignado no existe.' });
                 }
             }
-    
-            // Obtener el type_code del dispositivo
             const device = await deviceService.getById(device_id);
             if (!device) {
+                console.error('El dispositivo especificado no existe.');
                 return res.status(400).json({ error: 'El dispositivo especificado no existe.' });
             }
             const typeCode = device.type_code;
-    
-            // Generar el friendly_code utilizando el type_code
             const friendlyCode = this.generateFriendlyCode(typeCode);
     
             // Agrega los datos adicionales necesarios
@@ -50,10 +49,10 @@ class TicketController {
                 updated_by: createdBy,
                 friendly_code: friendlyCode,
                 created_at: new Date(),
-                closed_at: null
+                closed_at: null,
+                priority_id: req.body.priority_id || null, // Convertir vacío a null
+                assigned_user_id: req.body.assigned_user_id || null // Convertir vacío a null
             };
-    
-            // Crear el ticket con los datos y los adjuntos confirmados
             const ticket = await TicketService.createTicket(ticketData, attachments);
     
             return res.status(201).json(ticket);
@@ -62,6 +61,7 @@ class TicketController {
             next(error); // Enviar el error al middleware de manejo de errores
         }
     }
+    
     
     generateFriendlyCode(typeCode) {
         const timestamp = Date.now(); // Timestamp actual en milisegundos
@@ -83,9 +83,23 @@ class TicketController {
                 sortDirection = 'asc',
                 status = '',
                 priority = '',
-                dateRange = ''  // Nuevo parámetro de rango de fechas
+                dateOption = '',
+                isAssigned = null // Valor recibido de la solicitud
             } = req.query;
-
+    
+            const createdBy = req.user.id; // ID del usuario autenticado
+    
+    
+            // Asegurarse de que isAssigned sea booleano o null
+            let parsedIsAssigned;
+            if (isAssigned === 'true') {
+                parsedIsAssigned = true;
+            } else if (isAssigned === 'false') {
+                parsedIsAssigned = false;
+            } else {
+                parsedIsAssigned = null;
+            }
+            // Llamada al servicio con el valor procesado
             const ticketData = await TicketService.gettickets(
                 parseInt(page),
                 parseInt(limit),
@@ -96,17 +110,22 @@ class TicketController {
                 sortDirection,
                 status,
                 priority,
-                dateRange  // Pasar el rango de fecha
+                dateOption,
+                parsedIsAssigned, // Pasar booleano o null
+                createdBy
             );
-
+    
             return res.status(200).json(ticketData);
-
         } catch (error) {
+            // Log para errores capturados
+            console.error('Error en gettickets:', error);
             next(error);
         }
     }
-
-
+    
+    
+    
+    
     async getTicketByFriendlyCode(req, res, next) {
         try {
             const { friendlyCode } = req.params;
@@ -155,10 +174,6 @@ class TicketController {
             next(error); // Enviar el error al middleware de manejo de errores
         }
     }
-
-
-
-
 }
 
 export default new TicketController();
