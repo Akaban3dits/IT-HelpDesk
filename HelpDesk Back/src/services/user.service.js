@@ -124,7 +124,6 @@ class UserService {
 
             return adminAndSuperadminIds;
         } catch (error) {
-            console.error('Error al obtener los IDs de Administradores y Superadministradores:', error.message);
             throw new Error('No se pudieron obtener los usuarios con rol Administrador o Superadministrador.');
         }
     }

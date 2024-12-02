@@ -34,7 +34,7 @@ class CommentController {
 
             const commentData = {
                 comment_text,
-                ticket_id: ticket.friendly_code,
+                friendly_code: ticket.friendly_code,
                 user_id,
                 parent_comment_id: parent_comment_id || null,
             };

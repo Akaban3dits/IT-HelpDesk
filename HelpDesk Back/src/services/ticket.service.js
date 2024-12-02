@@ -25,8 +25,9 @@ class TicketService {
                 }));
 
                 try {
+                    // Intentar crear los adjuntos en la base de datos
                     await attachmentModel.createAttachments(enrichedAttachments);
-                    uploadedFiles.push(...enrichedAttachments);
+                    uploadedFiles.push(...enrichedAttachments);  // Guardar archivos procesados correctamente
                 } catch (attachmentError) {
                     console.error('Error al procesar los attachments:', attachmentError);
                     throw new Error('No se pudieron guardar los adjuntos. Se procederá con el rollback.');
@@ -38,7 +39,7 @@ class TicketService {
                 ticket_id: ticket.friendly_code,
                 type: 'Nuevo Ticket',
                 message: `Se ha creado un nuevo ticket: ${ticket.friendly_code}`,
-                recipients: await userService.getAdminAndSuperadminIds(), // Enviar a admins y superadmins
+                recipients: await userService.getAdminAndSuperadminIds(),
             });
 
             // Crear notificación si hay un usuario asignado
@@ -58,6 +59,7 @@ class TicketService {
             // Obtener el ticket completo con sus adjuntos
             const completeTicket = await this.getTicketById(ticket.friendly_code);
             return completeTicket;
+
         } catch (error) {
             console.error('Error en la creación del ticket:', error);
 
@@ -66,6 +68,43 @@ class TicketService {
 
             throw new Error(`Error al crear el ticket: ${error.message}`);
         }
+    }
+
+    async handleRollback(ticketId, uploadedFiles) {
+        try {
+            // 1. Eliminar archivos físicos
+            if (uploadedFiles.length > 0) {
+                await this.deleteUploadedFiles(uploadedFiles);
+            }
+
+            // 2. Eliminar registros de adjuntos si el ticket existe
+            if (ticketId) {
+                await attachmentModel.deleteAttachmentsByTicketId(ticketId);
+            }
+
+            // 3. Eliminar el ticket si existe
+            if (ticketId) {
+                await TicketModel.delete(ticketId);
+            }
+
+        } catch (rollbackError) {
+            console.error('Error durante el rollback:', rollbackError);
+            // No relanzamos el error del rollback para no ocultar el error original
+        }
+    }
+
+    async deleteUploadedFiles(attachments) {
+        const deletePromises = attachments.map(async (attachment) => {
+            try {
+                await fs.promises.unlink(attachment.file_path);  // Eliminar archivo físico
+            } catch (err) {
+                console.warn(`No se pudo eliminar el archivo: ${attachment.file_path}`, err);
+                // No lanzamos el error para continuar con los demás archivos
+            }
+        });
+
+        // Esperar que todas las promesas de eliminación se resuelvan
+        await Promise.allSettled(deletePromises);
     }
 
     async getTicketById(ticketId) {
@@ -86,48 +125,6 @@ class TicketService {
             throw error;
         }
     }
-
-    async handleRollback(ticketId, uploadedFiles) {
-        console.log('Iniciando rollback...');
-        try {
-            // 1. Eliminar archivos físicos
-            if (uploadedFiles.length > 0) {
-                console.log('Eliminando archivos físicos subidos...');
-                await this.deleteUploadedFiles(uploadedFiles);
-            }
-
-            // 2. Eliminar registros de adjuntos si el ticket existe
-            if (ticketId) {
-                console.log('Eliminando registros de attachments del ticket...');
-                await attachmentModel.deleteAttachmentsByTicketId(ticketId);
-            }
-
-            // 3. Eliminar el ticket si existe
-            if (ticketId) {
-                console.log('Eliminando el ticket...');
-                await TicketModel.delete(ticketId);
-            }
-        } catch (rollbackError) {
-            console.error('Error durante el rollback:', rollbackError);
-            // No relanzamos el error del rollback para no ocultar el error original
-        }
-    }
-
-    async deleteUploadedFiles(attachments) {
-        console.log('Eliminando archivos subidos...');
-        const deletePromises = attachments.map(async (attachment) => {
-            try {
-                await fs.promises.unlink(attachment.file_path); // Uso de fs.promises para evitar callbacks
-                console.log(`Archivo eliminado: ${attachment.file_path}`);
-            } catch (err) {
-                console.warn(`No se pudo eliminar el archivo: ${attachment.file_path}`, err);
-                // No lanzamos el error para continuar con los demás archivos
-            }
-        });
-
-        await Promise.allSettled(deletePromises);
-    }
-
 
     // Servicio
     async gettickets(
@@ -161,7 +158,6 @@ class TicketService {
             );
             return tickets;
         } catch (error) {
-            console.error('Error en TicketService.gettickets:', error);
             throw new Error('Error al obtener los tickets.');
         }
     }
@@ -210,7 +206,7 @@ class TicketService {
             if (!currentTicket) {
                 throw new Error('El ticket no existe');
             }
-    
+
             // Preparar campos a actualizar
             const fieldsToUpdate = {
                 title: updateData.title || currentTicket.title,
@@ -222,7 +218,7 @@ class TicketService {
                 closed_at: currentTicket.closed_at,
                 updated_at: new Date() // Actualiza `updated_at` con la fecha actual
             };
-    
+
             // Convertir `status_name` a `status_id` si es necesario
             if (updateData.status_name) {
                 fieldsToUpdate.status_id = await statusModel.getStatusIdByName(updateData.status_name);
@@ -230,7 +226,7 @@ class TicketService {
                     throw new Error(`El estado "${updateData.status_name}" no existe`);
                 }
             }
-    
+
             // Convertir `priority_name` a `priority_id` si es necesario
             if (updateData.priority_name) {
                 fieldsToUpdate.priority_id = await priorityModel.getPriorityIdByName(updateData.priority_name);
@@ -238,7 +234,7 @@ class TicketService {
                     throw new Error(`La prioridad "${updateData.priority_name}" no existe`);
                 }
             }
-    
+
             // Actualizar fecha de cierre si el estado cambia a "Cerrado"
             const closedStatusId = await statusModel.getStatusIdByName('Cerrado');
             if (fieldsToUpdate.status_id !== currentTicket.status_id) {
@@ -248,13 +244,13 @@ class TicketService {
                     fieldsToUpdate.closed_at = null; // Limpiar la fecha de cierre si ya no está cerrado
                 }
             }
-    
+
             // Actualizar ticket en la base de datos
             const updatedTicket = await TicketModel.updateByFriendlyCode(friendlyCode, fieldsToUpdate);
-    
+
             // Gestionar notificaciones
             const notifications = [];
-    
+
             // Notificar cambio de estado al creador si no es quien actualiza
             if (fieldsToUpdate.status_id !== currentTicket.status_id) {
                 if (currentTicket.created_by !== updateData.updated_by) {
@@ -266,7 +262,7 @@ class TicketService {
                     });
                 }
             }
-    
+
             // Notificar cambio de encargado
             if (fieldsToUpdate.assigned_user_id !== currentTicket.assigned_user_id) {
                 // Al nuevo encargado
@@ -278,7 +274,7 @@ class TicketService {
                         recipients: [fieldsToUpdate.assigned_user_id]
                     });
                 }
-    
+
                 // Al encargado anterior
                 if (currentTicket.assigned_user_id) {
                     notifications.push({
@@ -289,15 +285,23 @@ class TicketService {
                     });
                 }
             }
-    
+
             // Crear las notificaciones en el servicio de notificaciones
             for (const notification of notifications) {
                 await notificationService.createNotification(notification);
             }
-    
+
+            if (fieldsToUpdate.status_id !== currentTicket.status_id) {
+                await statusModel.create(
+                    friendlyCode,
+                    await statusModel.getStatusNameById(currentTicket.status_id), // Estado anterior
+                    await statusModel.getStatusNameById(fieldsToUpdate.status_id), // Nuevo estado
+                    updateData.updated_by || null // Usuario que realizó el cambio
+                );
+            }
+
             return updatedTicket; // Retornar el ticket actualizado
         } catch (error) {
-            console.error('Error en updateTicketByFriendlyCode:', error.message);
             throw new Error('Error al actualizar el ticket: ' + error.message);
         }
     }

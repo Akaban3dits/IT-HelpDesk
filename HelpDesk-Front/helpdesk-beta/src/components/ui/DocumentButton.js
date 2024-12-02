@@ -30,7 +30,6 @@ const DocumentButton = ({ doc }) => {
     setIsLoading(true);
   
     try {
-      console.log("Iniciando descarga del archivo...");
       if (!doc?.file_path || !doc?.original_filename) {
         throw new Error('Información del archivo incompleta');
       }
@@ -38,7 +37,6 @@ const DocumentButton = ({ doc }) => {
       const baseUrl = process.env.REACT_APP_FILE_BASE_URL || 'http://localhost:5000';
       const normalizedPath = doc.file_path.replace(/^uploads[\\/]/, '').replace(/\\/g, '/');
       const fileUrl = `${baseUrl}/uploads/${normalizedPath}`;
-      console.log("URL normalizada del archivo:", fileUrl);
 
       const token = localStorage.getItem('token');
       if (!token) {

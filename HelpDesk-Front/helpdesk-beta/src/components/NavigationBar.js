@@ -19,7 +19,18 @@ const NavigationBar = ({ showLogo = false }) => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
     const { userName, logout } = useContext(AuthContext);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const loadNotifications = async () => {
         try {
@@ -102,6 +113,149 @@ const NavigationBar = ({ showLogo = false }) => {
             : `/admin/view/${ticketId}`;
     };
 
+    const renderNotificationsDropdown = () => {
+        if (isMobile) {
+            return showNotifications ? (
+                <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
+                    <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
+                        <h3 className="text-lg font-semibold text-gray-700">Notificaciones</h3>
+                        <button
+                            onClick={() => setNotifications([])}
+                            className="text-sm text-blue-500 hover:underline"
+                        >
+                            Limpiar todo
+                        </button>
+                    </div>
+                    <div className="divide-y divide-gray-200 max-h-screen overflow-y-auto">
+                        {loading ? (
+                            <p className="text-sm text-gray-500 px-4 py-3">Cargando notificaciones...</p>
+                        ) : notifications.filter((notif) => !notif.hidden).length > 0 ? (
+                            notifications
+                                .filter((notif) => !notif.hidden)
+                                .map((notif) => (
+                                    <div
+                                        key={notif.id}
+                                        className={`px-4 py-3 hover:bg-gray-50 transition duration-150 ease-in-out ${
+                                            notif.read ? 'opacity-50' : ''
+                                        }`}
+                                    >
+                                        <div className="flex items-start">
+                                            <div className="flex-shrink-0 mt-1">
+                                                {getNotificationIcon(notif.type)}
+                                            </div>
+                                            <div className="ml-3 w-0 flex-1">
+                                                <Link 
+                                                    to={getTicketLink(notif.ticket_id)}
+                                                    className="text-sm font-medium text-gray-900 hover:text-blue-600"
+                                                >
+                                                    {notif.message}
+                                                </Link>
+                                                <p className="mt-1 text-xs text-gray-500">
+                                                    {new Date(notif.time).toLocaleString()}
+                                                </p>
+                                            </div>
+                                            <div className="ml-4 flex-shrink-0 flex space-x-2">
+                                                {!notif.read && (
+                                                    <button
+                                                        onClick={() => markAsRead(notif.id)}
+                                                        className="inline-flex text-gray-400 hover:text-green-500 focus:outline-none"
+                                                    >
+                                                        <Check size={16} />
+                                                    </button>
+                                                )}
+                                                <button
+                                                    onClick={() => hideNotification(notif.id)}
+                                                    className="inline-flex text-gray-400 hover:text-red-500 focus:outline-none"
+                                                >
+                                                    <X size={16} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                        ) : (
+                            <p className="text-sm text-gray-500 px-4 py-3">No hay notificaciones</p>
+                        )}
+                    </div>
+                    <div className="sticky bottom-0 bg-gray-50 px-4 py-2 border-t border-gray-200">
+                        <button
+                            onClick={toggleNotifications}
+                            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            ) : null;
+        }
+
+        // Desktop version (original)
+        return showNotifications && (
+            <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl overflow-hidden z-20 border border-gray-200">
+                <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
+                    <h3 className="text-lg font-semibold text-gray-700">Notificaciones</h3>
+                    <button
+                        onClick={() => setNotifications([])}
+                        className="text-sm text-blue-500 hover:underline"
+                    >
+                        Limpiar todo
+                    </button>
+                </div>
+                <div className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+                    {loading ? (
+                        <p className="text-sm text-gray-500 px-4 py-3">Cargando notificaciones...</p>
+                    ) : notifications.filter((notif) => !notif.hidden).length > 0 ? (
+                        notifications
+                            .filter((notif) => !notif.hidden)
+                            .map((notif) => (
+                                <div
+                                    key={notif.id}
+                                    className={`px-4 py-3 hover:bg-gray-50 transition duration-150 ease-in-out ${
+                                        notif.read ? 'opacity-50' : ''
+                                    }`}
+                                >
+                                    <div className="flex items-start">
+                                        <div className="flex-shrink-0 mt-1">
+                                            {getNotificationIcon(notif.type)}
+                                        </div>
+                                        <div className="ml-3 w-0 flex-1">
+                                            <Link 
+                                                to={getTicketLink(notif.ticket_id)}
+                                                className="text-sm font-medium text-gray-900 hover:text-blue-600"
+                                            >
+                                                {notif.message}
+                                            </Link>
+                                            <p className="mt-1 text-xs text-gray-500">
+                                                {new Date(notif.time).toLocaleString()}
+                                            </p>
+                                        </div>
+                                        <div className="ml-4 flex-shrink-0 flex space-x-2">
+                                            {!notif.read && (
+                                                <button
+                                                    onClick={() => markAsRead(notif.id)}
+                                                    className="inline-flex text-gray-400 hover:text-green-500 focus:outline-none"
+                                                >
+                                                    <Check size={16} />
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() => hideNotification(notif.id)}
+                                                className="inline-flex text-gray-400 hover:text-red-500 focus:outline-none"
+                                            >
+                                                <X size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                    ) : (
+                        <p className="text-sm text-gray-500 px-4 py-3">No hay notificaciones</p>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
     return (
         <nav className="bg-white shadow-md">
             <div className="p-4 flex justify-between items-center">
@@ -127,70 +281,7 @@ const NavigationBar = ({ showLogo = false }) => {
                             )}
                         </button>
 
-                        {showNotifications && (
-                            <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl overflow-hidden z-20 border border-gray-200">
-                                <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
-                                    <h3 className="text-lg font-semibold text-gray-700">Notificaciones</h3>
-                                    <button
-                                        onClick={() => setNotifications([])}
-                                        className="text-sm text-blue-500 hover:underline"
-                                    >
-                                        Limpiar todo
-                                    </button>
-                                </div>
-                                <div className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
-                                    {loading ? (
-                                        <p className="text-sm text-gray-500 px-4 py-3">Cargando notificaciones...</p>
-                                    ) : notifications.filter((notif) => !notif.hidden).length > 0 ? (
-                                        notifications
-                                            .filter((notif) => !notif.hidden)
-                                            .map((notif) => (
-                                                <div
-                                                    key={notif.id}
-                                                    className={`px-4 py-3 hover:bg-gray-50 transition duration-150 ease-in-out ${
-                                                        notif.read ? 'opacity-50' : ''
-                                                    }`}
-                                                >
-                                                    <div className="flex items-start">
-                                                        <div className="flex-shrink-0 mt-1">
-                                                            {getNotificationIcon(notif.type)}
-                                                        </div>
-                                                        <div className="ml-3 w-0 flex-1">
-                                                            <Link 
-                                                                to={getTicketLink(notif.ticket_id)}
-                                                                className="text-sm font-medium text-gray-900 hover:text-blue-600"
-                                                            >
-                                                                {notif.message}
-                                                            </Link>
-                                                            <p className="mt-1 text-xs text-gray-500">
-                                                                {new Date(notif.time).toLocaleString()}
-                                                            </p>
-                                                        </div>
-                                                        <div className="ml-4 flex-shrink-0 flex space-x-2">
-                                                            {!notif.read && (
-                                                                <button
-                                                                    onClick={() => markAsRead(notif.id)}
-                                                                    className="inline-flex text-gray-400 hover:text-green-500 focus:outline-none"
-                                                                >
-                                                                    <Check size={16} />
-                                                                </button>
-                                                            )}
-                                                            <button
-                                                                onClick={() => hideNotification(notif.id)}
-                                                                className="inline-flex text-gray-400 hover:text-red-500 focus:outline-none"
-                                                            >
-                                                                <X size={16} />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))
-                                    ) : (
-                                        <p className="text-sm text-gray-500 px-4 py-3">No hay notificaciones</p>
-                                    )}
-                                </div>
-                            </div>
-                        )}
+                        {renderNotificationsDropdown()}
                     </div>
 
                     {showLogo && (

@@ -24,15 +24,6 @@ export const fetchRecentTickets = async (
             return acc;
         }, {});
 
-        console.log('Enviando parámetros al backend:', {
-            page,
-            limit,
-            search,
-            sortBy: 'created_at',
-            sortDirection: 'desc',
-            ...parsedFilters
-        });
-
         const response = await apiClient.get('/tickets', {
             params: {
                 page,
@@ -44,10 +35,8 @@ export const fetchRecentTickets = async (
             }
         });
 
-        console.log('Respuesta del backend:', response.data);
         return response.data;
     } catch (error) {
-        console.log('Error en la obtención de tickets:', error);
         throw error;
     }
 };
@@ -69,7 +58,6 @@ export const getMonthlyTicketCounts = async () => {
         const response = await apiClient.get('/tickets-monthly');
         return response.data;
     } catch (error) {
-        console.log('Error en la obtención de conteos mensuales de tickets:', error);
         throw new Error('Error al obtener los conteos mensuales de tickets');
     }
 };

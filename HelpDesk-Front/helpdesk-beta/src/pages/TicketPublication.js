@@ -116,7 +116,6 @@ const TicketPublication = ({ isUser = null }) => {
     const updateTicketAssignedUser = async (friendlyCode, userId) => {
         try {
             await updateTicketByFriendlyCode(friendlyCode, { assigned_user_id: userId });
-            console.log('Ticket assigned user updated successfully');
         } catch (error) {
             console.error('Error updating ticket assigned user:', error);
         }
@@ -272,7 +271,7 @@ const TicketPublication = ({ isUser = null }) => {
                 <CommentsSection friendlyCode={ticketData.friendly_code} />
             </div>
 
-            {isTaskModalOpen && <TaskModal onClose={handleTaskModalClose} />}
+            {isTaskModalOpen && <TaskModal friendlyCode={ticketData.friendly_code} onClose={handleTaskModalClose} />}
             {isStatusModalOpen && (
                 <StatusChangeModal
                     onClose={handleStatusModalClose}

@@ -7,8 +7,12 @@ const router = Router();
 //*Ruta funcional
 router.get('/devices/search', authenticateToken, DeviceController.getDevices);
 
-//TODO Crear, Editar Eliminar
+router.get('/devices/list', authenticateToken, DeviceController.fetchDevicesList); // Obtener lista de dispositivos
+router.post('/devices', authenticateToken, DeviceController.createDevice); // Crear un dispositivo
+router.put('/devices/:id', authenticateToken, DeviceController.updateDevice); // Actualizar un dispositivo
+router.delete('/devices/:id', authenticateToken, DeviceController.deleteDevice); // Eliminar un dispositivo
 
 
 
 export default router;
+

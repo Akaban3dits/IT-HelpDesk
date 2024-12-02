@@ -33,7 +33,6 @@ const RecentTicketsTable = ({ isAssigned = null, isUser = null }) => { // Recibe
         setIsLoading(true);
         setError(null);
         try {
-            console.log('Cargando tickets con filtros:', { ...filters, isAssigned });
             const response = await fetchRecentTickets(currentPage, itemsPerPage, searchTerm, { ...filters, isAssigned });
             if (response && response.tickets) {
                 setTickets(response.tickets);
@@ -108,7 +107,7 @@ const RecentTicketsTable = ({ isAssigned = null, isUser = null }) => { // Recibe
                         <option value="En Progreso">En Progreso</option>
                         <option value="Pendiente">Pendiente</option>
                     </select>
-                    <select
+                    {isUser ? null : <select
                         onChange={(e) => handleFilter('priority', e.target.value)}
                         className="w-full sm:w-auto p-2 border border-indigo-200 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm text-gray-700"
                     >
@@ -116,7 +115,7 @@ const RecentTicketsTable = ({ isAssigned = null, isUser = null }) => { // Recibe
                         <option value="Alta">Alta</option>
                         <option value="Media">Media</option>
                         <option value="Baja">Baja</option>
-                    </select>
+                    </select>}
                     <select
                         value={filters.dateOption}  // Establece el valor seleccionado en el estado `dateRange`
                         onChange={(e) => handleFilter('dateOption', e.target.value)}

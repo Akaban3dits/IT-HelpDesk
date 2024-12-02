@@ -4,14 +4,18 @@ import Sidebar from './Sidebar';
 import NavigationBar from './NavigationBar';
 
 const AdminLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar inicia cerrado
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     const handleResize = () => {
       const newIsMobile = window.innerWidth < 768;
       setIsMobile(newIsMobile);
-      setSidebarOpen(!newIsMobile);
+
+      // Mantén el sidebar cerrado en dispositivos móviles, ábrelo en pantallas grandes si no es móvil
+      if (!newIsMobile) {
+        setSidebarOpen(false); // Sidebar cerrado incluso en pantallas grandes al cargar
+      }
     };
 
     window.addEventListener('resize', handleResize);

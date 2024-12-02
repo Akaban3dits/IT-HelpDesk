@@ -2,11 +2,11 @@ import pool from '../config/db.js';
 
 class Comment {
     async createComment(commentData) {
-        const { comment_text, ticket_id, user_id, parent_comment_id } = commentData;
+        const { comment_text, friendly_code, user_id, parent_comment_id } = commentData;
         const result = await pool.query(
             `INSERT INTO comments (comment_text, ticket_id, user_id, parent_comment_id, created_at)
              VALUES ($1, $2, $3, $4, NOW()) RETURNING *`,
-            [comment_text, ticket_id, user_id, parent_comment_id]
+            [comment_text, friendly_code, user_id, parent_comment_id]
         );
         return result.rows[0];
     }

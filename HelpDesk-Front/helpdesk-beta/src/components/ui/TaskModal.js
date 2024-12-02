@@ -1,46 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Trash, Edit, PlusCircle } from 'lucide-react';
+import { fetchTasksByTicketId, createTask, updateTask, deleteTask } from '../../api/tasks/taskService';
 
-const TaskModal = ({ onClose }) => {
-    const [tasks, setTasks] = useState([
-        { id: 1, description: 'Revisar el toner', is_completed: false, is_editing: false },
-        { id: 2, description: 'Reemplazar cartucho de cyan', is_completed: false, is_editing: false },
-        { id: 3, description: 'Imprimir página de prueba', is_completed: false, is_editing: false }
-    ]);
-
+const TaskModal = ({ onClose, friendlyCode }) => {
+    const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
-    const handleTaskChange = (id) => {
-        setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-                task.id === id ? { ...task, is_completed: !task.is_completed } : task
-            )
-        );
-    };
+    useEffect(() => {
+        const loadTasks = async () => {
+            try {
+                setIsLoading(true);
+                setErrorMessage(null);
+                const fetchedTasks = await fetchTasksByTicketId(friendlyCode);
+                setTasks(fetchedTasks);
+            } catch (error) {
+                console.error('Error al cargar las tareas:', error.message);
+                setErrorMessage('No se pudieron cargar las tareas.');
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    const handleDeleteTask = (id) => {
-        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
-    };
+        loadTasks();
+    }, [friendlyCode]);
 
-    const handleAddTask = () => {
-        if (newTask.trim() !== '') {
-            const newTaskObj = {
-                id: tasks.length + 1,
-                description: newTask,
-                is_completed: false,
-                is_editing: false
-            };
-            setTasks([...tasks, newTaskObj]);
-            setNewTask('');
+    const handleTaskChange = async (id, isCompleted) => {
+        try {
+            setErrorMessage(null);
+            await updateTask(id, { is_completed: !isCompleted });
+            setTasks((prevTasks) =>
+                prevTasks.map((task) =>
+                    task.id === id ? { ...task, is_completed: !task.is_completed } : task
+                )
+            );
+        } catch (error) {
+            console.error('Error al actualizar el estado de la tarea:', error.message);
+            setErrorMessage('No se pudo actualizar el estado de la tarea.');
         }
     };
 
-    const handleEditTask = (id, description) => {
-        setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-                task.id === id ? { ...task, description } : task
-            )
-        );
+    const handleDeleteTask = async (id) => {
+        try {
+            setErrorMessage(null);
+            await deleteTask(id);
+            setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+        } catch (error) {
+            console.error('Error al eliminar la tarea:', error.message);
+            setErrorMessage('No se pudo eliminar la tarea.');
+        }
+    };
+
+    const handleAddTask = async () => {
+        if (newTask.trim() === '') return;
+        try {
+            const createdTask = await createTask(friendlyCode, { task_description: newTask });
+            setTasks([...tasks, createdTask]);
+            setNewTask('');
+        } catch (error) {
+            console.error('Error al crear la tarea:', error.message);
+        }
+    };
+    
+
+    const handleEditTask = async (id, task_description) => {
+        try {
+            setErrorMessage(null);
+            await updateTask(id, { task_description });
+            setTasks((prevTasks) =>
+                prevTasks.map((task) =>
+                    task.id === id ? { ...task, task_description } : task
+                )
+            );
+        } catch (error) {
+            console.error('Error al actualizar la tarea:', error.message);
+            setErrorMessage('No se pudo actualizar la tarea.');
+        }
     };
 
     const toggleEditTask = (id) => {
@@ -53,7 +89,7 @@ const TaskModal = ({ onClose }) => {
 
     const handleKeyDown = (id, event) => {
         if (event.key === 'Enter') {
-            toggleEditTask(id); // Cerrar la edición cuando se presiona Enter
+            toggleEditTask(id);
         }
     };
 
@@ -67,46 +103,60 @@ const TaskModal = ({ onClose }) => {
                     <X size={24} />
                 </button>
                 <h3 className="text-xl font-semibold text-gray-700 mb-4">Lista de Tareas</h3>
+
+                {errorMessage && (
+                    <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
+                )}
+
                 <div className="space-y-3">
-                    {tasks.map((task) => (
-                        <div key={task.id} className="flex items-center space-x-3">
-                            <input
-                                type="checkbox"
-                                checked={task.is_completed}
-                                onChange={() => handleTaskChange(task.id)}
-                                className="h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
-                            />
-                            {task.is_editing ? (
+                    {isLoading ? (
+                        <p className="text-gray-500 text-center">Cargando tareas...</p>
+                    ) : tasks.length > 0 ? (
+                        tasks.map((task) => (
+                            <div key={task.id} className="flex items-center space-x-3">
                                 <input
-                                    type="text"
-                                    value={task.description}
-                                    onChange={(e) => handleEditTask(task.id, e.target.value)}
-                                    onKeyDown={(e) => handleKeyDown(task.id, e)}  // Detectar tecla Enter
-                                    className="border border-gray-300 rounded px-2 py-1 text-gray-700 flex-1"
-                                    autoFocus  // Colocar el foco en el input cuando se edita
+                                    type="checkbox"
+                                    checked={task.is_completed}
+                                    onChange={() => handleTaskChange(task.id, task.is_completed)}
+                                    className="h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
                                 />
-                            ) : (
-                                <span className={`text-gray-700 ${task.is_completed ? 'line-through' : ''}`}>
-                                    {task.description}
-                                </span>
-                            )}
-                            <button
-                                onClick={() => toggleEditTask(task.id)}
-                                className="text-gray-500 hover:text-blue-600"
-                            >
-                                <Edit size={16} />
-                            </button>
-                            <button
-                                onClick={() => handleDeleteTask(task.id)}
-                                className="text-gray-500 hover:text-red-600"
-                            >
-                                <Trash size={16} />
-                            </button>
-                        </div>
-                    ))}
+                                {task.is_editing ? (
+                                    <input
+                                        type="text"
+                                        value={task.task_description}
+                                        onChange={(e) => handleEditTask(task.id, e.target.value)}
+                                        onKeyDown={(e) => handleKeyDown(task.id, e)}
+                                        className="border border-gray-300 rounded px-2 py-1 text-gray-700 flex-1"
+                                        autoFocus
+                                    />
+                                ) : (
+                                    <span
+                                        className={`text-gray-700 ${
+                                            task.is_completed ? 'line-through' : ''
+                                        }`}
+                                    >
+                                        {task.task_description}
+                                    </span>
+                                )}
+                                <button
+                                    onClick={() => toggleEditTask(task.id)}
+                                    className="text-gray-500 hover:text-blue-600"
+                                >
+                                    <Edit size={16} />
+                                </button>
+                                <button
+                                    onClick={() => handleDeleteTask(task.id)}
+                                    className="text-gray-500 hover:text-red-600"
+                                >
+                                    <Trash size={16} />
+                                </button>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-center">No hay tareas aún.</p>
+                    )}
                 </div>
 
-                {/* Section to add new task */}
                 <div className="mt-4">
                     <input
                         type="text"

@@ -5,7 +5,6 @@ class NotificationController {
         try {
             const userId = req.user.id; // Obtiene el ID del usuario autenticado
             const notifications = await NotificationService.getUserNotifications(userId);
-            console.log(notifications)
             return res.status(200).json(notifications);
         } catch (error) {
             console.error('Error en userNotifications (NotificationController):', error.message);

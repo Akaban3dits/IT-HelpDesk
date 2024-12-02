@@ -39,14 +39,12 @@ const AssignedUserButton = ({ friendlyCode, ticketData, onUserChange }) => {
     const handleChangeAssignedUser = async () => {
         setIsLoading(true);
         setError(null);
-        console.log('Updating assigned user to:', selectedUser);
 
         try {
             await updateTicketByFriendlyCode(friendlyCode, {
                 assigned_user_id: selectedUser.value // Send the selected user's ID
             });
-            onUserChange(selectedUser.label); // Notify the parent of the change
-            console.log('User assigned successfully:', selectedUser.label);
+            onUserChange(selectedUser.label); 
             setIsModalOpen(false); // Close the modal
         } catch (error) {
             setError('No se pudo actualizar el usuario asignado. Inténtalo de nuevo.');

@@ -56,15 +56,9 @@ const Login = () => {
         try {
             await login(email, password);
         } catch (error) {
-            // Como loginUser lanza directamente el mensaje como string,
-            // simplemente usamos el error directamente
-            console.log('Error recibido:', error); // Para debugging
-            
-            // Si el error es una cadena, úsalo directamente
             if (typeof error === 'string') {
                 setErrorMessage(error);
             } 
-            // Si no es una cadena, busca el mensaje en diferentes lugares
             else {
                 setErrorMessage(
                     error.response?.data?.message || 

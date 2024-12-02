@@ -86,7 +86,6 @@ const RegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Datos del formulario antes de la validación:", formData);
     
         if (validateForm()) {
             // Limpieza de datos antes de enviar
@@ -97,12 +96,9 @@ const RegisterForm = () => {
                 role_id: Number(formData.role_id),          // Convertir a número si es necesario
                 department_id: Number(formData.department_id)  // Convertir a número si es necesario
             };
-            
-            console.log("Datos limpios a enviar:", cleanedData);
     
             try {
                 const response = await createUser(cleanedData);
-                console.log("Respuesta del servidor:", response);
     
                 setAlertType('success');
                 setAlertMessage('Usuario creado con éxito');
@@ -122,7 +118,6 @@ const RegisterForm = () => {
                 setAlertMessage(errorMessage);
             }
         } else {
-            console.log("Errores de validación:", errors);
         }
     };
     

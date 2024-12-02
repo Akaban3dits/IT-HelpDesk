@@ -16,7 +16,8 @@ import RegisterForm from './pages/Forms/UserForm/RegisterForm';
 import DashboardTicket from './pages/Dashboard_Ticket';
 import CreateTickettoUserForm from './pages/Forms/TicketForm/TicketFormtoUser';
 import UserLayout from './components/UserLayout';
-import RecentTicketsTable from './components/Tables/RecentTicketsTable';
+import DepartmentsTable from './components/Tables/DepartmentsTable';
+import DualTablePage from './pages/Dashboard_Devices';
 
 
 const App = () => {
@@ -36,7 +37,7 @@ const App = () => {
               path="/my-history"
               element={<DashboardTicket useRecentTickets={true} isAssigned={false} isUser={true} />}
             />
-            <Route path='/ticket/:friendlyCode' element={<TicketPublication isUser={true}/>} />
+            <Route path='/ticket/:friendlyCode' element={<TicketPublication isUser={true} />} />
 
           </Route>
 
@@ -57,7 +58,10 @@ const App = () => {
             <Route path="tickets" element={<DashboardTicket />} />
             <Route path='view/:friendlyCode' element={<TicketPublication />} />
 
+
             <Route element={<PrivateRoute allowedRoles={['Administrador', 'Superadministrador']} />}>
+              <Route path='departments' element={<DepartmentsTable />} />
+              <Route path='devices' element={<DualTablePage />} />
               <Route path="users" element={<DashboardUser />} />
               <Route path="create-user" element={<CreateUserForm />} />
               <Route path="edit-user/:friendlyCode" element={<UpdateUserForm />} />

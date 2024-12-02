@@ -24,7 +24,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { icon: History, label: 'Mi Historial', path: '/admin/my-history', roles: ['Observador', 'Administrador', 'Superadministrador'] },
         { icon: Ticket, label: 'Todos los tickets', path: '/admin/tickets', roles: ['Observador', 'Administrador', 'Superadministrador'] },
         { icon: User2, label: 'Usuarios', path: '/admin/users', roles: ['Administrador', 'Superadministrador'] },
-        { icon: Building2, label: 'Departamento', path: '/admin/department', roles: ['Administrador', 'Superadministrador'] },
+        { icon: Building2, label: 'Departamento', path: '/admin/departments', roles: ['Administrador', 'Superadministrador'] },
         { icon: Monitor, label: 'Devices', path: '/admin/devices', roles: ['Administrador', 'Superadministrador'] }
     ];
     

@@ -12,12 +12,8 @@ export const getStatusHistoryByFriendlyCode = async (friendlyCode) => {
     }
 
     try {
-        console.log(`Fetching status history for friendly code: ${friendlyCode}`); // Log de entrada
 
-        const response = await apiClient.get(`/tickets/${friendlyCode}/status-history`); // Ajusta la ruta según tu configuración
-        
-        console.log('Status history fetched successfully:', response.data); // Log de éxito
-
+        const response = await apiClient.get(`/tickets/${friendlyCode}/status-history`);
         return response.data; // Devuelve los datos del historial
     } catch (error) {
         const errorMessage = error.response?.data?.error || 'Error al obtener el historial de estados';

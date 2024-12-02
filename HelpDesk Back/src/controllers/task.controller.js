@@ -1,57 +1,61 @@
 import TaskService from '../services/task.service.js';
 
 class TaskController {
-    async createTask(req, res) {
+    // Crear una nueva tarea
+    async createTask(req, res, next) {
         try {
-            const task = await TaskService.createTask(req.body);
-            return res.status(201).json(task);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
-    }
-
-    async getAllTasks(req, res) {
-        try {
-            const tasks = await TaskService.getAllTasks();
-            return res.status(200).json(tasks);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
-    }
-
-    async getTaskById(req, res) {
-        try {
-            const task = await TaskService.getTaskById(req.params.id);
-            if (!task) {
-                return res.status(404).json({ message: 'Task not found' });
+    
+            const { task_description } = req.body;
+            const { ticket_id } = req.params;
+    
+            if (!ticket_id) {
+                throw new Error('El ID del ticket es obligatorio.');
             }
-            return res.status(200).json(task);
+    
+            const task = await TaskService.createTask({ task_description, ticket_id });
+    
+            res.status(201).json(task);
         } catch (error) {
-            return res.status(500).json({ error: error.message });
+            next(error);
+        }
+    }
+    
+    
+
+    // Actualizar una tarea
+    async updateTask(req, res, next) {
+        try {
+            const { id } = req.params;
+            const { task_description, is_completed } = req.body;
+            const updatedTask = await TaskService.updateTask(id, { task_description, is_completed });
+            res.status(200).json(updatedTask);
+        } catch (error) {
+            console.error('Error al actualizar la tarea:', error);
+            next(error);
         }
     }
 
-    async updateTask(req, res) {
+    // Eliminar una tarea
+    async deleteTask(req, res, next) {
         try {
-            const updatedTask = await TaskService.updateTask(req.params.id, req.body);
-            if (!updatedTask) {
-                return res.status(404).json({ message: 'Task not found' });
-            }
-            return res.status(200).json(updatedTask);
+            const { id } = req.params;
+            await TaskService.deleteTask(id);
+            res.status(204).send();
         } catch (error) {
-            return res.status(500).json({ error: error.message });
+            console.error('Error al eliminar la tarea:', error);
+            next(error);
         }
     }
 
-    async deleteTask(req, res) {
+    // Obtener tareas por `ticket_id`
+    async getTasksByTicketId(req, res, next) {
         try {
-            const deletedTask = await TaskService.deleteTask(req.params.id);
-            if (!deletedTask) {
-                return res.status(404).json({ message: 'Task not found' });
-            }
-            return res.status(200).json({ message: 'Task deleted successfully' });
+            const { ticket_id } = req.params;
+            const tasks = await TaskService.getTasksByTicketId(ticket_id);
+            res.status(200).json(tasks);
         } catch (error) {
-            return res.status(500).json({ error: error.message });
+            console.error('Error al obtener las tareas:', error);
+            next(error);
         }
     }
 }

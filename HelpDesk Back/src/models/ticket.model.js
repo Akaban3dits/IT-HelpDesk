@@ -412,7 +412,23 @@ class Ticket {
         }
     }
 
-
+    async getTicketDetailsByFriendlyCode(friendlyCode) {
+        try {
+            const query = `
+                SELECT 
+                    t.friendly_code,
+                    t.created_by,
+                    t.assigned_user_id
+                FROM tickets t
+                WHERE t.friendly_code = $1
+                LIMIT 1`;
+            const result = await pool.query(query, [friendlyCode]);
+            return result.rows[0] || null; // Retorna los detalles del ticket
+        } catch (error) {
+            console.error('Error al obtener el ticket:', error.message);
+            throw new Error('Error al obtener el ticket: ' + error.message);
+        }
+    }
 
 }
 
